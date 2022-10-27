@@ -2,14 +2,14 @@ import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
 
-import Posts from './components/Posts';
+import PostsPage from './pages/PostsPage';
 
 export default function App() {
   return (
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<Posts />} />
+        <Route path="/" element={<PostsPage />} />
       </Routes>
     </div>
   );
