@@ -1,5 +1,16 @@
+import { Route, Routes } from 'react-router-dom';
+
+import Header from './components/Header';
+
+import Posts from './components/Posts';
+
 export default function App() {
   return (
-    <p>Hello, world</p>
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Posts />} />
+      </Routes>
+    </div>
   );
 }
