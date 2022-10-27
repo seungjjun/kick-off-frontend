@@ -1,25 +1,21 @@
-import ApiService from '../services/ApiService';
+import { apiService } from '../services/ApiService';
 
-const apiService = new ApiService();
+import Store from './Store';
 
-export default class PostStore {
+export default class PostStore extends Store {
   constructor() {
-    this.title = '';
-    this.category = '';
-    this.author = '';
-    this.commentNumber = '';
-    this.like = '';
+    super();
+
+    this.posts = [];
   }
 
-  async posts() {
-    const {
-      title, category, author, commentNumber, like,
-    } = await apiService.fetchPosts();
+  async fetchPosts() {
+    const { posts } = await apiService.fetchPosts();
 
-    this.title = title;
-    this.category = category;
-    this.author = author;
-    this.commentNumber = commentNumber;
-    this.like = like;
+    this.posts = posts;
+
+    this.publish();
   }
 }
+
+export const postStore = new PostStore();

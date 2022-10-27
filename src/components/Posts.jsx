@@ -1,16 +1,29 @@
-export default function Posts() {
+/* eslint-disable react/prop-types */
+export default function Posts({ posts }) {
   return (
     <section>
       <article>
-        <p>
-          손흥민 득점왕 수상
-        </p>
-        <p>
-          EPL
-        </p>
-        <p>
-          굉민재
-        </p>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <p>
+                {post.title}
+                {' '}
+                [
+                {post.commentNumber}
+                ]
+              </p>
+              <p>
+                {post.category}
+              </p>
+              <p>
+                {post.author}
+                {' '}
+                {post.likeNumber}
+              </p>
+            </li>
+          ))}
+        </ul>
       </article>
     </section>
   );
