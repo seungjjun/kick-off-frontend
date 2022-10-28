@@ -7,12 +7,20 @@ export default class PostStore extends Store {
     super();
 
     this.posts = [];
+
+    this.category = '';
   }
 
   async fetchPosts() {
     const { posts } = await apiService.fetchPosts();
 
     this.posts = posts;
+
+    this.publish();
+  }
+
+  changeCategory(category) {
+    this.category = category;
 
     this.publish();
   }

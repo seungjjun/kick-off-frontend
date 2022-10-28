@@ -13,6 +13,7 @@ jest.mock('../hooks/usePostStore', () => () => ({
 test('postsPage', () => {
   posts = [
     {
+      id: 1,
       title: '손흥민 득점왕 수상',
       category: 'EPL',
       author: '굉민재',
