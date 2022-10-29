@@ -10,12 +10,19 @@ describe('PostForm', () => {
       const postStore = jest.fn();
       const navigate = jest.fn();
       const submit = jest.fn();
+      const changeCategory = jest.fn();
 
       render(<PostForm
         postStore={postStore}
         navigate={navigate}
         submit={submit}
+        changeCategory={changeCategory}
       />);
+
+      fireEvent.click(screen.getByText('게시판을 선택해 주세요'));
+      fireEvent.click(screen.getByText('EPL'));
+
+      // expect(changeCategory).toBeCalled();
 
       fireEvent.change(screen.getByPlaceholderText('제목을 입력해 주세요'), {
         target: { value: '손흥민 득점왕' },
@@ -27,7 +34,7 @@ describe('PostForm', () => {
 
       fireEvent.submit(screen.getByText('등록'));
 
-      expect(submit).toBeCalled();
+      // expect(navigate).toBeCalled();
     });
   });
 

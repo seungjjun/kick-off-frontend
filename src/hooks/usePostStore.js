@@ -11,7 +11,7 @@ export default function usePostStore() {
     postStore.subscribe(forceUpdate);
 
     return () => postStore.unsubscribe(forceUpdate);
-  }, []);
+  }, [forceUpdate]);
 
   return postStore;
 }

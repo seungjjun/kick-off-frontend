@@ -19,6 +19,12 @@ export default class PostStore extends Store {
     this.publish();
   }
 
+  async write(title, content, category) {
+    const post = await apiService.write(title, content, category);
+
+    this.category = post.category;
+  }
+
   changeCategory(category) {
     this.category = category;
 

@@ -9,8 +9,14 @@ export default function PostFormPage() {
 
   const navigate = useNavigate();
 
+  const changeCategory = (value) => {
+    postStore.changeCategory(value);
+  };
+
   const submit = async (data) => {
-    postStore.write(data, postStore.category);
+    postStore.write(data.title, data.content, postStore.category);
+    postStore.fetchPosts();
+    navigate('/');
   };
 
   return (
@@ -18,6 +24,7 @@ export default function PostFormPage() {
       postStore={postStore}
       navigate={navigate}
       submit={submit}
+      changeCategory={changeCategory}
     />
   );
 }

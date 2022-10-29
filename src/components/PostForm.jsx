@@ -3,7 +3,9 @@
 
 import { useForm } from 'react-hook-form';
 
-export default function PostForm({ postStore, navigate, submit }) {
+export default function PostForm({
+  postStore, navigate, submit, changeCategory,
+}) {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const handleClickCancel = () => {
@@ -11,19 +13,15 @@ export default function PostForm({ postStore, navigate, submit }) {
   };
 
   const handleChange = (target) => {
-    postStore.changeCategory(target.target.value);
+    changeCategory(target.target.value);
   };
 
   const onSubmit = async (data) => {
     if (postStore.category === '') {
       alert('게시판을 선택해주세요');
+      return;
     }
-
-    navigate('/');
     submit(data);
-
-    console.log(data);
-    console.log(postStore.category);
   };
 
   return (
@@ -37,14 +35,12 @@ export default function PostForm({ postStore, navigate, submit }) {
         <input
           id="input-title"
           type="text"
-          value="title"
           placeholder="제목을 입력해 주세요"
           {...register('title')}
         />
         <input
           id="input-content"
           type="text"
-          value="content"
           placeholder="내용을 입력하세요"
           {...register('content')}
         />
