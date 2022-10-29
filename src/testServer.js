@@ -28,6 +28,15 @@ const server = setupServer(
     }));
   }),
 
+  rest.get(`${baseUrl}/post/1`, async (req, res, ctx) => res(ctx.json({
+    id: 1,
+    title: '대만힌국 16강 진출',
+    content: '카타르 월드컵 대한민국 16강 진출',
+    author: 'jel1y',
+    category: 'EPL',
+    hit: 1,
+  }))),
+
 );
 
 export default server;

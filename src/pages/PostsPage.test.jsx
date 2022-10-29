@@ -3,11 +3,18 @@ import { render } from '@testing-library/react';
 import PostsPage from './PostsPage';
 
 const fetchPosts = jest.fn();
+const navigate = jest.fn();
 let posts = [];
 
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPosts,
   posts,
+}));
+
+jest.mock('react-router-dom', () => ({
+  useNavigate() {
+    return navigate;
+  },
 }));
 
 test('postsPage', () => {

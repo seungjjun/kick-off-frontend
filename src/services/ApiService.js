@@ -14,6 +14,14 @@ export default class ApiService {
     return data;
   }
 
+  async fetchPost(postId) {
+    const url = `${baseUrl}/post/${postId}`;
+
+    const { data } = await axios.get(url);
+
+    return data;
+  }
+
   async write(title, content, category) {
     const url = `${baseUrl}/post`;
 

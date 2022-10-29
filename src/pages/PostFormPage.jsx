@@ -14,9 +14,9 @@ export default function PostFormPage() {
   };
 
   const submit = async (data) => {
-    postStore.write(data.title, data.content, postStore.category);
+    await postStore.write(data.title, data.content, postStore.category);
     postStore.fetchPosts();
-    navigate('/');
+    navigate(`/post/${postStore.postId}`);
   };
 
   return (

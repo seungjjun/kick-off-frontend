@@ -1,11 +1,19 @@
 /* eslint-disable react/prop-types */
-export default function Posts({ posts }) {
+export default function Posts({ posts, navigate }) {
+  const handleClickPost = (id) => {
+    navigate(`/post/${id}`);
+  };
+
   return (
     <section>
       <article>
         <ul>
           {posts.map((post) => (
-            <li key={post.id}>
+            <button
+              key={post.id}
+              type="button"
+              onClick={() => handleClickPost(post.id)}
+            >
               <p>
                 {post.title}
                 {' '}
@@ -21,7 +29,7 @@ export default function Posts({ posts }) {
                 {' '}
                 {post.likeNumber}
               </p>
-            </li>
+            </button>
           ))}
         </ul>
       </article>
