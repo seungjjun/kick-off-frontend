@@ -13,6 +13,16 @@ export default class ApiService {
 
     return data;
   }
+
+  async write(title, content, category) {
+    const url = `${baseUrl}/post`;
+
+    const { data } = await axios.post(url, {
+      title, content, category,
+    });
+
+    return data;
+  }
 }
 
 export const apiService = new ApiService();

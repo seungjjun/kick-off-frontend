@@ -18,6 +18,16 @@ const server = setupServer(
       },
     ],
   }))),
+
+  rest.post(`${baseUrl}/post`, async (req, res, ctx) => {
+    const { title, content, category } = await req.json();
+    return res(ctx.json({
+      title,
+      content,
+      category,
+    }));
+  }),
+
 );
 
 export default server;
