@@ -6,7 +6,10 @@ export default class PostStore extends Store {
   constructor() {
     super();
 
+    this.postId = 0;
+
     this.posts = [];
+    this.post = {};
 
     this.category = '';
   }
@@ -19,10 +22,20 @@ export default class PostStore extends Store {
     this.publish();
   }
 
+  async fetchPost(postId) {
+    const post = await apiService.fetchPost(postId);
+
+    this.post = post;
+
+    this.publish();
+  }
+
   async write(title, content, category) {
     const post = await apiService.write(title, content, category);
 
-    this.category = post.category;
+    this.postId = post.id;
+    this.category = category;
+    this.publish();
   }
 
   changeCategory(category) {
