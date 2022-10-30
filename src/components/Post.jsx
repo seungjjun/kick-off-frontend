@@ -1,6 +1,6 @@
 export default function Post({ post }) {
   return (
-    <div>
+    <article>
       <p>
         제목:
         {' '}
@@ -16,6 +16,15 @@ export default function Post({ post }) {
         {' '}
         {post.hit}
       </p>
-    </div>
+      <p>
+        등록날짜:
+        {' '}
+        {post.createdAt}
+      </p>
+      <div>
+        {post.imageUrl ? <img src={post.imageUrl} alt="uploadImage" />
+          : null}
+      </div>
+    </article>
   );
 }

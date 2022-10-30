@@ -22,12 +22,22 @@ export default class ApiService {
     return data;
   }
 
-  async write(title, content, category) {
+  async write(title, content, category, imageUrl) {
     const url = `${baseUrl}/post`;
 
     const { data } = await axios.post(url, {
-      title, content, category,
+      title,
+      content,
+      category,
+      imageUrl,
     });
+
+    return data;
+  }
+
+  async upload(formData) {
+    const url = `${baseUrl}/upload`;
+    const { data } = await axios.post(url, formData);
 
     return data;
   }

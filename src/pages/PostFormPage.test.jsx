@@ -6,6 +6,7 @@ const navigate = jest.fn();
 const fetchPosts = jest.fn();
 const changeCategory = jest.fn();
 const write = jest.fn();
+const upload = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   useNavigate() {
@@ -17,6 +18,7 @@ jest.mock('../hooks/usePostStore', () => () => ({
   fetchPosts,
   changeCategory,
   write,
+  upload,
 }));
 
 test('PostFormPage', () => {
