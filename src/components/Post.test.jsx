@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import Post from './Post';
 
 test('Post', () => {
@@ -6,6 +7,7 @@ test('Post', () => {
     title: '이강인 손흥민과 한 팀??',
     content: '이강인 토트넘 이적 루머',
     hit: 50,
+    imageUrl: 'imageUrl',
   };
   render(<Post post={post} />);
 

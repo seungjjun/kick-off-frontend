@@ -18,7 +18,7 @@ export default function Posts({ posts, navigate }) {
                 {post.title}
                 {' '}
                 [
-                {post.commentNumber}
+                {post.commentNumber === null ? 0 : (post.commentNumber) }
                 ]
               </p>
               <p>
@@ -27,8 +27,19 @@ export default function Posts({ posts, navigate }) {
               <p>
                 {post.author}
                 {' '}
-                {post.likeNumber}
+                /
+                {' '}
+                {post.createdAt}
+                {' '}
+                {post.hit}
               </p>
+              <p>
+                {post.likeNumber === null ? 0 : post.likeNumber}
+              </p>
+              <div>
+                {post.imageUrl ? <img src={post.imageUrl} alt="uploadImage" />
+                  : null}
+              </div>
             </button>
           ))}
         </ul>

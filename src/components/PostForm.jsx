@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 // import { useForm } from 'react-hook-form';
-
 import { useForm } from 'react-hook-form';
 
 export default function PostForm({
-  postStore, navigate, submit, changeCategory,
+  postStore, navigate, submit, changeCategory, upload, image,
 }) {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -21,7 +20,12 @@ export default function PostForm({
       alert('게시판을 선택해주세요');
       return;
     }
+
     submit(data);
+  };
+
+  const handleChangeImage = (e) => {
+    upload(e);
   };
 
   return (
@@ -29,6 +33,7 @@ export default function PostForm({
       <form onSubmit={handleSubmit(onSubmit)}>
         <select onChange={handleChange}>
           <option value="">게시판을 선택해 주세요</option>
+          <option value="전체 게시판">전체 게시판</option>
           <option value="EPL">EPL</option>
           <option value="SerieA">SerieA</option>
         </select>
@@ -44,7 +49,15 @@ export default function PostForm({
           placeholder="내용을 입력하세요"
           {...register('content')}
         />
-        <input type="file" />
+        <input
+          type="file"
+          accept="image/*"
+          id="image"
+          onChange={handleChangeImage}
+        />
+        <div>
+          <img src={image} alt="uploadImage" />
+        </div>
         <button type="button" onClick={handleClickCancel}>취소</button>
         <button type="submit">등록</button>
       </form>

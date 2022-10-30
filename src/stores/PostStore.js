@@ -12,6 +12,7 @@ export default class PostStore extends Store {
     this.post = {};
 
     this.category = '';
+    this.imageUrl = '';
   }
 
   async fetchPosts() {
@@ -30,11 +31,19 @@ export default class PostStore extends Store {
     this.publish();
   }
 
-  async write(title, content, category) {
-    const post = await apiService.write(title, content, category);
+  async write(title, content, category, image) {
+    const post = await apiService.write(title, content, category, image);
 
     this.postId = post.id;
     this.category = category;
+    this.publish();
+  }
+
+  async upload(formData) {
+    const imageUrl = await apiService.upload(formData);
+
+    this.imageUrl = imageUrl;
+
     this.publish();
   }
 
