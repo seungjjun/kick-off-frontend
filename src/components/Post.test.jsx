@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import Post from './Post';
 
@@ -23,14 +23,21 @@ test('Post', () => {
     length: 1,
   };
 
+  const countLike = jest.fn();
+
   render(<Post
     post={post}
     category={category}
     author={author}
     likes={likes}
+    countLike={countLike}
   />);
 
   screen.getByText('제목: 이강인 손흥민과 한 팀??');
   screen.getByText('내용: 이강인 토트넘 이적 루머');
   screen.getByText('조회수: 50');
+
+  fireEvent.click(screen.getByText('좋아요'));
+
+  expect(countLike).toBeCalled();
 });
