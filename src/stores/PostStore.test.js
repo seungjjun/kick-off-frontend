@@ -28,11 +28,14 @@ describe('PostStore', () => {
       it('게시글이 작성된것을 확인할 수 있다.', async () => {
         const title = '카타르 월드컵 4강 진출';
         const content = '대한민국 20년만에 월드컵 4강 진출';
-        const category = '전체 게시판';
+        const categoryId = 1;
+        const image = 'imageUrl';
+        const userId = 1;
 
-        await postStore.write(title, content, category);
+        await postStore.write(title, content, categoryId, image, userId);
 
-        expect(postStore.category).toBe('전체 게시판');
+        expect(postStore.post.title).toBe('카타르 월드컵 4강 진출');
+        expect(postStore.post.content).toBe('대한민국 20년만에 월드컵 4강 진출');
       });
     });
   });

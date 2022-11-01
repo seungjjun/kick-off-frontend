@@ -11,18 +11,24 @@ describe('PostForm', () => {
       const navigate = jest.fn();
       const submit = jest.fn();
       const changeCategory = jest.fn();
+      const upload = jest.fn();
+      let image = '';
 
       render(<PostForm
         postStore={postStore}
         navigate={navigate}
         submit={submit}
         changeCategory={changeCategory}
+        upload={upload}
+        image={image}
       />);
 
-      fireEvent.click(screen.getByText('게시판을 선택해 주세요'));
-      fireEvent.click(screen.getByText('EPL'));
+      image = 'image';
 
-      // expect(changeCategory).toBeCalled();
+      expect(screen.getByRole(
+        'option',
+        { name: '게시판을 선택해 주세요' },
+      ).selected).toBeTruthy();
 
       fireEvent.change(screen.getByPlaceholderText('제목을 입력해 주세요'), {
         target: { value: '손흥민 득점왕' },
@@ -34,7 +40,7 @@ describe('PostForm', () => {
 
       fireEvent.submit(screen.getByText('등록'));
 
-      // expect(navigate).toBeCalled();
+      // expect(submit).toBeCalled();
     });
   });
 

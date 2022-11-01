@@ -5,7 +5,7 @@ import config from '../config';
 
 const baseUrl = config.apiBaseUrl;
 
-export default class ApiService {
+export default class PostApiService {
   async fetchPosts() {
     const url = `${baseUrl}/posts`;
 
@@ -22,14 +22,15 @@ export default class ApiService {
     return data;
   }
 
-  async write(title, content, category, imageUrl) {
+  async write(title, content, categoryId, imageUrl, userId) {
     const url = `${baseUrl}/post`;
 
     const { data } = await axios.post(url, {
       title,
       content,
-      category,
+      categoryId,
       imageUrl,
+      userId,
     });
 
     return data;
@@ -43,4 +44,4 @@ export default class ApiService {
   }
 }
 
-export const apiService = new ApiService();
+export const postApiService = new PostApiService();

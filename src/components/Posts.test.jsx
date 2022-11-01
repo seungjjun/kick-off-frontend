@@ -5,12 +5,27 @@ import Posts from './Posts';
 test('posts', () => {
   const posts = [
     {
+      category: {
+        id: 1,
+        name: 'EPL',
+      },
+      comments: {
+        id: 1,
+        length: 3,
+      },
+      user: {
+        id: 1,
+        name: '굉민재',
+      },
+      likes: {
+        id: 1,
+        length: 3,
+      },
       id: 1,
       title: '손흥민 득점왕 수상',
-      category: 'EPL',
-      author: '굉민재',
-      commentNumber: 3,
-      like: 20,
+      createdAt: '2022-10-30',
+      hit: 10,
+      imageUrl: 'imageUrl',
     },
   ];
 

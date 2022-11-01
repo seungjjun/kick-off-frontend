@@ -6,7 +6,7 @@ import usePostStore from '../hooks/usePostStore';
 
 import PostForm from '../components/PostForm';
 
-export default function PostFormPage() {
+export default function PostFormPage({ user }) {
   const [image, setImage] = useState('');
 
   const postStore = usePostStore();
@@ -29,7 +29,7 @@ export default function PostFormPage() {
   };
 
   const submit = async (data) => {
-    await postStore.write(data.title, data.content, postStore.category, image);
+    await postStore.write(data.title, data.content, postStore.categoryId, image, user.id);
     postStore.fetchPosts();
     navigate(`/post/${postStore.postId}`);
   };

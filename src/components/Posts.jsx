@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
-export default function Posts({ posts, navigate }) {
+export default function cPosts({ posts, navigate }) {
   const handleClickPost = (id) => {
     navigate(`/post/${id}`);
   };
-
   return (
     <section>
       <article>
@@ -18,23 +17,22 @@ export default function Posts({ posts, navigate }) {
                 {post.title}
                 {' '}
                 [
-                {post.commentNumber === null ? 0 : (post.commentNumber) }
+                {post.comments.length}
                 ]
               </p>
               <p>
-                {post.category}
-              </p>
-              <p>
-                {post.author}
+                {post.category.name}
                 {' '}
                 /
+                {' '}
+                {post.user.name}
+              </p>
+              <p>
+                {post.likes.length}
                 {' '}
                 {post.createdAt}
                 {' '}
                 {post.hit}
-              </p>
-              <p>
-                {post.likeNumber === null ? 0 : post.likeNumber}
               </p>
               <div>
                 {post.imageUrl ? <img src={post.imageUrl} alt="uploadImage" />
