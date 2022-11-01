@@ -1,6 +1,10 @@
 export default function Post({
-  post, category, author, likes,
+  post, category, author, likes, countLike,
 }) {
+  const handleClickLike = () => {
+    countLike();
+  };
+
   return (
     <article>
       <p>
@@ -33,11 +37,10 @@ export default function Post({
           {post.imageUrl ? <img src={post.imageUrl} alt="uploadImage" />
             : null}
         </div>
-        <button type="button">
+        <button type="button" onClick={handleClickLike}>
           좋아요
-          {' '}
-          {likes.length}
         </button>
+        <p>{likes.length}</p>
       </div>
       <div>댓글 창 (미구현)</div>
     </article>

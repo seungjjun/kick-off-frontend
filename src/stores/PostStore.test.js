@@ -53,4 +53,18 @@ describe('PostStore', () => {
       });
     });
   });
+
+  describe('countLike', () => {
+    context('게시글의 좋아요 버튼을 누를 경우', () => {
+      it('좋아요 수가 늘너안 것을 확인할 수 있다.', async () => {
+        await postStore.fetchPost(1);
+
+        expect(postStore.post.title).toBe('대만힌국 16강 진출');
+        expect(postStore.post.content).toBe('카타르 월드컵 대한민국 16강 진출');
+        expect(postStore.post.author).toBe('jel1y');
+        expect(postStore.post.category).toBe('EPL');
+        expect(postStore.post.hit).toBe(1);
+      });
+    });
+  });
 });

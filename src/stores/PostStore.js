@@ -30,6 +30,8 @@ export default class PostStore extends Store {
   async fetchPost(postId) {
     const post = await postApiService.fetchPost(postId);
 
+    console.log(post);
+
     this.post = post;
     this.category = post.category;
     this.author = post.user;
@@ -49,6 +51,14 @@ export default class PostStore extends Store {
     const imageUrl = await postApiService.upload(formData);
 
     this.imageUrl = imageUrl;
+
+    this.publish();
+  }
+
+  async countLike(postId, userId) {
+    await postApiService.like(postId, userId);
+
+    await this.fetchPost(postId);
 
     this.publish();
   }

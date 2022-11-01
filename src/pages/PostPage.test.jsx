@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import PostPage from './PostPage';
 
 const fetchPost = jest.fn();
+const countLike = jest.fn();
 let location = jest.fn();
 let post = {};
 let category = {};
@@ -11,6 +12,7 @@ let likes = {};
 
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPost,
+  countLike,
   post,
   category,
   author,
@@ -76,7 +78,13 @@ describe('PostPage', () => {
     screen.getByText('등록날짜: 2022-10-31');
   });
 
-  it('render like number', () => {
-    screen.getByText('좋아요 1');
+  it('render like button', () => {
+    screen.getByText('좋아요');
+  });
+
+  it('click like button', () => {
+    fireEvent.click(screen.getByText('좋아요'));
+
+    expect(countLike).toBeCalled();
   });
 });
