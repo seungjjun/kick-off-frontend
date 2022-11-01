@@ -19,10 +19,16 @@ export default function PostPage() {
   }, []);
 
   const { post } = postStore;
+  const { category } = postStore;
+  const { author } = postStore;
+  const { likes } = postStore;
 
   return (
     <Post
       post={post}
+      category={category}
+      author={author}
+      likes={likes}
     />
   );
 }

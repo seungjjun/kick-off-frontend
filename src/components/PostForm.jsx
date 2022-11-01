@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 export default function PostForm({
   postStore, navigate, submit, changeCategory, upload, image,
 }) {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handleClickCancel = () => {
     navigate('/');
@@ -13,9 +13,10 @@ export default function PostForm({
 
   const handleChange = (target) => {
     changeCategory(target.target.value);
+    console.log(target.target.value);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     if (postStore.category === '') {
       alert('게시판을 선택해주세요');
       return;
@@ -32,10 +33,14 @@ export default function PostForm({
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <select onChange={handleChange}>
-          <option value="">게시판을 선택해 주세요</option>
-          <option value="전체 게시판">전체 게시판</option>
-          <option value="EPL">EPL</option>
-          <option value="SerieA">SerieA</option>
+          <option value="">
+            게시판을 선택해 주세요
+          </option>
+          <option value="1">
+            전체 게시판
+          </option>
+          <option value="2">EPL</option>
+          <option value="3">SerieA</option>
         </select>
         <input
           id="input-title"
@@ -43,7 +48,7 @@ export default function PostForm({
           placeholder="제목을 입력해 주세요"
           {...register('title')}
         />
-        <input
+        <textarea
           id="input-content"
           type="text"
           placeholder="내용을 입력하세요"
@@ -52,11 +57,13 @@ export default function PostForm({
         <input
           type="file"
           accept="image/*"
+          placeholder="파일 선택"
           id="image"
           onChange={handleChangeImage}
         />
         <div>
-          <img src={image} alt="uploadImage" />
+          {image ? <img src={image} alt="uploadImage" />
+            : null}
         </div>
         <button type="button" onClick={handleClickCancel}>취소</button>
         <button type="submit">등록</button>

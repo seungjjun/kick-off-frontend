@@ -1,4 +1,6 @@
-export default function Post({ post }) {
+export default function Post({
+  post, category, author, likes,
+}) {
   return (
     <article>
       <p>
@@ -7,9 +9,11 @@ export default function Post({ post }) {
         {post.title}
       </p>
       <p>
-        내용:
+        {category.name}
         {' '}
-        {post.content}
+        /
+        {' '}
+        {author.name}
       </p>
       <p>
         조회수:
@@ -22,9 +26,20 @@ export default function Post({ post }) {
         {post.createdAt}
       </p>
       <div>
-        {post.imageUrl ? <img src={post.imageUrl} alt="uploadImage" />
-          : null}
+        내용:
+        {' '}
+        {post.content}
+        <div>
+          {post.imageUrl ? <img src={post.imageUrl} alt="uploadImage" />
+            : null}
+        </div>
+        <button type="button">
+          좋아요
+          {' '}
+          {likes.length}
+        </button>
       </div>
+      <div>댓글 창 (미구현)</div>
     </article>
   );
 }

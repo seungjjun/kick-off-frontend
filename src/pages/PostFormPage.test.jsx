@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  render, screen,
+} from '@testing-library/react';
 
 import PostFormPage from './PostFormPage';
 
@@ -21,12 +23,28 @@ jest.mock('../hooks/usePostStore', () => () => ({
   upload,
 }));
 
-test('PostFormPage', () => {
-  render(<PostFormPage />);
+describe('PostFormPage', () => {
+  it('render category', () => {
+    render(<PostFormPage />);
 
-  fireEvent.click(screen.getByText('게시판을 선택해 주세요'));
-  fireEvent.click(screen.getByText('EPL'));
-  screen.getByText('등록');
+    expect(screen.getByRole('option', { name: '게시판을 선택해 주세요' }).selected).toBeTruthy();
+  });
 
-  // expect(changeCategory).toBeCalled();
+  it('render input title', () => {
+    render(<PostFormPage />);
+
+    expect(screen.getByPlaceholderText('제목을 입력해 주세요'));
+  });
+
+  it('render input content', () => {
+    render(<PostFormPage />);
+
+    expect(screen.getByPlaceholderText('내용을 입력하세요'));
+  });
+
+  it('render upload file button', () => {
+    render(<PostFormPage />);
+
+    expect(screen.getByPlaceholderText('파일 선택'));
+  });
 });
