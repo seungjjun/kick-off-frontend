@@ -13,6 +13,16 @@ export default class CommentApiService {
 
     return data;
   }
+
+  async createComment(content, postId, userId) {
+    const url = `${baseUrl}/comment`;
+
+    await axios.post(url, {
+      content,
+      postId,
+      userId,
+    });
+  }
 }
 
 export const commentApiService = new CommentApiService();
