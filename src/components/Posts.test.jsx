@@ -2,43 +2,72 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import Posts from './Posts';
 
-test('posts', () => {
-  const posts = [
-    {
-      category: {
+const navigate = jest.fn();
+
+describe('posts', () => {
+  beforeEach(() => {
+    const posts = [
+      {
+        id: 1,
+        title: '대한민국 카타르 월드컵 4강 진출',
+        categoryId: 1,
+        hit: 52,
+        imageUrl: 'imageUrl',
+        userId: 3,
+        createdAt: '2022-11-01',
+      },
+    ];
+    const commentNumber = [1, 1, 1, 1, 2];
+    const likes = [
+      {
+        id: 5,
+        postId: 1,
+        userId: 3,
+      },
+    ];
+    const categories = [
+      {
         id: 1,
         name: 'EPL',
       },
-      comments: {
-        id: 1,
-        length: 3,
-      },
-      user: {
-        id: 1,
+    ];
+    const users = [
+      {
+        id: 3,
+        identification: 'jel1y',
         name: '굉민재',
+        profileImage: 'profileImage',
       },
-      likes: {
-        id: 1,
-        length: 3,
-      },
-      id: 1,
-      title: '손흥민 득점왕 수상',
-      createdAt: '2022-10-30',
-      hit: 10,
-      imageUrl: 'imageUrl',
-    },
-  ];
+    ];
 
-  const navigate = jest.fn();
+    const recommentNumber = [1, 1, 1];
 
-  render(<Posts
-    posts={posts}
-    navigate={navigate}
-  />);
+    render(<Posts
+      posts={posts}
+      commentNumber={commentNumber}
+      recommentNumber={recommentNumber}
+      likes={likes}
+      users={users}
+      categories={categories}
+      navigate={navigate}
+    />);
+  });
 
-  screen.getByText('손흥민 득점왕 수상 [3]');
+  it(('render title'), () => {
+    screen.getByText('대한민국 카타르 월드컵 4강 진출 [7]');
+  });
 
-  fireEvent.click(screen.getByText('손흥민 득점왕 수상 [3]'));
+  it(('render category and title'), () => {
+    screen.getByText('EPL / 굉민재');
+  });
 
-  expect(navigate).toBeCalledWith('/post/1');
+  it(('render like number'), () => {
+    screen.getByText('1 2022-11-01 52');
+  });
+
+  it(('render post detail page'), () => {
+    fireEvent.click(screen.getByText('대한민국 카타르 월드컵 4강 진출 [7]'));
+
+    expect(navigate).toBeCalledWith('/post/1');
+  });
 });

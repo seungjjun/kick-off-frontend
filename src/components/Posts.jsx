@@ -1,10 +1,20 @@
 /* eslint-disable react/prop-types */
-export default function cPosts({ posts, navigate }) {
+export default function Posts({
+  posts, commentNumber, recommentNumber, likes, users, categories, navigate,
+}) {
   const handleClickPost = (id) => {
     navigate(`/post/${id}`);
   };
+
+  const handleClickWrite = () => {
+    navigate('/write');
+  };
+
   return (
     <section>
+      <div>
+        <button type="button" onClick={handleClickWrite}>글쓰기</button>
+      </div>
       <article>
         <ul>
           {posts.map((post) => (
@@ -17,18 +27,19 @@ export default function cPosts({ posts, navigate }) {
                 {post.title}
                 {' '}
                 [
-                {post.comments.length}
+                {commentNumber.filter((comment) => comment === post.id).length
+                + recommentNumber.filter((recomment) => recomment === post.id).length}
                 ]
               </p>
               <p>
-                {post.category.name}
+                {categories.find((category) => category.id === post.categoryId).name}
                 {' '}
                 /
                 {' '}
-                {post.user.name}
+                {users.find((user) => user.id === post.userId).name}
               </p>
               <p>
-                {post.likes.length}
+                {likes.filter((like) => like.postId === post.id).length}
                 {' '}
                 {post.createdAt}
                 {' '}

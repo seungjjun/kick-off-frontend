@@ -11,18 +11,31 @@ export default class PostStore extends Store {
     this.posts = [];
     this.post = {};
 
+    this.comments = [];
+    this.recomments = [];
+
+    this.likes = [];
+
+    this.users = [];
+    this.user = {};
+
+    this.categories = [];
     this.category = {};
-    this.author = {};
-    this.likes = {};
 
     this.categoryId = '';
+
     this.imageUrl = '';
   }
 
   async fetchPosts() {
-    const { posts } = await postApiService.fetchPosts();
+    const data = await postApiService.fetchPosts();
 
-    this.posts = [...posts];
+    this.posts = data.posts;
+    this.comments = data.comments;
+    this.recomments = data.recomments;
+    this.likes = data.likes;
+    this.users = data.users;
+    this.categories = data.categories;
 
     this.publish();
   }
@@ -30,20 +43,20 @@ export default class PostStore extends Store {
   async fetchPost(postId) {
     const post = await postApiService.fetchPost(postId);
 
-    console.log(post);
-
     this.post = post;
-    this.category = post.category;
-    this.author = post.user;
     this.likes = post.likes;
+    this.category = post.category;
+    this.user = post.user;
 
     this.publish();
   }
 
   async write(title, content, categoryId, image, userId) {
-    const post = await postApiService.write(title, content, categoryId, image, userId);
+    const postId = await postApiService
+      .write(title, content, categoryId, image, userId);
 
-    this.post = post;
+    this.postId = postId.id;
+
     this.publish();
   }
 

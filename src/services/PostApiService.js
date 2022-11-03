@@ -15,7 +15,7 @@ export default class PostApiService {
   }
 
   async fetchPost(postId) {
-    const url = `${baseUrl}/post/${postId}`;
+    const url = `${baseUrl}/posts/${postId}`;
 
     const { data } = await axios.get(url);
 
