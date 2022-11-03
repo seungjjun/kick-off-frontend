@@ -1,7 +1,8 @@
 import Comment from './Comment';
 
 export default function Post({
-  post, category, likes, comments, recomments, user, countLike, users, submitComment,
+  post, category, likes, comments, recomments, user, countLike, users,
+  submitComment, recommentVisibleState, changeRecommentFormState, submitRecomment,
 }) {
   const handleClickLike = () => {
     countLike();
@@ -49,6 +50,9 @@ export default function Post({
         recomments={recomments}
         users={users}
         submitComment={submitComment}
+        recommentVisibleState={recommentVisibleState}
+        changeRecommentFormState={changeRecommentFormState}
+        submitRecomment={submitRecomment}
       />
     </article>
   );

@@ -26,6 +26,7 @@ export default function PostPage() {
     postStore.fetchPost(postId);
     postStore.fetchPosts();
     commentStore.fetchComment(postId);
+    commentStore.setRecommentVisibleState();
   }, []);
 
   const countLike = () => {
@@ -41,9 +42,24 @@ export default function PostPage() {
 
   const { users } = postStore;
 
+  const { recommentVisibleState } = commentStore;
+
+  const changeRecommentFormState = (commentId) => {
+    commentStore.changeRecommentVisibleState(commentId);
+  };
+
   const submitComment = async (data) => {
     await commentStore.createComment(
       data.content,
+      postId,
+      myId,
+    );
+  };
+
+  const submitRecomment = async (data, commentId) => {
+    await commentStore.createRecomment(
+      data.content,
+      commentId,
       postId,
       myId,
     );
@@ -60,6 +76,9 @@ export default function PostPage() {
       countLike={countLike}
       users={users}
       submitComment={submitComment}
+      recommentVisibleState={recommentVisibleState}
+      changeRecommentFormState={changeRecommentFormState}
+      submitRecomment={submitRecomment}
     />
   );
 }

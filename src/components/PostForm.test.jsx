@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  fireEvent, render, screen, waitFor,
+} from '@testing-library/react';
 
 import PostForm from './PostForm';
 
@@ -6,7 +8,7 @@ const context = describe;
 
 describe('PostForm', () => {
   context('when write post form', () => {
-    it('submit form', () => {
+    it('submit form', async () => {
       const postStore = jest.fn();
       const navigate = jest.fn();
       const submit = jest.fn();
@@ -40,7 +42,9 @@ describe('PostForm', () => {
 
       fireEvent.submit(screen.getByText('등록'));
 
-      // expect(submit).toBeCalled();
+      await waitFor(() => {
+        expect(submit).toBeCalled();
+      });
     });
   });
 

@@ -1,8 +1,14 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  fireEvent, render, screen, waitFor,
+} from '@testing-library/react';
 
 import Comment from './Comment';
 
 const submitComment = jest.fn();
+
+const changeRecommentFormState = jest.fn();
+
+const submitRecomment = jest.fn();
 
 describe('comment', () => {
   beforeEach(() => {
@@ -34,11 +40,16 @@ describe('comment', () => {
       },
     ];
 
+    const recommentVisibleState = 2;
+
     render(<Comment
       comments={comments}
       recomments={recomments}
       users={users}
       submitComment={submitComment}
+      recommentVisibleState={recommentVisibleState}
+      changeRecommentFormState={changeRecommentFormState}
+      submitRecomment={submitRecomment}
     />);
   });
 
@@ -54,13 +65,25 @@ describe('comment', () => {
     screen.getByText('등록');
   });
 
-  it('create comment', () => {
+  it('create comment', async () => {
     fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요', {
       target: { value: '댓글' },
     }));
 
     fireEvent.click(screen.getByText('등록'));
 
-    // expect(submitComment).toBeCalled();
+    await waitFor(() => {
+      expect(submitComment).toBeCalled();
+    });
+  });
+
+  it('render recomment button', () => {
+    screen.getByText('답글쓰기');
+  });
+
+  it('click recomment button', () => {
+    fireEvent.click(screen.getByText('답글쓰기'));
+
+    expect(changeRecommentFormState).toBeCalled();
   });
 });

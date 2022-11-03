@@ -1,12 +1,19 @@
 import { useForm } from 'react-hook-form';
 
+import RecommentForm from './RecommentForm';
+
 export default function Comment({
-  comments, recomments, users, submitComment,
+  comments, recomments, users, submitComment, recommentVisibleState,
+  changeRecommentFormState, submitRecomment,
 }) {
   const { register, handleSubmit } = useForm();
 
-  const submit = (data) => {
+  const createComment = (data) => {
     submitComment(data);
+  };
+
+  const handleClickRecomment = (commentId) => {
+    changeRecommentFormState(commentId);
   };
 
   return (
@@ -26,6 +33,21 @@ export default function Comment({
                 {comment.content}
                 {' '}
                 {comment.commentDate}
+                {' '}
+                <button
+                  type="button"
+                  onClick={() => handleClickRecomment(comment.id)}
+                >
+                  답글쓰기
+                </button>
+                {recommentVisibleState === comment.id ? (
+                  <RecommentForm
+                    changeRecommentFormState={changeRecommentFormState}
+                    submitRecomment={submitRecomment}
+                    commentId={comment.id}
+                    userName={user.name}
+                  />
+                ) : null}
               </li>
               {recomments.map((recomment) => (
                 recomment.commentId === comment.id ? (
@@ -45,7 +67,7 @@ export default function Comment({
             </ul>
           ))}
       </ul>
-      <form onSubmit={handleSubmit(submit)}>
+      <form onSubmit={handleSubmit(createComment)}>
         <input
           id="input-content"
           type="text"
