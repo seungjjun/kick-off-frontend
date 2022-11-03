@@ -3,20 +3,35 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import PostPage from './PostPage';
 
 const fetchPost = jest.fn();
+const fetchPosts = jest.fn();
 const countLike = jest.fn();
+const fetchComment = jest.fn;
+
 let location = jest.fn();
 let post = {};
 let category = {};
-let author = {};
+let user = {};
 let likes = {};
+let users = [];
+
+let comments = {};
+let recomments = {};
 
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPost,
+  fetchPosts,
   countLike,
   post,
   category,
-  author,
+  user,
   likes,
+  users,
+}));
+
+jest.mock('../hooks/useCommentStore', () => () => ({
+  fetchComment,
+  comments,
+  recomments,
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -28,6 +43,7 @@ jest.mock('react-router-dom', () => ({
 describe('PostPage', () => {
   beforeEach(() => {
     post = {
+      id: 1,
       title: '이강인 손흥민과 한 팀??',
       content: '이강인 토트넘 이적 루머',
       hit: 50,
@@ -38,14 +54,23 @@ describe('PostPage', () => {
       name: 'SerieA',
     };
 
-    author = {
+    user = {
       name: '이강인',
     };
 
-    likes = {
-      id: 1,
-      length: 1,
-    };
+    users = [
+      {
+        id: 1,
+        name: '이강인',
+      },
+    ];
+
+    likes = [
+      {
+        id: 1,
+        length: 1,
+      },
+    ];
 
     location = {
       pathname: '/post/1',
@@ -54,6 +79,21 @@ describe('PostPage', () => {
       state: null,
       key: 'default',
     };
+
+    comments = [{
+      id: 1,
+      content: '1번째 게시글의 댓글',
+      userId: 1,
+      postId: 1,
+    }];
+
+    recomments = [{
+      id: 2,
+      conent: '1번째 게시글의 1번째 댓글의 댓글',
+      commentId: 1,
+      postId: 1,
+      userId: 1,
+    }];
 
     render(<PostPage />);
   });
@@ -86,5 +126,9 @@ describe('PostPage', () => {
     fireEvent.click(screen.getByText('좋아요'));
 
     expect(countLike).toBeCalled();
+  });
+
+  it('render comment', () => {
+    screen.getByText('이강인 1번째 게시글의 댓글');
   });
 });

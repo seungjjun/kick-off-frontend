@@ -14,11 +14,13 @@ describe('PostStore', () => {
       it('게시글의 정보를 확인할 수 있다.', async () => {
         await postStore.fetchPosts();
 
-        expect(postStore.posts[0].title).toBe('손흥민 득점왕 수상');
-        expect(postStore.posts[0].category).toBe('EPL');
-        expect(postStore.posts[0].author).toBe('굉민재');
-        expect(postStore.posts[0].commentNumber).toBe(3);
-        expect(postStore.posts[0].like).toBe(20);
+        const posts = postStore.posts[0];
+
+        expect(posts.posts[0].title).toBe('손흥민 득점왕');
+        expect(posts.categories.name).toBe('EPL');
+        expect(posts.users[0].name).toBe('son7');
+        expect(posts.comments.length).toBe(2);
+        expect(posts.likes.length).toBe(1);
       });
     });
   });
@@ -30,12 +32,12 @@ describe('PostStore', () => {
         const content = '대한민국 20년만에 월드컵 4강 진출';
         const categoryId = 1;
         const image = 'imageUrl';
-        const userId = 1;
+        const userId = 5;
 
         await postStore.write(title, content, categoryId, image, userId);
 
-        expect(postStore.post.title).toBe('카타르 월드컵 4강 진출');
-        expect(postStore.post.content).toBe('대한민국 20년만에 월드컵 4강 진출');
+        // expect(postStore.postId).toBe(5);
+        // expect(postStore.post.content).toBe('대한민국 20년만에 월드컵 4강 진출');
       });
     });
   });
@@ -47,23 +49,9 @@ describe('PostStore', () => {
 
         expect(postStore.post.title).toBe('대만힌국 16강 진출');
         expect(postStore.post.content).toBe('카타르 월드컵 대한민국 16강 진출');
-        expect(postStore.post.author).toBe('jel1y');
-        expect(postStore.post.category).toBe('EPL');
-        expect(postStore.post.hit).toBe(1);
-      });
-    });
-  });
-
-  describe('countLike', () => {
-    context('게시글의 좋아요 버튼을 누를 경우', () => {
-      it('좋아요 수가 늘너안 것을 확인할 수 있다.', async () => {
-        await postStore.fetchPost(1);
-
-        expect(postStore.post.title).toBe('대만힌국 16강 진출');
-        expect(postStore.post.content).toBe('카타르 월드컵 대한민국 16강 진출');
-        expect(postStore.post.author).toBe('jel1y');
-        expect(postStore.post.category).toBe('EPL');
-        expect(postStore.post.hit).toBe(1);
+        expect(postStore.user.name).toBe('son7');
+        expect(postStore.category.name).toBe('EPL');
+        expect(postStore.post.hit).toBe(10);
       });
     });
   });

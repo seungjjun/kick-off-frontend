@@ -1,5 +1,7 @@
+import Comment from './Comment';
+
 export default function Post({
-  post, category, author, likes, countLike,
+  post, category, likes, comments, recomments, user, countLike, users,
 }) {
   const handleClickLike = () => {
     countLike();
@@ -17,7 +19,7 @@ export default function Post({
         {' '}
         /
         {' '}
-        {author.name}
+        {user.name}
       </p>
       <p>
         조회수:
@@ -40,9 +42,13 @@ export default function Post({
         <button type="button" onClick={handleClickLike}>
           좋아요
         </button>
-        <p>{likes.length}</p>
+        <p>{likes.filter((like) => like.postId === post.id).length}</p>
       </div>
-      <div>댓글 창 (미구현)</div>
+      <Comment
+        comments={comments}
+        recomments={recomments}
+        users={users}
+      />
     </article>
   );
 }

@@ -29,7 +29,14 @@ export default function PostFormPage({ user }) {
   };
 
   const submit = async (data) => {
-    await postStore.write(data.title, data.content, postStore.categoryId, image, user.id);
+    await postStore.write(
+      data.title,
+      data.content,
+      postStore.categoryId,
+      image,
+      user.id,
+    );
+
     postStore.fetchPosts();
     navigate(`/post/${postStore.postId}`);
   };

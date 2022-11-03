@@ -16,10 +16,23 @@ export default function PostsPage() {
   }, []);
 
   const { posts } = postStore;
+  const { comments } = postStore;
+  const { likes } = postStore;
+  const { users } = postStore;
+  const { categories } = postStore;
+  const { recomments } = postStore;
+
+  const commentNumber = comments.map((comment) => comment.postId);
+  const recommentNumber = recomments.map((recomment) => recomment.postId);
 
   return (
     <Posts
       posts={posts}
+      commentNumber={commentNumber}
+      recommentNumber={recommentNumber}
+      likes={likes}
+      users={users}
+      categories={categories}
       navigate={navigate}
     />
   );
