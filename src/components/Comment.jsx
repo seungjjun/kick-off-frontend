@@ -1,4 +1,14 @@
-export default function Comment({ comments, recomments, users }) {
+import { useForm } from 'react-hook-form';
+
+export default function Comment({
+  comments, recomments, users, submitComment,
+}) {
+  const { register, handleSubmit } = useForm();
+
+  const submit = (data) => {
+    submitComment(data);
+  };
+
   return (
     <div>
       <ul>
@@ -35,8 +45,14 @@ export default function Comment({ comments, recomments, users }) {
             </ul>
           ))}
       </ul>
-      <form>
-        <button type="button">등록</button>
+      <form onSubmit={handleSubmit(submit)}>
+        <input
+          id="input-content"
+          type="text"
+          placeholder="댓글을 입력하세요"
+          {...register('content')}
+        />
+        <button type="submit">등록</button>
       </form>
     </div>
   );

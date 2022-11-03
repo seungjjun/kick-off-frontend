@@ -18,6 +18,14 @@ export default class CommentStore extends Store {
 
     this.publish();
   }
+
+  async createComment(content, postId, userId) {
+    await commentApiService.createComment(content, postId, userId);
+
+    await this.fetchComment(postId);
+
+    this.publish();
+  }
 }
 
 export const commentStore = new CommentStore();

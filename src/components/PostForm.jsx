@@ -13,7 +13,6 @@ export default function PostForm({
 
   const handleChange = (target) => {
     changeCategory(target.target.value);
-    console.log(target.target.value);
   };
 
   const onSubmit = (data) => {

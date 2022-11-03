@@ -41,6 +41,14 @@ export default function PostPage() {
 
   const { users } = postStore;
 
+  const submitComment = async (data) => {
+    await commentStore.createComment(
+      data.content,
+      postId,
+      myId,
+    );
+  };
+
   return (
     <Post
       post={post}
@@ -51,6 +59,7 @@ export default function PostPage() {
       user={user}
       countLike={countLike}
       users={users}
+      submitComment={submitComment}
     />
   );
 }
