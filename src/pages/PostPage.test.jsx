@@ -5,7 +5,8 @@ import PostPage from './PostPage';
 const fetchPost = jest.fn();
 const fetchPosts = jest.fn();
 const countLike = jest.fn();
-const fetchComment = jest.fn;
+const fetchComment = jest.fn();
+const setRecommentVisibleState = jest.fn();
 
 let location = jest.fn();
 let post = {};
@@ -32,6 +33,7 @@ jest.mock('../hooks/useCommentStore', () => () => ({
   fetchComment,
   comments,
   recomments,
+  setRecommentVisibleState,
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -130,5 +132,9 @@ describe('PostPage', () => {
 
   it('render comment', () => {
     screen.getByText('이강인 1번째 게시글의 댓글');
+  });
+
+  it('render recomment button', () => {
+    screen.getByText('답글쓰기');
   });
 });

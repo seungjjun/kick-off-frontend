@@ -8,6 +8,8 @@ export default class CommentStore extends Store {
 
     this.comments = {};
     this.recomments = {};
+
+    this.recommentVisibleState = 0;
   }
 
   async fetchComment(postId) {
@@ -23,6 +25,24 @@ export default class CommentStore extends Store {
     await commentApiService.createComment(content, postId, userId);
 
     await this.fetchComment(postId);
+
+    this.publish();
+  }
+
+  async createRecomment(content, commentId, postId, userId) {
+    await commentApiService.createRecomment(content, commentId, postId, userId);
+
+    await this.fetchComment(postId);
+
+    this.publish();
+  }
+
+  setRecommentVisibleState() {
+    this.recommentVisibleState = 0;
+  }
+
+  changeRecommentVisibleState(commentId) {
+    this.recommentVisibleState = commentId;
 
     this.publish();
   }
