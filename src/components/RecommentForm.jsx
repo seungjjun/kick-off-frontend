@@ -18,9 +18,7 @@ export default function RecommentForm({
   return (
     <form onSubmit={handleSubmit(createRecomment)}>
       <div>
-        {userName}
-      </div>
-      <div>
+        <p>{userName}</p>
         <input
           id="input-content"
           type="text"

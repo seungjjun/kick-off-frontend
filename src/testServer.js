@@ -129,6 +129,16 @@ const server = setupServer(
     ],
   }))),
 
+  // rest.get('https://api-football-v1.p.rapidapi.com/v3/fixtures', async (req, res, ctx) => res(ctx.json({
+  //   response: [
+  //     {
+  //       fixture: {
+  //         id: 1,
+  //       },
+  //     },
+  //   ].fill(157),
+  // }))),
+
 );
 
 export default server;

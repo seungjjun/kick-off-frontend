@@ -4,7 +4,7 @@ import RecommentForm from './RecommentForm';
 
 export default function Comment({
   comments, recomments, users, submitComment, recommentVisibleState,
-  changeRecommentFormState, submitRecomment,
+  changeRecommentFormState, submitRecomment, userName,
 }) {
   const { register, handleSubmit } = useForm();
 
@@ -45,7 +45,7 @@ export default function Comment({
                     changeRecommentFormState={changeRecommentFormState}
                     submitRecomment={submitRecomment}
                     commentId={comment.id}
-                    userName={user.name}
+                    userName={userName}
                   />
                 ) : null}
               </li>
