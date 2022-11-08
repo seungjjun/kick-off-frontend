@@ -10,9 +10,14 @@ export default function Posts({
     navigate('/write');
   };
 
+  const handleClickSchedule = () => {
+    navigate('/schedule');
+  };
+
   return (
     <section>
       <div>
+        <button type="button" onClick={handleClickSchedule}>경기일정</button>
         <button type="button" onClick={handleClickWrite}>글쓰기</button>
       </div>
       <article>

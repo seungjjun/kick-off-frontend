@@ -4,12 +4,10 @@ import { MemoryRouter } from 'react-router-dom';
 
 import App from './App';
 
-test('App', () => {
+test('App', async () => {
   render((
     <MemoryRouter>
       <App />
     </MemoryRouter>
   ));
-
-  screen.getByText(/KiCK OFF/);
 });

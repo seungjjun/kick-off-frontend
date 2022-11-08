@@ -2,18 +2,20 @@ import { useEffect } from 'react';
 
 import { useLocation } from 'react-router-dom';
 
-import { userStore } from '../stores/UserStore';
-
 import Post from '../components/Post';
 
 import usePostStore from '../hooks/usePostStore';
 
 import useCommentStore from '../hooks/useCommentStore';
 
+import useUserStore from '../hooks/useUserStore';
+
 export default function PostPage() {
   const postStore = usePostStore();
 
   const commentStore = useCommentStore();
+
+  const userStore = useUserStore();
 
   const location = useLocation();
 
@@ -27,6 +29,7 @@ export default function PostPage() {
     postStore.fetchPosts();
     commentStore.fetchComment(postId);
     commentStore.setRecommentVisibleState();
+    userStore.fetchUser();
   }, []);
 
   const countLike = () => {
@@ -43,6 +46,8 @@ export default function PostPage() {
   const { users } = postStore;
 
   const { recommentVisibleState } = commentStore;
+
+  const userName = userStore.user.name;
 
   const changeRecommentFormState = (commentId) => {
     commentStore.changeRecommentVisibleState(commentId);
@@ -79,6 +84,7 @@ export default function PostPage() {
       recommentVisibleState={recommentVisibleState}
       changeRecommentFormState={changeRecommentFormState}
       submitRecomment={submitRecomment}
+      userName={userName}
     />
   );
 }
