@@ -1,16 +1,13 @@
+/* eslint-disable eqeqeq */
 import styled from 'styled-components';
 
-const Container = styled.div`
-
+const CategoryName = styled.h2`
+  font-size: 2em;
 `;
 
 const List = styled.ul`
   display: flex;
   flex-direction: column;
-`;
-
-const Post = styled.li`
-  margin-bottom: 1em;
 `;
 
 const ImageBox = styled.div`
@@ -26,61 +23,31 @@ const BlankImageBox = styled.div`
   background: url('https://user-images.githubusercontent.com/104769120/200729388-cf5186bd-0a9e-4d3a-a1b8-00f24dddb193.png') no-repeat center;
 `;
 
-const ContentBox = styled.div`
-  display: inline;
-`;
-
-const Title = styled.p`
-  display: block;
-  cursor: pointer;
-`;
-
-const Category = styled.p`
-  margin-top: 3.8em;
-`;
-
-const Create = styled.p`
-  margin-top: 1.2em;
-`;
-
 const PostImage = styled.img`
   width: 8em;
   height: 8em;
 `;
 
-const WriteButton = styled.button`
-  border: none;
-`;
-
-export default function Posts({
-  posts, commentNumber, recommentNumber, likes, users, categories, navigate,
+export default function CategoryPosts({
+  posts, commentNumber, recommentNumber, likes, users, categories, navigate, categoryId,
 }) {
   const handleClickPost = (id) => {
     navigate(`/post/${id}`);
   };
 
-  const handleClickWrite = () => {
-    navigate('/write');
-  };
-
-  const handleClickSchedule = () => {
-    navigate('/schedule');
-  };
-
   return (
-    <Container>
+    <div>
       {Object.keys(posts).length === 0 ? (
-        <p>loading</p>
+        <p>게시글이 없습니다</p>
       ) : (
         <section>
-          <div>
-            <button type="button" onClick={handleClickSchedule}>경기일정</button>
-            <WriteButton type="button" onClick={handleClickWrite}>글쓰기</WriteButton>
-          </div>
+          <CategoryName>
+            {categories.find((category) => category.id == categoryId).name}
+          </CategoryName>
           <article>
             <List>
               {posts.map((post) => (
-                <Post
+                <li
                   key={post.id}
                 >
                   <ImageBox>
@@ -93,8 +60,8 @@ export default function Posts({
                     )
                       : <BlankImageBox />}
                   </ImageBox>
-                  <ContentBox>
-                    <Title
+                  <div>
+                    <p
                       onClick={() => handleClickPost(post.id)}
                     >
                       {post.postInformation.title}
@@ -103,29 +70,28 @@ export default function Posts({
                       {commentNumber.filter((comment) => comment === post.id).length
                 + recommentNumber.filter((recomment) => recomment === post.id).length}
                       ]
-                    </Title>
-                    <Category>
+                    </p>
+                    <p>
                       {categories.find((category) => category.id === post.categoryId).name}
                       {' '}
                       /
                       {' '}
                       {users.find((user) => user.id === post.userId.userId).name}
-                    </Category>
-                    <Create>
+                    </p>
+                    <p>
                       {likes.filter((like) => like.postId === post.id).length}
                       {' '}
                       {post.createdAt}
                       {' '}
                       {post.hit}
-                    </Create>
-                  </ContentBox>
-                </Post>
+                    </p>
+                  </div>
+                </li>
               ))}
             </List>
           </article>
         </section>
       )}
-    </Container>
-
+    </div>
   );
 }

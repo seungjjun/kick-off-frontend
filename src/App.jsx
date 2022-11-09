@@ -1,6 +1,10 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
+
+import { Reset } from 'styled-reset';
+
+import GlobalStyle from './styles/GlobalStyle';
 
 import useUserStore from './hooks/useUserStore';
 
@@ -13,6 +17,7 @@ import PostFormPage from './pages/PostFormPage';
 import PostPage from './pages/PostPage';
 import SchedulePage from './pages/SchedulePage';
 import ChattingRoomPage from './pages/ChattingRoomPage';
+import CategoryPostsPage from './pages/CategoryPostsPage';
 
 export default function App() {
   // const [schedule, setSchedule] = useState(null);
@@ -48,9 +53,12 @@ export default function App() {
 
   return (
     <div>
+      <Reset />
+      <GlobalStyle />
       <Header />
       <Routes>
         <Route path="/" element={<PostsPage />} />
+        <Route path="/posts" element={<CategoryPostsPage />} />
         <Route path="/post/:postId" element={<PostPage />} />
         <Route path="/write" element={<PostFormPage user={user} />} />
         <Route path="/schedule" element={<SchedulePage />} />

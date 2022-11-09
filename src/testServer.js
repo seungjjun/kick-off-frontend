@@ -107,6 +107,30 @@ const server = setupServer(
     profileImage: 'imageUrl',
   }))),
 
+  rest.get(`${baseUrl}/comments`, async (req, res, ctx) => res(ctx.json({
+    comments: [
+      {
+        id: 1,
+        content: '댓글이다',
+        postId: 1,
+        userId: 3,
+        commentDate: '2022-10-30',
+      },
+    ],
+  }))),
+
+  rest.get(`${baseUrl}/recomments`, async (req, res, ctx) => res(ctx.json({
+    recomments: [
+      {
+        id: 1,
+        content: '대댓글이다',
+        commentId: 1,
+        postId: 1,
+        userId: 3,
+      },
+    ],
+  }))),
+
   rest.get(`${baseUrl}/posts/1/comments`, async (req, res, ctx) => res(ctx.json({
     comments: [
       {
@@ -129,16 +153,55 @@ const server = setupServer(
     ],
   }))),
 
-  // rest.get('https://api-football-v1.p.rapidapi.com/v3/fixtures', async (req, res, ctx) => res(ctx.json({
-  //   response: [
-  //     {
-  //       fixture: {
-  //         id: 1,
-  //       },
-  //     },
-  //   ].fill(157),
-  // }))),
+  rest.get(`${baseUrl}/posts/1/recomments`, async (req, res, ctx) => res(ctx.json({
+    recomments: [
+      {
+        id: 1,
+        content: '첫번째 게시글의 댓글의 대댓글',
+        commentId: 1,
+        postId: 1,
+        userId: 1,
+        commentDate: '2022-11-08',
+      },
+    ],
+  }))),
 
+  rest.get(`${baseUrl}/likes`, async (req, res, ctx) => res(ctx.json({
+    likes: [
+      {
+        id: 110,
+        postId: 20,
+        userId: 1,
+      },
+    ],
+  }))),
+
+  rest.get(`${baseUrl}/category`, async (req, res, ctx) => res(ctx.json({
+    categories: [
+      {
+        id: 1,
+        name: 'EPL',
+        parentId: 1,
+      },
+    ],
+  }))),
+
+  // rest.get(`${baseUrl}/users`, async (req, res, ctx) => res(ctx.json({
+  //   users: [
+  //     {
+  //       id: 1,
+  //       identification: 'jel1y',
+  //       name: 'son7',
+  //       profileImage: 'image',
+  //     },
+  //     {
+  //       id: 2,
+  //       identification: 'app1e',
+  //       name: 'pikachu',
+  //       profileImage: 'image',
+  //     },
+  //   ],
+  // }))),
 );
 
 export default server;

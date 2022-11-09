@@ -1,14 +1,16 @@
 import { render, screen } from '@testing-library/react';
+import CategoryPostsPage from './CategoryPostsPage';
 
-import PostsPage from './PostsPage';
-
-const fetchPosts = jest.fn();
+const fetchCategoryPosts = jest.fn();
 const fetchComments = jest.fn();
 const fetchRecomments = jest.fn();
 const fetchUsers = jest.fn();
 const fetchCategory = jest.fn();
 const fetchLike = jest.fn();
+
 const navigate = jest.fn();
+
+let location = {};
 
 let posts = [];
 let likes = [];
@@ -18,7 +20,7 @@ let comments = [];
 let recomments = [];
 
 jest.mock('../hooks/usePostStore', () => () => ({
-  fetchPosts,
+  fetchCategoryPosts,
   posts,
 }));
 
@@ -39,42 +41,45 @@ jest.mock('../hooks/useLikeStore', () => () => ({
   likes,
 }));
 
-jest.mock('react-router-dom', () => ({
-  useNavigate() {
-    return navigate;
-  },
-}));
-
 jest.mock('../hooks/useCategoryStore', () => () => ({
   fetchCategory,
   categories,
 }));
 
-describe('postsPage', () => {
+jest.mock('react-router-dom', () => ({
+  useNavigate() {
+    return navigate;
+  },
+  useLocation() {
+    return location;
+  },
+}));
+
+describe('CategoryPostPage', () => {
   beforeEach(() => {
     posts = [
       {
         postInformation: {
-          title: '손흥민 득점왕 수상',
+          title: '2022년 카타르 월드컵 개막',
         },
         id: 1,
         categoryId: 1,
-        hit: 25,
+        hit: 100,
         imageUrl: 'imageUrl',
         userId: {
-          userId: 3,
+          userId: 1,
         },
-        createdAt: '2022-11-01',
+        createdAt: '2022-11-22',
       },
     ];
 
     comments = [
       {
         id: 1,
-        content: '1번째 게시글의 댓글',
-        userId: 3,
+        content: '벌써 카타르 월드컵이 개막을??',
+        userId: 1,
         postId: 1,
-        commentDate: '2022-11-01',
+        commentDate: '2022-11-22',
       },
     ];
 
@@ -82,22 +87,22 @@ describe('postsPage', () => {
       {
         id: 5,
         postId: 1,
-        userId: 3,
+        userId: 1,
       },
     ];
 
     categories = [
       {
         id: 1,
-        name: 'EPL',
+        name: '전체 게시판',
       },
     ];
 
     users = [
       {
-        id: 3,
+        id: 1,
         identification: 'jel1y',
-        name: '굉민재',
+        name: '쏘온',
         profileImage: 'profileImage',
       },
     ];
@@ -109,26 +114,30 @@ describe('postsPage', () => {
       },
     ];
 
-    render(<PostsPage />);
+    location = {
+      pathname: '/posts',
+      search: '?category=1',
+      hash: '',
+      state: null,
+      key: 'default',
+    };
+
+    render(<CategoryPostsPage />);
   });
 
-  it('fetch posts', () => {
-    expect(fetchPosts).toBeCalled();
+  it('render board category name', () => {
+    screen.getByText('전체 게시판');
   });
 
-  it('render write button', () => {
-    screen.getByText('글쓰기');
+  it('render post title', () => {
+    screen.getByText('2022년 카타르 월드컵 개막 [2]');
   });
 
-  it('render title and comment number', () => {
-    screen.getByText('손흥민 득점왕 수상 [2]');
+  it('render category and name', () => {
+    screen.getByText('전체 게시판 / 쏘온');
   });
 
-  it('render likes, createdAt, hit', () => {
-    screen.getByText('1 2022-11-01 25');
-  });
-
-  it('render category, Name', () => {
-    screen.getByText('EPL / 굉민재');
+  it('render hit and post date', () => {
+    screen.getByText('1 2022-11-22 100');
   });
 });

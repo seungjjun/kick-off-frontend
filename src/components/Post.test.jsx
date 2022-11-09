@@ -7,8 +7,10 @@ const countLike = jest.fn();
 describe('Post', () => {
   beforeEach(() => {
     const post = {
-      title: '이강인 손흥민과 한 팀??',
-      content: '이강인 토트넘 이적 루머',
+      postInformation: {
+        title: '이강인 손흥민과 한 팀??',
+        content: '이강인 토트넘 이적 루머',
+      },
       hit: 50,
       createdAt: '2022-10-31',
     };

@@ -11,15 +11,6 @@ export default class PostStore extends Store {
     this.posts = [];
     this.post = {};
 
-    this.comments = [];
-    this.recomments = [];
-
-    this.likes = [];
-
-    this.users = [];
-    this.user = {};
-
-    this.categories = [];
     this.category = {};
 
     this.categoryId = '';
@@ -31,11 +22,6 @@ export default class PostStore extends Store {
     const data = await postApiService.fetchPosts();
 
     this.posts = data.posts;
-    this.comments = data.comments;
-    this.recomments = data.recomments;
-    this.likes = data.likes;
-    this.users = data.users;
-    this.categories = data.categories;
 
     this.publish();
   }
@@ -44,9 +30,15 @@ export default class PostStore extends Store {
     const post = await postApiService.fetchPost(postId);
 
     this.post = post;
-    this.likes = post.likes;
     this.category = post.category;
-    this.user = post.user;
+
+    this.publish();
+  }
+
+  async fetchCategoryPosts(categoryId) {
+    const data = await postApiService.fetchCategoryPosts(categoryId);
+
+    this.posts = data.posts;
 
     this.publish();
   }
@@ -64,14 +56,6 @@ export default class PostStore extends Store {
     const imageUrl = await postApiService.upload(formData);
 
     this.imageUrl = imageUrl;
-
-    this.publish();
-  }
-
-  async countLike(postId, userId) {
-    await postApiService.like(postId, userId);
-
-    await this.fetchPost(postId);
 
     this.publish();
   }

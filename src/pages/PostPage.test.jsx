@@ -4,8 +4,12 @@ import PostPage from './PostPage';
 
 const fetchPost = jest.fn();
 const fetchPosts = jest.fn();
+const fetchUser = jest.fn();
+const fetchLike = jest.fn();
+
 const countLike = jest.fn();
 const fetchComment = jest.fn();
+const fetchRecomment = jest.fn();
 const setRecommentVisibleState = jest.fn();
 
 let location = jest.fn();
@@ -21,19 +25,28 @@ let recomments = {};
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPost,
   fetchPosts,
-  countLike,
   post,
   category,
-  user,
-  likes,
-  users,
 }));
 
 jest.mock('../hooks/useCommentStore', () => () => ({
   fetchComment,
+  fetchRecomment,
   comments,
   recomments,
   setRecommentVisibleState,
+}));
+
+jest.mock('../hooks/useUserStore', () => () => ({
+  fetchUser,
+  user,
+  users,
+}));
+
+jest.mock('../hooks/useLikeStore', () => () => ({
+  fetchLike,
+  countLike,
+  likes,
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -45,9 +58,11 @@ jest.mock('react-router-dom', () => ({
 describe('PostPage', () => {
   beforeEach(() => {
     post = {
+      postInformation: {
+        title: '이강인 손흥민과 한 팀??',
+        content: '이강인 토트넘 이적 루머',
+      },
       id: 1,
-      title: '이강인 손흥민과 한 팀??',
-      content: '이강인 토트넘 이적 루머',
       hit: 50,
       createdAt: '2022-10-31',
     };

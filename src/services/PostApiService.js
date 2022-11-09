@@ -22,6 +22,14 @@ export default class PostApiService {
     return data;
   }
 
+  async fetchCategoryPosts(categoryId) {
+    const url = `${baseUrl}/category/${categoryId}`;
+
+    const { data } = await axios.get(url);
+
+    return data;
+  }
+
   async write(title, content, categoryId, imageUrl, userId) {
     const url = `${baseUrl}/post`;
 
@@ -39,16 +47,6 @@ export default class PostApiService {
   async upload(formData) {
     const url = `${baseUrl}/upload`;
     const { data } = await axios.post(url, formData);
-
-    return data;
-  }
-
-  async like(postId, userId) {
-    const url = `${baseUrl}/like`;
-    const { data } = await axios.post(url, {
-      postId,
-      userId,
-    });
 
     return data;
   }
