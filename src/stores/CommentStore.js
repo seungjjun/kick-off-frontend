@@ -6,16 +6,39 @@ export default class CommentStore extends Store {
   constructor() {
     super();
 
-    this.comments = {};
-    this.recomments = {};
+    this.comments = [];
+    this.recomments = [];
 
     this.recommentVisibleState = 0;
+  }
+
+  async fetchComments() {
+    const data = await commentApiService.fetchComments();
+
+    this.comments = data.comments;
+
+    this.publish();
+  }
+
+  async fetchRecomments() {
+    const data = await commentApiService.fetchRecomments();
+
+    this.recomments = data.recomments;
+
+    this.publish();
   }
 
   async fetchComment(postId) {
     const data = await commentApiService.fetchComment(postId);
 
     this.comments = data.comments;
+
+    this.publish();
+  }
+
+  async fetchRecomment(postId) {
+    const data = await commentApiService.fetchRecomment(postId);
+
     this.recomments = data.recomments;
 
     this.publish();
@@ -32,7 +55,7 @@ export default class CommentStore extends Store {
   async createRecomment(content, commentId, postId, userId) {
     await commentApiService.createRecomment(content, commentId, postId, userId);
 
-    await this.fetchComment(postId);
+    await this.fetchRecomment(postId);
 
     this.publish();
   }

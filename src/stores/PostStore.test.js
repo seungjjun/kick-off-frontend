@@ -49,7 +49,6 @@ describe('PostStore', () => {
 
         expect(postStore.post.title).toBe('대만힌국 16강 진출');
         expect(postStore.post.content).toBe('카타르 월드컵 대한민국 16강 진출');
-        expect(postStore.user.name).toBe('son7');
         expect(postStore.category.name).toBe('EPL');
         expect(postStore.post.hit).toBe(10);
       });

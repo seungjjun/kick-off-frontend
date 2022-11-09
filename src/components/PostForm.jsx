@@ -39,7 +39,9 @@ export default function PostForm({
             전체 게시판
           </option>
           <option value="2">EPL</option>
-          <option value="3">SerieA</option>
+          <option value="3">LaLiga</option>
+          <option value="4">SerieA</option>
+          <option value="5">Bundesliga</option>
         </select>
         <input
           id="input-title"

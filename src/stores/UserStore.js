@@ -7,6 +7,16 @@ export default class UserStore extends Store {
     super();
 
     this.user = {};
+
+    this.users = [];
+  }
+
+  async fetchUsers() {
+    const data = await userApiService.fetchUsers();
+
+    this.users = data.users;
+
+    this.publish();
   }
 
   async fetchUser() {

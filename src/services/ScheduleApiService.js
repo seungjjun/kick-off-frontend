@@ -16,7 +16,6 @@ export default class ScheduleApiService {
       },
     });
 
-    console.log(data);
     return data;
   }
 }

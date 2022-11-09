@@ -1,6 +1,13 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Menu from './Menu';
 
 export default function Header() {
+  const [isShow, setIsShow] = useState(false);
+
+  const handleClickMenu = () => {
+    setIsShow(!isShow);
+  };
   return (
     <div>
       <nav>
@@ -13,6 +20,17 @@ export default function Header() {
           </li>
           <li>
             <Link to="/signup">회원가입</Link>
+          </li>
+          <li>
+            <button
+              type="button"
+              onClick={handleClickMenu}
+            >
+              Menu
+            </button>
+            {isShow ? (
+              <Menu />
+            ) : null}
           </li>
         </ul>
       </nav>

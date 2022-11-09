@@ -20,5 +20,13 @@ describe('UserStore', () => {
         expect(userStore.user.profileImage).toBe('imageUrl');
       });
     });
+
+    // context('모든 유저의 정보를 불러올 경우', () => {
+    //   it('불러온 유저들의 정보를 확인할 수 있다.', async () => {
+    //     await userStore.fetchUsers();
+
+    //     expect(userStore.users[0].name).toBe('son7');
+    //   });
+    // });
   });
 });

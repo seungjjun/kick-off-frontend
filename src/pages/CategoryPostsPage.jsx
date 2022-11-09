@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
-import Posts from '../components/Posts';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import usePostStore from '../hooks/usePostStore';
 import useCommentStore from '../hooks/useCommentStore';
@@ -10,23 +8,31 @@ import useUserStore from '../hooks/useUserStore';
 import useLikeStore from '../hooks/useLikeStore';
 import useCategoryStore from '../hooks/useCategoryStore';
 
-export default function PostsPage() {
+import CategoryPosts from '../components/CategoryPosts';
+
+export default function CategoryPostsPage() {
   const postStore = usePostStore();
   const commentStore = useCommentStore();
   const userStore = useUserStore();
   const likeStore = useLikeStore();
   const categoryStore = useCategoryStore();
 
+  const location = useLocation();
+
+  const path = location.search;
+
+  const categoryId = path.split('=')[1];
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    postStore.fetchPosts();
+    postStore.fetchCategoryPosts(categoryId);
     commentStore.fetchComments();
     commentStore.fetchRecomments();
     userStore.fetchUsers();
     likeStore.fetchLike();
     categoryStore.fetchCategory();
-  }, []);
+  }, [location]);
 
   const { comments } = commentStore;
   const { recomments } = commentStore;
@@ -35,7 +41,7 @@ export default function PostsPage() {
   const recommentNumber = recomments.map((recomment) => recomment.postId);
 
   return (
-    <Posts
+    <CategoryPosts
       posts={postStore.posts}
       commentNumber={commentNumber}
       recommentNumber={recommentNumber}
@@ -43,6 +49,7 @@ export default function PostsPage() {
       users={userStore.users}
       categories={categoryStore.categories}
       navigate={navigate}
+      categoryId={categoryId}
     />
   );
 }

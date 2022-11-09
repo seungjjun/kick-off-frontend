@@ -1,52 +1,60 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import Posts from './Posts';
+import CategoryPosts from './CategoryPosts';
 
 const navigate = jest.fn();
 
-describe('posts', () => {
+const context = describe;
+
+describe('CategoryPosts', () => {
   beforeEach(() => {
     const posts = [
       {
         id: 1,
         postInformation: {
-          title: '대한민국 카타르 월드컵 4강 진출',
+          title: '이강인 맨시티 이적...!!',
         },
         categoryId: 1,
-        hit: 52,
+        hit: 12,
         imageUrl: 'imageUrl',
         userId: {
-          userId: 3,
+          userId: 1,
         },
-        createdAt: '2022-11-01',
+        createdAt: '2022-11-10',
       },
     ];
+
     const commentNumber = [1, 1, 1, 1, 2];
+
     const likes = [
       {
-        id: 5,
+        id: 1,
         postId: 1,
-        userId: 3,
+        userId: 1,
       },
     ];
+
     const categories = [
       {
         id: 1,
         name: 'EPL',
       },
     ];
+
     const users = [
       {
-        id: 3,
+        id: 1,
         identification: 'jel1y',
-        name: '굉민재',
+        name: '골든보이',
         profileImage: 'profileImage',
       },
     ];
 
     const recommentNumber = [1, 1, 1];
 
-    render(<Posts
+    const categoryId = 1;
+
+    render(<CategoryPosts
       posts={posts}
       commentNumber={commentNumber}
       recommentNumber={recommentNumber}
@@ -54,24 +62,27 @@ describe('posts', () => {
       users={users}
       categories={categories}
       navigate={navigate}
+      categoryId={categoryId}
     />);
   });
 
-  it(('render title'), () => {
-    screen.getByText('대한민국 카타르 월드컵 4강 진출 [7]');
+  it('render category name', () => {
+    screen.getByText('EPL');
   });
 
-  it(('render category and title'), () => {
-    screen.getByText('EPL / 굉민재');
+  it('render post title', () => {
+    screen.getByText('이강인 맨시티 이적...!! [7]');
   });
 
-  it(('render like number'), () => {
-    screen.getByText('1 2022-11-01 52');
+  it('render user category and name', () => {
+    screen.getByText('EPL / 골든보이');
   });
 
-  it(('render post detail page'), () => {
-    fireEvent.click(screen.getByText('대한민국 카타르 월드컵 4강 진출 [7]'));
+  context('when click post', () => {
+    it('navigate call', () => {
+      fireEvent.click(screen.getByText('이강인 맨시티 이적...!! [7]'));
 
-    expect(navigate).toBeCalledWith('/post/1');
+      expect(navigate).toBeCalled();
+    });
   });
 });

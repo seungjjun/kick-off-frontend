@@ -6,8 +6,32 @@ import config from '../config';
 const baseUrl = config.apiBaseUrl;
 
 export default class CommentApiService {
+  async fetchComments() {
+    const url = `${baseUrl}/comments`;
+
+    const { data } = await axios.get(url);
+
+    return data;
+  }
+
   async fetchComment(postId) {
     const url = `${baseUrl}/posts/${postId}/comments`;
+
+    const { data } = await axios.get(url);
+
+    return data;
+  }
+
+  async fetchRecomments() {
+    const url = `${baseUrl}/recomments`;
+
+    const { data } = await axios.get(url);
+
+    return data;
+  }
+
+  async fetchRecomment(postId) {
+    const url = `${baseUrl}/posts/${postId}/recomments`;
 
     const { data } = await axios.get(url);
 

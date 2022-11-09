@@ -10,12 +10,13 @@ import useCommentStore from '../hooks/useCommentStore';
 
 import useUserStore from '../hooks/useUserStore';
 
+import useLikeStore from '../hooks/useLikeStore';
+
 export default function PostPage() {
   const postStore = usePostStore();
-
   const commentStore = useCommentStore();
-
   const userStore = useUserStore();
+  const likeStore = useLikeStore();
 
   const location = useLocation();
 
@@ -28,26 +29,19 @@ export default function PostPage() {
     postStore.fetchPost(postId);
     postStore.fetchPosts();
     commentStore.fetchComment(postId);
+    commentStore.fetchRecomment(postId);
     commentStore.setRecommentVisibleState();
     userStore.fetchUser();
+    likeStore.fetchLike();
   }, []);
 
   const countLike = () => {
-    postStore.countLike(postId, myId);
+    likeStore.countLike(postId, myId);
   };
 
-  const { post } = postStore;
   const { category } = postStore;
-  const { likes } = postStore;
-  const { user } = postStore;
-  const { comments } = commentStore;
-  const { recomments } = commentStore;
-
-  const { users } = postStore;
 
   const { recommentVisibleState } = commentStore;
-
-  const userName = userStore.user.name;
 
   const changeRecommentFormState = (commentId) => {
     commentStore.changeRecommentVisibleState(commentId);
@@ -72,19 +66,19 @@ export default function PostPage() {
 
   return (
     <Post
-      post={post}
+      post={postStore.post}
       category={category}
-      likes={likes}
-      comments={comments}
-      recomments={recomments}
-      user={user}
+      likes={likeStore.likes}
+      comments={commentStore.comments}
+      recomments={commentStore.recomments}
+      user={userStore.user}
       countLike={countLike}
-      users={users}
+      users={userStore.users}
       submitComment={submitComment}
       recommentVisibleState={recommentVisibleState}
       changeRecommentFormState={changeRecommentFormState}
       submitRecomment={submitRecomment}
-      userName={userName}
+      userName={userStore.user.name}
     />
   );
 }
