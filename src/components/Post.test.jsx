@@ -32,6 +32,8 @@ describe('Post', () => {
 
     const comments = {};
 
+    const pageButtons = [1, 2, 3];
+
     render(<Post
       post={post}
       category={category}
@@ -39,6 +41,7 @@ describe('Post', () => {
       comments={comments}
       user={user}
       countLike={countLike}
+      pageButtons={pageButtons}
     />);
   });
 

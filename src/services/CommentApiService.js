@@ -14,10 +14,14 @@ export default class CommentApiService {
     return data;
   }
 
-  async fetchComment(postId) {
+  async fetchComment(postId, commentPageNumber) {
     const url = `${baseUrl}/posts/${postId}/comments`;
 
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, {
+      params: {
+        page: commentPageNumber,
+      },
+    });
 
     return data;
   }

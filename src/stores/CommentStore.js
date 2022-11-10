@@ -10,6 +10,11 @@ export default class CommentStore extends Store {
     this.recomments = [];
 
     this.recommentVisibleState = 0;
+
+    this.page = {};
+    this.commentPageNumber = 0;
+
+    this.pageButton = [];
   }
 
   async fetchComments() {
@@ -28,10 +33,14 @@ export default class CommentStore extends Store {
     this.publish();
   }
 
-  async fetchComment(postId) {
-    const data = await commentApiService.fetchComment(postId);
+  async fetchComment(postId, commentPageNumber) {
+    const data = await commentApiService.fetchComment(postId, commentPageNumber);
 
     this.comments = data.comments;
+
+    this.page = data.page;
+
+    this.makePage();
 
     this.publish();
   }
@@ -66,6 +75,31 @@ export default class CommentStore extends Store {
 
   changeRecommentVisibleState(commentId) {
     this.recommentVisibleState = commentId;
+
+    this.publish();
+  }
+
+  changeCommentNumber(commentPageNumber) {
+    this.commentPageNumber = commentPageNumber;
+
+    this.publish();
+  }
+
+  nextPage() {
+    this.pageNumber = this.page.lastPage;
+
+    this.publish();
+  }
+
+  previousPage() {
+    this.pageNumber = this.page.startPage - 11;
+
+    this.publish();
+  }
+
+  makePage() {
+    const pageButtons = [...Array(this.page.lastPage)].map((page, index) => index + 1);
+    this.pageButton = pageButtons.slice(this.page.startPage - 1, this.page.lastPage);
 
     this.publish();
   }

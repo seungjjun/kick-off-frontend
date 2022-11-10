@@ -160,6 +160,16 @@ const server = setupServer(
         userId: 3,
       },
     ],
+
+    page: [
+      {
+        currentLastPage: 5,
+        currentPageNumber: 1,
+        lastPage: 5,
+        startPage: 1,
+        totalPageNumber: 5,
+      },
+    ],
   }))),
 
   rest.get(`${baseUrl}/posts/1/recomments`, async (req, res, ctx) => res(ctx.json({

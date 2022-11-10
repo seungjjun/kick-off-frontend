@@ -10,6 +10,10 @@ const changeRecommentFormState = jest.fn();
 
 const submitRecomment = jest.fn();
 
+const changeCommentNumber = jest.fn();
+
+const context = describe;
+
 describe('comment', () => {
   beforeEach(() => {
     const comments = [
@@ -40,7 +44,13 @@ describe('comment', () => {
       },
     ];
 
+    const isPreviousPage = true;
+
+    const isNextPage = true;
+
     const recommentVisibleState = 2;
+
+    const pageButtons = [1, 2, 3, 4, 5];
 
     render(<Comment
       comments={comments}
@@ -50,6 +60,10 @@ describe('comment', () => {
       recommentVisibleState={recommentVisibleState}
       changeRecommentFormState={changeRecommentFormState}
       submitRecomment={submitRecomment}
+      changeCommentNumber={changeCommentNumber}
+      isPreviousPage={isPreviousPage}
+      isNextPage={isNextPage}
+      pageButtons={pageButtons}
     />);
   });
 
@@ -85,5 +99,29 @@ describe('comment', () => {
     fireEvent.click(screen.getByText('답글쓰기'));
 
     expect(changeRecommentFormState).toBeCalled();
+  });
+
+  it('render comment button', () => {
+    screen.getByText('1');
+    screen.getByText('2');
+    screen.getByText('3');
+    screen.getByText('4');
+    screen.getByText('5');
+  });
+
+  context('when click comment button', () => {
+    it('change comment button', () => {
+      fireEvent.click(screen.getByText('1'));
+
+      expect(changeCommentNumber).toBeCalled();
+    });
+  });
+
+  it('render next page button', () => {
+    screen.getByText('다음');
+  });
+
+  it('render previous page button', () => {
+    screen.getByText('이전');
   });
 });
