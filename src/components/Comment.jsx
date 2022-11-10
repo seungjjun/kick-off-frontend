@@ -4,7 +4,8 @@ import RecommentForm from './RecommentForm';
 
 export default function Comment({
   comments, recomments, users, submitComment, recommentVisibleState,
-  changeRecommentFormState, submitRecomment, userName,
+  changeRecommentFormState, submitRecomment, userName, changeCommentNumber,
+  isPreviousPage, isNextPage, nextPage, previousPage, pageButtons,
 }) {
   const { register, handleSubmit } = useForm();
 
@@ -14,6 +15,18 @@ export default function Comment({
 
   const handleClickRecomment = (commentId) => {
     changeRecommentFormState(commentId);
+  };
+
+  const handleClickPage = (event) => {
+    changeCommentNumber(event.target.innerText - 1);
+  };
+
+  const handleClickNextPage = () => {
+    nextPage();
+  };
+
+  const handleClickPreviousPage = () => {
+    previousPage();
   };
 
   return (
@@ -67,6 +80,21 @@ export default function Comment({
             </ul>
           ))}
       </ul>
+      {isPreviousPage ? (
+        <button type="button" onClick={handleClickPreviousPage}>이전</button>
+      ) : null}
+      {pageButtons.map((pageButton) => (
+        <button
+          key={pageButton}
+          type="button"
+          onClick={(event) => handleClickPage(event)}
+        >
+          {pageButton}
+        </button>
+      ))}
+      {isNextPage ? (
+        <button type="button" onClick={handleClickNextPage}>다음</button>
+      ) : null}
       <form onSubmit={handleSubmit(createComment)}>
         <input
           id="input-content"

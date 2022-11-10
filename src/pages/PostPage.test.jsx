@@ -22,6 +22,9 @@ let users = [];
 let comments = {};
 let recomments = {};
 
+let page = {};
+let pageButton = [];
+
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPost,
   fetchPosts,
@@ -35,6 +38,8 @@ jest.mock('../hooks/useCommentStore', () => () => ({
   comments,
   recomments,
   setRecommentVisibleState,
+  page,
+  pageButton,
 }));
 
 jest.mock('../hooks/useUserStore', () => () => ({
@@ -111,6 +116,14 @@ describe('PostPage', () => {
       postId: 1,
       userId: 1,
     }];
+
+    page = {
+      startPage: 1,
+      lastPage: 10,
+      currentLastPage: 11,
+    };
+
+    pageButton = [1, 2, 3];
 
     render(<PostPage />);
   });

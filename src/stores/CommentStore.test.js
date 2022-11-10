@@ -42,6 +42,13 @@ describe('CommentStore', () => {
         expect(commentStore.recomments[0].id).toBe(1);
         expect(commentStore.recomments[0].content).toBe('첫번째 게시글의 댓글의 대댓글');
       });
+
+      it('render total comment number', async () => {
+        await commentStore.fetchComment(1, 1);
+
+        const { page } = commentStore;
+        expect(page[0].totalPageNumber).toBe(5);
+      });
     });
   });
 });

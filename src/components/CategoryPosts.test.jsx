@@ -57,7 +57,7 @@ describe('CategoryPosts', () => {
 
     const pageButtons = [1, 2, 3];
 
-    const isPreviousPage = false;
+    const isPreviousPage = true;
 
     const isNextPage = true;
 
@@ -99,6 +99,12 @@ describe('CategoryPosts', () => {
 
       expect(navigate).toBeCalled();
     });
+
+    it('navigate call', () => {
+      fireEvent.click(screen.getByAltText('uploadImage'));
+
+      expect(navigate).toBeCalled();
+    });
   });
 
   it('render page buttons', () => {
@@ -116,6 +122,12 @@ describe('CategoryPosts', () => {
       fireEvent.click(screen.getByText('다음'));
 
       expect(nextPage).toBeCalled();
+    });
+
+    it('previous page function call', () => {
+      fireEvent.click(screen.getByText('이전'));
+
+      expect(previousPage).toBeCalled();
     });
 
     it('changePageNumber function call', () => {
