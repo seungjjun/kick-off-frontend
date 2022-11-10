@@ -23,6 +23,24 @@ describe('PostStore', () => {
         expect(posts.likes.length).toBe(1);
       });
     });
+
+    context('게시글이 10개가 넘어 페이지가 나뉘는 경우', () => {
+      beforeEach(async () => {
+        await postStore.fetchPosts();
+      });
+
+      it('게시글의 총 갯수를 확인할 수 있다.', async () => {
+        const { page } = postStore;
+
+        expect(page[0].totalPageNumber).toBe(21);
+      });
+
+      it('게시글의 마지막 페이지의 수를 확인할 수 있다.', () => {
+        const { page } = postStore;
+
+        expect(page[0].lastPage).toBe(3);
+      });
+    });
   });
 
   describe('writePost', () => {
@@ -51,6 +69,28 @@ describe('PostStore', () => {
         expect(postStore.post.content).toBe('카타르 월드컵 대한민국 16강 진출');
         expect(postStore.category.name).toBe('EPL');
         expect(postStore.post.hit).toBe(10);
+      });
+    });
+  });
+
+  describe('fetchCategoryPosts', () => {
+    context('특정 카테고리의 게시글만 불러올 경우', () => {
+      beforeEach(async () => {
+        await postStore.fetchCategoryPosts(3, 1);
+      });
+
+      it('게시글의 정보를 확인할 수 있다.', async () => {
+        const { posts } = postStore;
+
+        expect(posts[0].categories.name).toBe('LaLiga');
+        expect(posts[0].posts[0].title).toBe('이강인 라리가 베스트 일레븐');
+        expect(posts[0].posts[0].hit).toBe(10);
+      });
+
+      it('현재 페이지를 확인할 수 있다', () => {
+        const { page } = postStore;
+
+        expect(page[0].currentPageNumber).toBe(1);
       });
     });
   });

@@ -54,6 +54,7 @@ const WriteButton = styled.button`
 
 export default function Posts({
   posts, commentNumber, recommentNumber, likes, users, categories, navigate,
+  changePageNumber, nextPage, previousPage, pageButtons, isPreviousPage, isNextPage,
 }) {
   const handleClickPost = (id) => {
     navigate(`/post/${id}`);
@@ -67,10 +68,22 @@ export default function Posts({
     navigate('/schedule');
   };
 
+  const handleClickPage = (event) => {
+    changePageNumber(event.target.innerText - 1);
+  };
+
+  const handleClickNextPage = () => {
+    nextPage();
+  };
+
+  const handleClickPreviousPage = () => {
+    previousPage();
+  };
+
   return (
     <Container>
       {Object.keys(posts).length === 0 ? (
-        <p>loading</p>
+        <p>게시글이 없습니다.</p>
       ) : (
         <section>
           <div>
@@ -123,6 +136,23 @@ export default function Posts({
               ))}
             </List>
           </article>
+          <div>
+            {isPreviousPage ? (
+              <button type="button" onClick={handleClickPreviousPage}>이전</button>
+            ) : null}
+            {pageButtons.map((pageButton) => (
+              <button
+                key={pageButton}
+                type="button"
+                onClick={(event) => handleClickPage(event)}
+              >
+                {pageButton}
+              </button>
+            ))}
+            {isNextPage ? (
+              <button type="button" onClick={handleClickNextPage}>다음</button>
+            ) : null}
+          </div>
         </section>
       )}
     </Container>

@@ -16,12 +16,21 @@ export default class PostStore extends Store {
     this.categoryId = '';
 
     this.imageUrl = '';
+
+    this.page = {};
+    this.pageNumber = 0;
+
+    this.pageButton = [];
   }
 
-  async fetchPosts() {
-    const data = await postApiService.fetchPosts();
+  async fetchPosts(pageNumber) {
+    const data = await postApiService.fetchPosts(pageNumber);
 
     this.posts = data.posts;
+
+    this.page = data.page;
+
+    this.makePage();
 
     this.publish();
   }
@@ -35,10 +44,14 @@ export default class PostStore extends Store {
     this.publish();
   }
 
-  async fetchCategoryPosts(categoryId) {
-    const data = await postApiService.fetchCategoryPosts(categoryId);
+  async fetchCategoryPosts(categoryId, pageNumber) {
+    const data = await postApiService.fetchCategoryPosts(categoryId, pageNumber);
 
     this.posts = data.posts;
+
+    this.page = data.page;
+
+    this.makePage();
 
     this.publish();
   }
@@ -62,6 +75,31 @@ export default class PostStore extends Store {
 
   changeCategory(categoryId) {
     this.categoryId = categoryId;
+
+    this.publish();
+  }
+
+  changePageNumber(pageNumber) {
+    this.pageNumber = pageNumber;
+
+    this.publish();
+  }
+
+  nextPage() {
+    this.pageNumber = this.page.lastPage;
+
+    this.publish();
+  }
+
+  previousPage() {
+    this.pageNumber = this.page.startPage - 11;
+
+    this.publish();
+  }
+
+  makePage() {
+    const pageButtons = [...Array(this.page.lastPage)].map((page, index) => index + 1);
+    this.pageButton = pageButtons.slice(this.page.startPage - 1, this.page.lastPage);
 
     this.publish();
   }

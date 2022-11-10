@@ -25,20 +25,41 @@ export default function CategoryPostsPage() {
 
   const navigate = useNavigate();
 
+  const { pageNumber } = postStore;
+
   useEffect(() => {
-    postStore.fetchCategoryPosts(categoryId);
+    postStore.fetchCategoryPosts(categoryId, pageNumber);
     commentStore.fetchComments();
     commentStore.fetchRecomments();
     userStore.fetchUsers();
     likeStore.fetchLike();
     categoryStore.fetchCategory();
-  }, [location]);
+  }, [location, pageNumber]);
+
+  const changePageNumber = (pageNubmer) => {
+    postStore.changePageNumber(pageNubmer);
+  };
+
+  const nextPage = () => {
+    postStore.nextPage();
+  };
+
+  const previousPage = () => {
+    postStore.previousPage();
+  };
 
   const { comments } = commentStore;
   const { recomments } = commentStore;
 
   const commentNumber = comments.map((comment) => comment.postId);
   const recommentNumber = recomments.map((recomment) => recomment.postId);
+
+  const { startPage } = postStore.page;
+  const { lastPage } = postStore.page;
+  const { currentLastPage } = postStore.page;
+
+  const isPreviousPage = startPage > 1;
+  const isNextPage = lastPage < currentLastPage;
 
   return (
     <CategoryPosts
@@ -50,6 +71,12 @@ export default function CategoryPostsPage() {
       categories={categoryStore.categories}
       navigate={navigate}
       categoryId={categoryId}
+      changePageNumber={changePageNumber}
+      nextPage={nextPage}
+      previousPage={previousPage}
+      pageButtons={postStore.pageButton}
+      isPreviousPage={isPreviousPage}
+      isNextPage={isNextPage}
     />
   );
 }

@@ -3,6 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import Posts from './Posts';
 
 const navigate = jest.fn();
+const changePageNumber = jest.fn();
+const nextPage = jest.fn();
+const previousPage = jest.fn();
 
 describe('posts', () => {
   beforeEach(() => {
@@ -46,6 +49,12 @@ describe('posts', () => {
 
     const recommentNumber = [1, 1, 1];
 
+    const pageButtons = [1, 2, 3, 4, 5];
+
+    const isPreviousPage = false;
+
+    const isNextPage = true;
+
     render(<Posts
       posts={posts}
       commentNumber={commentNumber}
@@ -54,6 +63,12 @@ describe('posts', () => {
       users={users}
       categories={categories}
       navigate={navigate}
+      changePageNumber={changePageNumber}
+      nextPage={nextPage}
+      previousPage={previousPage}
+      pageButtons={pageButtons}
+      isPreviousPage={isPreviousPage}
+      isNextPage={isNextPage}
     />);
   });
 
@@ -73,5 +88,29 @@ describe('posts', () => {
     fireEvent.click(screen.getByText('대한민국 카타르 월드컵 4강 진출 [7]'));
 
     expect(navigate).toBeCalledWith('/post/1');
+  });
+
+  it('render page buttons', () => {
+    screen.getByText('1');
+    screen.getByText('2');
+    screen.getByText('3');
+    screen.getByText('4');
+    screen.getByText('5');
+  });
+
+  it('click next page button', () => {
+    fireEvent.click(screen.getByText('다음'));
+
+    expect(nextPage).toBeCalled();
+  });
+
+  it('click page button', () => {
+    fireEvent.click(screen.getByText('1'));
+
+    expect(changePageNumber).toBeCalled();
+  });
+
+  it('render next page button', () => {
+    screen.getByText('다음');
   });
 });

@@ -10,6 +10,11 @@ const fetchCategory = jest.fn();
 const fetchLike = jest.fn();
 const navigate = jest.fn();
 
+const makePage = jest.fn();
+const changePageNumber = jest.fn();
+const nextPage = jest.fn();
+const previousPage = jest.fn();
+
 let posts = [];
 let likes = [];
 let users = [];
@@ -17,9 +22,18 @@ let categories = [];
 let comments = [];
 let recomments = [];
 
+let page = {};
+let pageButton = [];
+
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPosts,
+  makePage,
+  changePageNumber,
+  nextPage,
+  previousPage,
   posts,
+  page,
+  pageButton,
 }));
 
 jest.mock('../hooks/useCommentStore', () => () => ({
@@ -109,6 +123,13 @@ describe('postsPage', () => {
       },
     ];
 
+    page = {
+      startPage: 1,
+      lastPage: 10,
+      currentLastPage: 11,
+    };
+
+    pageButton = [1, 2, 3];
     render(<PostsPage />);
   });
 
@@ -130,5 +151,15 @@ describe('postsPage', () => {
 
   it('render category, Name', () => {
     screen.getByText('EPL / 굉민재');
+  });
+
+  it('render page buttons', () => {
+    screen.getByText('1');
+    screen.getByText('2');
+    screen.getByText('3');
+  });
+
+  it('render next page button', () => {
+    screen.getByText('다음');
   });
 });
