@@ -10,6 +10,11 @@ const fetchLike = jest.fn();
 
 const navigate = jest.fn();
 
+const makePage = jest.fn();
+const changePageNumber = jest.fn();
+const nextPage = jest.fn();
+const previousPage = jest.fn();
+
 let location = {};
 
 let posts = [];
@@ -19,9 +24,18 @@ let categories = [];
 let comments = [];
 let recomments = [];
 
+let page = {};
+let pageButton = [];
+
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchCategoryPosts,
   posts,
+  makePage,
+  changePageNumber,
+  nextPage,
+  previousPage,
+  page,
+  pageButton,
 }));
 
 jest.mock('../hooks/useCommentStore', () => () => ({
@@ -122,6 +136,14 @@ describe('CategoryPostPage', () => {
       key: 'default',
     };
 
+    page = {
+      startPage: 1,
+      lastPage: 10,
+      currentLastPage: 11,
+    };
+
+    pageButton = [1, 2, 3, 4, 5];
+
     render(<CategoryPostsPage />);
   });
 
@@ -139,5 +161,17 @@ describe('CategoryPostPage', () => {
 
   it('render hit and post date', () => {
     screen.getByText('1 2022-11-22 100');
+  });
+
+  it('render page buttons', () => {
+    screen.getByText('1');
+    screen.getByText('2');
+    screen.getByText('3');
+    screen.getByText('4');
+    screen.getByText('5');
+  });
+
+  it('render next page button', () => {
+    screen.getByText('다음');
   });
 });

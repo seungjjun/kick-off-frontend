@@ -6,10 +6,14 @@ import config from '../config';
 const baseUrl = config.apiBaseUrl;
 
 export default class PostApiService {
-  async fetchPosts() {
+  async fetchPosts(pageNumber) {
     const url = `${baseUrl}/posts`;
 
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, {
+      params: {
+        page: pageNumber,
+      },
+    });
 
     return data;
   }
@@ -22,10 +26,14 @@ export default class PostApiService {
     return data;
   }
 
-  async fetchCategoryPosts(categoryId) {
+  async fetchCategoryPosts(categoryId, pageNumber) {
     const url = `${baseUrl}/category/${categoryId}`;
 
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, {
+      params: {
+        page: pageNumber,
+      },
+    });
 
     return data;
   }

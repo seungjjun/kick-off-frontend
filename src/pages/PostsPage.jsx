@@ -19,20 +19,43 @@ export default function PostsPage() {
 
   const navigate = useNavigate();
 
+  const { pageNumber } = postStore;
+
   useEffect(() => {
-    postStore.fetchPosts();
+    postStore.fetchPosts(pageNumber);
     commentStore.fetchComments();
     commentStore.fetchRecomments();
     userStore.fetchUsers();
     likeStore.fetchLike();
     categoryStore.fetchCategory();
-  }, []);
+
+    postStore.makePage();
+  }, [pageNumber]);
+
+  const changePageNumber = (pageNubmer) => {
+    postStore.changePageNumber(pageNubmer);
+  };
+
+  const nextPage = () => {
+    postStore.nextPage();
+  };
+
+  const previousPage = () => {
+    postStore.previousPage();
+  };
 
   const { comments } = commentStore;
   const { recomments } = commentStore;
 
   const commentNumber = comments.map((comment) => comment.postId);
   const recommentNumber = recomments.map((recomment) => recomment.postId);
+
+  const { startPage } = postStore.page;
+  const { lastPage } = postStore.page;
+  const { currentLastPage } = postStore.page;
+
+  const isPreviousPage = startPage > 1;
+  const isNextPage = lastPage < currentLastPage;
 
   return (
     <Posts
@@ -43,6 +66,12 @@ export default function PostsPage() {
       users={userStore.users}
       categories={categoryStore.categories}
       navigate={navigate}
+      changePageNumber={changePageNumber}
+      nextPage={nextPage}
+      previousPage={previousPage}
+      pageButtons={postStore.pageButton}
+      isPreviousPage={isPreviousPage}
+      isNextPage={isNextPage}
     />
   );
 }

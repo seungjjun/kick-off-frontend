@@ -3,6 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import CategoryPosts from './CategoryPosts';
 
 const navigate = jest.fn();
+const changePageNumber = jest.fn();
+const nextPage = jest.fn();
+const previousPage = jest.fn();
 
 const context = describe;
 
@@ -52,6 +55,12 @@ describe('CategoryPosts', () => {
 
     const recommentNumber = [1, 1, 1];
 
+    const pageButtons = [1, 2, 3];
+
+    const isPreviousPage = false;
+
+    const isNextPage = true;
+
     const categoryId = 1;
 
     render(<CategoryPosts
@@ -63,6 +72,12 @@ describe('CategoryPosts', () => {
       categories={categories}
       navigate={navigate}
       categoryId={categoryId}
+      changePageNumber={changePageNumber}
+      nextPage={nextPage}
+      previousPage={previousPage}
+      pageButtons={pageButtons}
+      isPreviousPage={isPreviousPage}
+      isNextPage={isNextPage}
     />);
   });
 
@@ -83,6 +98,30 @@ describe('CategoryPosts', () => {
       fireEvent.click(screen.getByText('이강인 맨시티 이적...!! [7]'));
 
       expect(navigate).toBeCalled();
+    });
+  });
+
+  it('render page buttons', () => {
+    screen.getByText('1');
+    screen.getByText('2');
+    screen.getByText('3');
+  });
+
+  it('render next page button', () => {
+    screen.getByText('다음');
+  });
+
+  context('when click page button', () => {
+    it('next page function call', () => {
+      fireEvent.click(screen.getByText('다음'));
+
+      expect(nextPage).toBeCalled();
+    });
+
+    it('changePageNumber function call', () => {
+      fireEvent.click(screen.getByText('3'));
+
+      expect(changePageNumber).toBeCalled();
     });
   });
 });
