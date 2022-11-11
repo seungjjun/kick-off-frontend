@@ -11,8 +11,13 @@ export default class PostStore extends Store {
     this.posts = [];
     this.post = {};
 
-    this.category = {};
+    this.categories = [];
+    this.comments = [];
+    this.recomments = [];
+    this.likes = [];
+    this.users = [];
 
+    this.category = {};
     this.categoryId = '';
 
     this.imageUrl = '';
@@ -26,9 +31,17 @@ export default class PostStore extends Store {
   async fetchPosts(pageNumber) {
     const data = await postApiService.fetchPosts(pageNumber);
 
-    this.posts = data.posts;
+    const { posts } = data;
 
-    this.page = data.page;
+    this.posts = posts.posts;
+
+    this.categories = posts.categories;
+    this.comments = posts.comments;
+    this.recomments = posts.reComments;
+    this.likes = posts.likes;
+    this.users = posts.users;
+
+    this.page = data.postPageDto;
 
     this.makePage();
 
@@ -47,7 +60,9 @@ export default class PostStore extends Store {
   async fetchCategoryPosts(categoryId, pageNumber) {
     const data = await postApiService.fetchCategoryPosts(categoryId, pageNumber);
 
-    this.posts = data.posts;
+    console.log(data);
+
+    this.posts = data.categoryPosts;
 
     this.page = data.page;
 

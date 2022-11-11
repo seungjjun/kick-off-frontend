@@ -3,11 +3,6 @@ import { render, screen } from '@testing-library/react';
 import PostsPage from './PostsPage';
 
 const fetchPosts = jest.fn();
-const fetchComments = jest.fn();
-const fetchRecomments = jest.fn();
-const fetchUsers = jest.fn();
-const fetchCategory = jest.fn();
-const fetchLike = jest.fn();
 const navigate = jest.fn();
 
 const makePage = jest.fn();
@@ -34,34 +29,17 @@ jest.mock('../hooks/usePostStore', () => () => ({
   posts,
   page,
   pageButton,
-}));
-
-jest.mock('../hooks/useCommentStore', () => () => ({
-  fetchComments,
-  fetchRecomments,
   comments,
   recomments,
-}));
-
-jest.mock('../hooks/useUserStore', () => () => ({
-  fetchUsers,
   users,
-}));
-
-jest.mock('../hooks/useLikeStore', () => () => ({
-  fetchLike,
   likes,
+  categories,
 }));
 
 jest.mock('react-router-dom', () => ({
   useNavigate() {
     return navigate;
   },
-}));
-
-jest.mock('../hooks/useCategoryStore', () => () => ({
-  fetchCategory,
-  categories,
 }));
 
 describe('postsPage', () => {

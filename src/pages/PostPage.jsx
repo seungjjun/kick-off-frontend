@@ -29,7 +29,7 @@ export default function PostPage() {
 
   useEffect(() => {
     postStore.fetchPost(postId);
-    postStore.fetchPosts();
+    // postStore.fetchPosts();
     commentStore.fetchComment(postId, commentPageNumber);
     commentStore.fetchRecomment(postId);
     commentStore.setRecommentVisibleState();
