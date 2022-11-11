@@ -14,7 +14,7 @@ describe('PostStore', () => {
       it('게시글의 정보를 확인할 수 있다.', async () => {
         await postStore.fetchPosts();
 
-        const posts = postStore.posts[0];
+        const { posts } = postStore;
 
         expect(posts.posts[0].title).toBe('손흥민 득점왕');
         expect(posts.categories.name).toBe('EPL');
@@ -82,9 +82,9 @@ describe('PostStore', () => {
       it('게시글의 정보를 확인할 수 있다.', async () => {
         const { posts } = postStore;
 
-        expect(posts[0].categories.name).toBe('LaLiga');
-        expect(posts[0].posts[0].title).toBe('이강인 라리가 베스트 일레븐');
-        expect(posts[0].posts[0].hit).toBe(10);
+        expect(posts.categories.name).toBe('LaLiga');
+        expect(posts.posts[0].title).toBe('이강인 라리가 베스트 일레븐');
+        expect(posts.posts[0].hit).toBe(10);
       });
 
       it('현재 페이지를 확인할 수 있다', () => {

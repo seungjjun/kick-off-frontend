@@ -8,8 +8,8 @@ const baseUrl = config.apiBaseUrl;
 
 const server = setupServer(
   rest.get(`${baseUrl}/posts`, (req, res, ctx) => res(ctx.json({
-    posts: [
-      {
+    posts: {
+      posts: {
         categories: {
           id: 1,
           name: 'EPL',
@@ -56,9 +56,8 @@ const server = setupServer(
           },
         ],
       },
-    ],
-
-    page: [
+    },
+    postPageDto: [
       {
         currentLastPage: 3,
         currentPageNumber: 1,
@@ -206,48 +205,46 @@ const server = setupServer(
   }))),
 
   rest.get(`${baseUrl}/category/3`, async (req, res, ctx) => res(ctx.json({
-    posts: [
-      {
-        categories: {
-          id: 3,
-          name: 'LaLiga',
-        },
-        comments: [
-          {
-            id: 1,
-            content: '1번째 게시글의 댓글',
-            userId: 1,
-            postId: 10,
-            commentDate: '2022-11-01',
-          },
-        ],
-        likes: [
-          {
-            id: 2,
-            postId: 10,
-            userId: 1,
-          },
-        ],
-        posts: [
-          {
-            id: 10,
-            title: '이강인 라리가 베스트 일레븐',
-            categoryId: 3,
-            hit: 10,
-            imageUrl: 'imageUrl',
-            userId: 1,
-          },
-        ],
-        users: [
-          {
-            id: 1,
-            identification: 'Pikachu',
-            name: 'Lee',
-            profileImage: 'profileImage',
-          },
-        ],
+    categoryPosts: {
+      categories: {
+        id: 3,
+        name: 'LaLiga',
       },
-    ],
+      comments: [
+        {
+          id: 1,
+          content: '1번째 게시글의 댓글',
+          userId: 1,
+          postId: 10,
+          commentDate: '2022-11-01',
+        },
+      ],
+      likes: [
+        {
+          id: 2,
+          postId: 10,
+          userId: 1,
+        },
+      ],
+      posts: [
+        {
+          id: 10,
+          title: '이강인 라리가 베스트 일레븐',
+          categoryId: 3,
+          hit: 10,
+          imageUrl: 'imageUrl',
+          userId: 1,
+        },
+      ],
+      users: [
+        {
+          id: 1,
+          identification: 'Pikachu',
+          name: 'Lee',
+          profileImage: 'profileImage',
+        },
+      ],
+    },
 
     page: [
       {
@@ -260,22 +257,22 @@ const server = setupServer(
     ],
   }))),
 
-  // rest.get(`${baseUrl}/users`, async (req, res, ctx) => res(ctx.json({
-  //   users: [
-  //     {
-  //       id: 1,
-  //       identification: 'jel1y',
-  //       name: 'son7',
-  //       profileImage: 'image',
-  //     },
-  //     {
-  //       id: 2,
-  //       identification: 'app1e',
-  //       name: 'pikachu',
-  //       profileImage: 'image',
-  //     },
-  //   ],
-  // }))),
+  rest.get(`${baseUrl}/users`, async (req, res, ctx) => res(ctx.json({
+    users: [
+      {
+        id: 1,
+        identification: 'jel1y',
+        name: 'son7',
+        profileImage: 'image',
+      },
+      {
+        id: 2,
+        identification: 'app1e',
+        name: 'pikachu',
+        profileImage: 'image',
+      },
+    ],
+  }))),
 );
 
 export default server;
