@@ -52,6 +52,17 @@ export default class PostApiService {
     return data;
   }
 
+  async patch(title, content, categoryId, imageUrl, postId) {
+    const url = `${baseUrl}/posts/${postId}`;
+
+    await axios.patch(url, {
+      title,
+      content,
+      categoryId,
+      imageUrl,
+    });
+  }
+
   async upload(formData) {
     const url = `${baseUrl}/upload`;
     const { data } = await axios.post(url, formData);
