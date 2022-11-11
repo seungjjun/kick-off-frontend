@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Post from '../components/Post';
 
@@ -19,6 +19,7 @@ export default function PostPage() {
   const likeStore = useLikeStore();
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const path = location.pathname;
   const postId = path.split('/')[2];
@@ -29,7 +30,6 @@ export default function PostPage() {
 
   useEffect(() => {
     postStore.fetchPost(postId);
-    // postStore.fetchPosts();
     commentStore.fetchComment(postId, commentPageNumber);
     commentStore.fetchRecomment(postId);
     commentStore.setRecommentVisibleState();
@@ -39,6 +39,10 @@ export default function PostPage() {
 
   const countLike = () => {
     likeStore.countLike(postId, myId);
+  };
+
+  const modify = (postId) => {
+    navigate(`/posts/edit/${postId}`);
   };
 
   const { category } = postStore;
@@ -106,6 +110,7 @@ export default function PostPage() {
       nextPage={nextPage}
       previousPage={previousPage}
       pageButtons={commentStore.pageButton}
+      modify={modify}
     />
   );
 }

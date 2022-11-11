@@ -60,8 +60,6 @@ export default class PostStore extends Store {
   async fetchCategoryPosts(categoryId, pageNumber) {
     const data = await postApiService.fetchCategoryPosts(categoryId, pageNumber);
 
-    console.log(data);
-
     this.posts = data.categoryPosts;
 
     this.page = data.page;
@@ -76,6 +74,12 @@ export default class PostStore extends Store {
       .write(title, content, categoryId, image, userId);
 
     this.postId = postId.id;
+
+    this.publish();
+  }
+
+  async patch(title, content, categoryId, image, postId) {
+    await postApiService.patch(title, content, categoryId, image, postId);
 
     this.publish();
   }

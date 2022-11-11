@@ -4,10 +4,14 @@ export default function Post({
   post, category, likes, comments, recomments, user, countLike, users,
   submitComment, recommentVisibleState, changeRecommentFormState, submitRecomment,
   userName, changeCommentNumber, isPreviousPage, isNextPage, nextPage, previousPage,
-  pageButtons,
+  pageButtons, modify,
 }) {
   const handleClickLike = () => {
     countLike();
+  };
+
+  const handleClcikModify = () => {
+    modify(post.id);
   };
 
   return (
@@ -16,6 +20,9 @@ export default function Post({
         <p>loading</p>
       ) : (
         <article>
+          <div>
+            <button type="button" onClick={handleClcikModify}>수정</button>
+          </div>
           <p>
             제목:
             {' '}

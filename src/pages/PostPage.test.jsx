@@ -11,6 +11,7 @@ const countLike = jest.fn();
 const fetchComment = jest.fn();
 const fetchRecomment = jest.fn();
 const setRecommentVisibleState = jest.fn();
+const navigate = jest.fn();
 
 let location = jest.fn();
 let post = {};
@@ -57,6 +58,9 @@ jest.mock('../hooks/useLikeStore', () => () => ({
 jest.mock('react-router-dom', () => ({
   useLocation() {
     return location;
+  },
+  useNavigate() {
+    return navigate;
   },
 }));
 
