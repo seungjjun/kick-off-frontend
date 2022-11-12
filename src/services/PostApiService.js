@@ -63,6 +63,12 @@ export default class PostApiService {
     });
   }
 
+  async deletePost(postId) {
+    const url = `${baseUrl}/posts/${postId}`;
+
+    await axios.delete(url);
+  }
+
   async upload(formData) {
     const url = `${baseUrl}/upload`;
     const { data } = await axios.post(url, formData);

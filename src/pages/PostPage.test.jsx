@@ -4,6 +4,7 @@ import PostPage from './PostPage';
 
 const fetchPost = jest.fn();
 const fetchPosts = jest.fn();
+const deletePost = jest.fn();
 const fetchUser = jest.fn();
 const fetchLike = jest.fn();
 
@@ -29,6 +30,7 @@ let pageButton = [];
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPost,
   fetchPosts,
+  deletePost,
   post,
   category,
 }));
@@ -168,5 +170,9 @@ describe('PostPage', () => {
 
   it('render recomment button', () => {
     screen.getByText('답글쓰기');
+  });
+
+  it('render delete button', () => {
+    screen.getByText('삭제');
   });
 });

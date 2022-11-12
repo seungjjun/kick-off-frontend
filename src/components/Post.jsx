@@ -4,7 +4,7 @@ export default function Post({
   post, category, likes, comments, recomments, user, countLike, users,
   submitComment, recommentVisibleState, changeRecommentFormState, submitRecomment,
   userName, changeCommentNumber, isPreviousPage, isNextPage, nextPage, previousPage,
-  pageButtons, modify,
+  pageButtons, modify, deletePost,
 }) {
   const handleClickLike = () => {
     countLike();
@@ -12,6 +12,10 @@ export default function Post({
 
   const handleClcikModify = () => {
     modify(post.id);
+  };
+
+  const handleClickDelete = () => {
+    deletePost(post.id);
   };
 
   return (
@@ -22,6 +26,7 @@ export default function Post({
         <article>
           <div>
             <button type="button" onClick={handleClcikModify}>수정</button>
+            <button type="button" onClick={handleClickDelete}>삭제</button>
           </div>
           <p>
             제목:

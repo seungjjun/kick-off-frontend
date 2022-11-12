@@ -3,6 +3,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import Post from './Post';
 
 const countLike = jest.fn();
+const modify = jest.fn();
+const deletePost = jest.fn();
+
+const context = describe;
 
 describe('Post', () => {
   beforeEach(() => {
@@ -42,6 +46,8 @@ describe('Post', () => {
       user={user}
       countLike={countLike}
       pageButtons={pageButtons}
+      modify={modify}
+      deletePost={deletePost}
     />);
   });
 
@@ -67,5 +73,21 @@ describe('Post', () => {
     fireEvent.click(screen.getByText('좋아요'));
 
     expect(countLike).toBeCalled();
+  });
+
+  context('when click modify button', () => {
+    it('modify to be called', () => {
+      fireEvent.click(screen.getByText('수정'));
+
+      expect(modify).toBeCalled();
+    });
+  });
+
+  context('when click delete button', () => {
+    it('delte to be called', () => {
+      fireEvent.click(screen.getByText('삭제'));
+
+      expect(deletePost).toBeCalled();
+    });
   });
 });
