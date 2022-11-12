@@ -45,6 +45,11 @@ export default function PostPage() {
     navigate(`/posts/edit/${postId}`);
   };
 
+  const deletePost = (postId) => {
+    postStore.deletePost(postId);
+    navigate('/');
+  };
+
   const { category } = postStore;
 
   const { recommentVisibleState } = commentStore;
@@ -111,6 +116,7 @@ export default function PostPage() {
       previousPage={previousPage}
       pageButtons={commentStore.pageButton}
       modify={modify}
+      deletePost={deletePost}
     />
   );
 }

@@ -84,6 +84,14 @@ export default class PostStore extends Store {
     this.publish();
   }
 
+  async deletePost(postId) {
+    await postApiService.deletePost(postId);
+
+    this.fetchPosts(0);
+
+    this.publish();
+  }
+
   async upload(formData) {
     const imageUrl = await postApiService.upload(formData);
 
