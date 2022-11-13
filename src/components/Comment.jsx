@@ -1,71 +1,108 @@
 import { useForm } from 'react-hook-form';
 
+import CommentEditForm from './CommentEditForm';
+
+import RecommentEditForm from './RecommentEditForm';
+
 import RecommentForm from './RecommentForm';
 
 export default function Comment({
-  comments, recomments, users, submitComment, recommentVisibleState,
-  changeRecommentFormState, submitRecomment, userName, changeCommentNumber,
-  isPreviousPage, isNextPage, nextPage, previousPage, pageButtons,
+  posts, pages, comments, recomments,
 }) {
   const { register, handleSubmit } = useForm();
 
   const createComment = (data) => {
-    submitComment(data);
+    comments.submitComment(data);
   };
 
   const handleClickRecomment = (commentId) => {
-    changeRecommentFormState(commentId);
+    recomments.changeRecommentFormState(commentId);
   };
 
   const handleClickPage = (event) => {
-    changeCommentNumber(event.target.innerText - 1);
+    pages.changeCommentNumber(event.target.innerText - 1);
   };
 
   const handleClickNextPage = () => {
-    nextPage();
+    pages.nextPage();
   };
 
   const handleClickPreviousPage = () => {
-    previousPage();
+    pages.previousPage();
+  };
+
+  const handleClcikCommentModify = (commentId) => {
+    comments.changeCommentEditState(commentId);
+  };
+
+  const handleClcikRecommentModify = (recommentId) => {
+    recomments.changeRecommentEditState(recommentId);
+  };
+
+  const handleClickCommentDelete = (commentId) => {
+    comments.deleteComment(commentId);
+  };
+
+  const handleClickRecommentDelete = (recommentId) => {
+    recomments.deleteRecomment(recommentId);
   };
 
   return (
     <div>
       <ul>
-        {comments.length === undefined
+        {posts.comments.length === undefined
           ? <p>Loading...</p>
-          : comments.map((comment) => (
+          : posts.comments.map((comment) => (
             <ul key={comment.id}>
               <li key={comment.id}>
-                {users.map((user) => (
+                {posts.users.map((user) => (
                   user.id === comment.userId ? (
                     user.name
                   ) : null
                 ))}
-                {' '}
-                {comment.content}
-                {' '}
-                {comment.commentDate}
-                {' '}
-                <button
-                  type="button"
-                  onClick={() => handleClickRecomment(comment.id)}
-                >
-                  답글쓰기
-                </button>
-                {recommentVisibleState === comment.id ? (
-                  <RecommentForm
-                    changeRecommentFormState={changeRecommentFormState}
-                    submitRecomment={submitRecomment}
+                {comment.deleted ? (
+                  <p>삭제된 댓글입니다.</p>
+                ) : (
+                  <>
+                    {' '}
+                    {comment.content}
+                    {' '}
+                    {comment.commentDate}
+                    {' '}
+                    <button
+                      type="button"
+                      onClick={() => handleClickRecomment(comment.id)}
+                    >
+                      답글쓰기
+                    </button>
+                    <button type="button" onClick={() => handleClcikCommentModify(comment.id)}>수정</button>
+                    <button type="button" onClick={() => handleClickCommentDelete(comment.id)}>삭제</button>
+                  </>
+                )}
+                {comments.commentEditState === comment.id ? (
+                  <CommentEditForm
                     commentId={comment.id}
-                    userName={userName}
+                    initialContent={comment.content}
+                    modifyComment={comments.modifyComment}
+                    changeCommentEditState={comments.changeCommentEditState}
+                  />
+                ) : (
+                  null
+                )}
+                {comments.recommentVisibleState === comment.id ? (
+                  <RecommentForm
+                    changeRecommentFormState={recomments.changeRecommentFormState}
+                    submitRecomment={recomments.submitRecomment}
+                    commentId={comment.id}
+                    userName={posts.userName}
+                    content={comment.content}
                   />
                 ) : null}
               </li>
-              {recomments.map((recomment) => (
+              {posts.recomments.map((recomment) => (
                 recomment.commentId === comment.id ? (
                   <li key={recomment.id}>
-                    {users.map((user) => (
+                    {posts.users.map((user) => (
                       user.id === recomment.userId ? (
                         user.name
                       ) : null
@@ -74,16 +111,26 @@ export default function Comment({
                     {recomment.content}
                     {' '}
                     {recomment.commentDate}
+                    <button type="button" onClick={() => handleClcikRecommentModify(recomment.id)}>수정</button>
+                    <button type="button" onClick={() => handleClickRecommentDelete(recomment.id)}>삭제</button>
+                    {recomments.recommentEditState === recomment.id ? (
+                      <RecommentEditForm
+                        recommentId={recomment.id}
+                        initialContent={recomment.content}
+                        modifyRecomment={recomments.modifyRecomment}
+                        changeRecommentEditState={recomments.changeRecommentEditState}
+                      />
+                    ) : null}
                   </li>
                 ) : null
               ))}
             </ul>
           ))}
       </ul>
-      {isPreviousPage ? (
+      {pages.isPreviousPage ? (
         <button type="button" onClick={handleClickPreviousPage}>이전</button>
       ) : null}
-      {pageButtons.map((pageButton) => (
+      {pages.pageButtons.map((pageButton) => (
         <button
           key={pageButton}
           type="button"
@@ -92,7 +139,7 @@ export default function Comment({
           {pageButton}
         </button>
       ))}
-      {isNextPage ? (
+      {pages.isNextPage ? (
         <button type="button" onClick={handleClickNextPage}>다음</button>
       ) : null}
       <form onSubmit={handleSubmit(createComment)}>

@@ -10,6 +10,9 @@ export default class CommentStore extends Store {
     this.recomments = [];
 
     this.recommentVisibleState = 0;
+    this.commentEditState = 0;
+
+    this.recommentEditState = 0;
 
     this.page = {};
     this.commentPageNumber = 0;
@@ -69,12 +72,55 @@ export default class CommentStore extends Store {
     this.publish();
   }
 
+  async modifyComment(content, commentId) {
+    await commentApiService.modifyComment(content, commentId);
+
+    this.commentEditState = 0;
+
+    this.publish();
+  }
+
+  async modifyRecomment(content, recommentId) {
+    await commentApiService.modifyRecomment(content, recommentId);
+
+    this.recommentEditState = 0;
+
+    this.publish();
+  }
+
+  async deleteComment(commentId) {
+    await commentApiService.deleteComment(commentId);
+
+    this.publish();
+  }
+
+  async deleteRecomment(recommentId) {
+    await commentApiService.deleteRecomment(recommentId);
+
+    this.publish();
+  }
+
   setRecommentVisibleState() {
     this.recommentVisibleState = 0;
   }
 
   changeRecommentVisibleState(commentId) {
     this.recommentVisibleState = commentId;
+    this.commentEditState = 0;
+
+    this.publish();
+  }
+
+  changeCommentEditState(commentId) {
+    this.commentEditState = commentId;
+    this.setRecommentVisibleState();
+
+    this.publish();
+  }
+
+  changeRecommentEditState(recommentId) {
+    this.recommentEditState = recommentId;
+    this.commentEditState = 0;
 
     this.publish();
   }

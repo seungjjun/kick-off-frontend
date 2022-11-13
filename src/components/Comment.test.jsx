@@ -4,66 +4,107 @@ import {
 
 import Comment from './Comment';
 
-const submitComment = jest.fn();
+const changeCommentNumber = jest.fn();
 
 const changeRecommentFormState = jest.fn();
 
-const submitRecomment = jest.fn();
+const deleteComment = jest.fn();
 
-const changeCommentNumber = jest.fn();
+const deleteRecomment = jest.fn();
+
+const modifyComment = jest.fn();
+
+const modifyRecomment = jest.fn();
+
+const changeRecommentEditState = jest.fn();
+
+const submitComment = jest.fn();
+
+const submitRecomment = jest.fn();
 
 const context = describe;
 
 describe('comment', () => {
   beforeEach(() => {
-    const comments = [
-      {
-        id: 1,
-        userId: 1,
-        postId: 3,
-        content: '3번째 게시글의 댓글',
+    const posts = {
+      post: {
+        postInformation: {
+          title: '이강인 손흥민과 한 팀??',
+          content: '이강인 토트넘 이적 루머',
+        },
+        hit: 50,
+        createdAt: '2022-10-31',
       },
-    ];
 
-    const recomments = [
-      {
-        id: 1,
-        userId: 1,
-        postId: 3,
-        commentId: 1,
-        content: '3번째 게시글의 1번째 댓글의 대댓글',
+      category: {
+        name: 'SerieA',
       },
-    ];
 
-    const users = [
-      {
-        id: 1,
-        identification: 'jel1y',
-        name: '장어',
-        profileImage: '장어 이미지',
-      },
-    ];
+      users: [
+        {
+          id: 1,
+          identification: 'jel1y',
+          name: '장어',
+          profileImage: '장어 이미지',
+        },
+      ],
 
-    const isPreviousPage = true;
+      likes: [
+        {
+          id: 1,
+          length: 1,
+        },
+      ],
 
-    const isNextPage = true;
+      comments: [
+        {
+          id: 1,
+          userId: 1,
+          postId: 3,
+          content: '3번째 게시글의 댓글',
+          deleted: false,
+        },
+      ],
 
-    const recommentVisibleState = 2;
+      recomments: [
+        {
+          id: 1,
+          userId: 1,
+          postId: 3,
+          commentId: 1,
+          content: '3번째 게시글의 1번째 댓글의 대댓글',
+        },
+      ],
+    };
 
-    const pageButtons = [1, 2, 3, 4, 5];
+    const comments = {
+      submitComment,
+      recommentVisibleState: 2,
+      modifyComment,
+      deleteComment,
+    };
+
+    const recomments = {
+      submitRecomment,
+      changeRecommentFormState,
+      changeRecommentEditState,
+      recommentEditState: 1,
+      deleteRecomment,
+      modifyRecomment,
+    };
+
+    const pages = {
+      isPreviousPage: true,
+      isNextPage: true,
+      pageButtons: [1, 2, 3, 4, 5],
+      changeCommentNumber,
+    };
 
     render(<Comment
+      posts={posts}
+      pages={pages}
       comments={comments}
       recomments={recomments}
-      users={users}
-      submitComment={submitComment}
-      recommentVisibleState={recommentVisibleState}
-      changeRecommentFormState={changeRecommentFormState}
-      submitRecomment={submitRecomment}
-      changeCommentNumber={changeCommentNumber}
-      isPreviousPage={isPreviousPage}
-      isNextPage={isNextPage}
-      pageButtons={pageButtons}
     />);
   });
 
@@ -123,5 +164,21 @@ describe('comment', () => {
 
   it('render previous page button', () => {
     screen.getByText('이전');
+  });
+
+  context('when comment delete', () => {
+    it('deleteComment to be called', () => {
+      fireEvent.click(screen.getAllByText('삭제')[0]);
+
+      expect(deleteComment).toBeCalled();
+    });
+  });
+
+  context('when recomment delete', () => {
+    it('deleteRecomment to be called', () => {
+      fireEvent.click(screen.getAllByText('삭제')[1]);
+
+      expect(deleteRecomment).toBeCalled();
+    });
   });
 });
