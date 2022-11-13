@@ -3,50 +3,53 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import Post from './Post';
 
 const countLike = jest.fn();
-const modify = jest.fn();
+const modifyPost = jest.fn();
 const deletePost = jest.fn();
 
 const context = describe;
 
 describe('Post', () => {
   beforeEach(() => {
-    const post = {
-      postInformation: {
-        title: '이강인 손흥민과 한 팀??',
-        content: '이강인 토트넘 이적 루머',
+    const posts = {
+      post: {
+        postInformation: {
+          title: '이강인 손흥민과 한 팀??',
+          content: '이강인 토트넘 이적 루머',
+        },
+        hit: 50,
+        createdAt: '2022-10-31',
       },
-      hit: 50,
-      createdAt: '2022-10-31',
-    };
 
-    const category = {
-      name: 'SerieA',
-    };
-
-    const user = {
-      name: '이강인',
-    };
-
-    const likes = [
-      {
-        id: 1,
-        length: 1,
+      category: {
+        name: 'SerieA',
       },
-    ];
+
+      user: {
+        name: '이강인',
+      },
+
+      likes: [
+        {
+          id: 1,
+          length: 1,
+        },
+      ],
+
+      comments: [],
+    };
+
+    const pages = {
+      pageButtons: [1, 2, 3],
+    };
 
     const comments = {};
 
-    const pageButtons = [1, 2, 3];
-
     render(<Post
-      post={post}
-      category={category}
-      likes={likes}
+      posts={posts}
+      pages={pages}
       comments={comments}
-      user={user}
       countLike={countLike}
-      pageButtons={pageButtons}
-      modify={modify}
+      modifyPost={modifyPost}
       deletePost={deletePost}
     />);
   });
@@ -79,7 +82,7 @@ describe('Post', () => {
     it('modify to be called', () => {
       fireEvent.click(screen.getByText('수정'));
 
-      expect(modify).toBeCalled();
+      expect(modifyPost).toBeCalled();
     });
   });
 

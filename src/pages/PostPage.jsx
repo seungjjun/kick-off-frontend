@@ -28,31 +28,19 @@ export default function PostPage() {
 
   const { commentPageNumber } = commentStore;
 
-  useEffect(() => {
-    postStore.fetchPost(postId);
-    commentStore.fetchComment(postId, commentPageNumber);
-    commentStore.fetchRecomment(postId);
-    commentStore.setRecommentVisibleState();
-    userStore.fetchUser();
-    likeStore.fetchLike();
-  }, [commentPageNumber]);
-
   const countLike = () => {
     likeStore.countLike(postId, myId);
   };
 
-  const modify = (postId) => {
+  const modifyPost = (postId) => {
     navigate(`/posts/edit/${postId}`);
   };
 
   const deletePost = (postId) => {
     postStore.deletePost(postId);
+
     navigate('/');
   };
-
-  const { category } = postStore;
-
-  const { recommentVisibleState } = commentStore;
 
   const changeRecommentFormState = (commentId) => {
     commentStore.changeRecommentVisibleState(commentId);
@@ -87,6 +75,48 @@ export default function PostPage() {
     commentStore.previousPage();
   };
 
+  const changeCommentEditState = (commentId) => {
+    commentStore.changeCommentEditState(commentId);
+  };
+
+  const modifyComment = async (content, commentId) => {
+    await commentStore.modifyComment(content, commentId);
+
+    commentStore.fetchComment(postId, commentPageNumber);
+  };
+
+  const deleteComment = async (commentId) => {
+    await commentStore.deleteComment(commentId);
+
+    commentStore.fetchComment(postId, commentPageNumber);
+  };
+
+  const changeRecommentEditState = (recommentId) => {
+    commentStore.changeRecommentEditState(recommentId);
+  };
+
+  const modifyRecomment = async (content, recommentId) => {
+    await commentStore.modifyRecomment(content, recommentId);
+
+    commentStore.fetchRecomment(postId);
+  };
+
+  const deleteRecomment = async (recommentId) => {
+    await commentStore.deleteRecomment(recommentId);
+
+    commentStore.fetchComment(postId, commentPageNumber);
+    commentStore.fetchRecomment(postId);
+  };
+
+  useEffect(() => {
+    postStore.fetchPost(postId);
+    commentStore.fetchComment(postId, commentPageNumber);
+    commentStore.fetchRecomment(postId);
+    commentStore.setRecommentVisibleState();
+    userStore.fetchUser();
+    likeStore.fetchLike();
+  }, [commentPageNumber]);
+
   const { startPage } = commentStore.page;
   const { lastPage } = commentStore.page;
   const { currentLastPage } = commentStore.page;
@@ -94,28 +124,52 @@ export default function PostPage() {
   const isPreviousPage = startPage > 1;
   const isNextPage = lastPage < currentLastPage;
 
+  const posts = {
+    post: postStore.post,
+    category: postStore.category,
+    likes: likeStore.likes,
+    comments: commentStore.comments,
+    recomments: commentStore.recomments,
+    user: userStore.user,
+    users: userStore.users,
+    userName: userStore.user.name,
+  };
+
+  const pages = {
+    pageButtons: commentStore.pageButton,
+    isPreviousPage,
+    isNextPage,
+    nextPage,
+    previousPage,
+    changeCommentNumber,
+  };
+
+  const comments = {
+    submitComment,
+    commentEditState: commentStore.commentEditState,
+    modifyComment,
+    deleteComment,
+    changeCommentEditState,
+    recommentVisibleState: commentStore.recommentVisibleState,
+  };
+
+  const recomments = {
+    submitRecomment,
+    changeRecommentFormState,
+    recommentEditState: commentStore.recommentEditState,
+    changeRecommentEditState,
+    deleteRecomment,
+    modifyRecomment,
+  };
+
   return (
     <Post
-      post={postStore.post}
-      category={category}
-      likes={likeStore.likes}
-      comments={commentStore.comments}
-      recomments={commentStore.recomments}
-      user={userStore.user}
+      posts={posts}
+      pages={pages}
+      comments={comments}
+      recomments={recomments}
       countLike={countLike}
-      users={userStore.users}
-      submitComment={submitComment}
-      recommentVisibleState={recommentVisibleState}
-      changeRecommentFormState={changeRecommentFormState}
-      submitRecomment={submitRecomment}
-      userName={userStore.user.name}
-      changeCommentNumber={changeCommentNumber}
-      isPreviousPage={isPreviousPage}
-      isNextPage={isNextPage}
-      nextPage={nextPage}
-      previousPage={previousPage}
-      pageButtons={commentStore.pageButton}
-      modify={modify}
+      modifyPost={modifyPost}
       deletePost={deletePost}
     />
   );

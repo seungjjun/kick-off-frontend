@@ -34,7 +34,10 @@ export default function PostsPage() {
   const { comments } = postStore;
   const { recomments } = postStore;
 
-  const commentNumber = comments.map((comment) => comment.postId);
+  const commentNumber = comments.map((comment) => (
+    comment.deleted ? null : comment.postId
+  ));
+
   const recommentNumber = recomments.map((recomment) => recomment.postId);
 
   const { startPage } = postStore.page;

@@ -62,6 +62,34 @@ export default class CommentApiService {
       userId,
     });
   }
+
+  async modifyComment(content, commentId) {
+    const url = `${baseUrl}/comments/${commentId}`;
+
+    await axios.patch(url, {
+      content,
+    });
+  }
+
+  async modifyRecomment(content, recommentId) {
+    const url = `${baseUrl}/recomments/${recommentId}`;
+
+    await axios.patch(url, {
+      content,
+    });
+  }
+
+  async deleteComment(commentId) {
+    const url = `${baseUrl}/comments/${commentId}`;
+
+    await axios.delete(url);
+  }
+
+  async deleteRecomment(recommentId) {
+    const url = `${baseUrl}/recomments/${recommentId}`;
+
+    await axios.delete(url);
+  }
 }
 
 export const commentApiService = new CommentApiService();

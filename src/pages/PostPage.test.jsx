@@ -14,7 +14,7 @@ const fetchRecomment = jest.fn();
 const setRecommentVisibleState = jest.fn();
 const navigate = jest.fn();
 
-let location = jest.fn();
+let location = {};
 let post = {};
 let category = {};
 let user = {};
@@ -113,6 +113,7 @@ describe('PostPage', () => {
       content: '1번째 게시글의 댓글',
       userId: 1,
       postId: 1,
+      deleted: false,
     }];
 
     recomments = [{
@@ -173,6 +174,6 @@ describe('PostPage', () => {
   });
 
   it('render delete button', () => {
-    screen.getByText('삭제');
+    screen.getAllByText('삭제');
   });
 });
