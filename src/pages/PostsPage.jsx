@@ -52,9 +52,6 @@ export default function PostsPage() {
       posts={postStore.posts}
       commentNumber={commentNumber}
       recommentNumber={recommentNumber}
-      likes={postStore.likes}
-      users={postStore.users}
-      categories={postStore.categories}
       navigate={navigate}
       changePageNumber={changePageNumber}
       nextPage={nextPage}

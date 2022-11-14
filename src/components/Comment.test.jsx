@@ -108,12 +108,12 @@ describe('comment', () => {
     />);
   });
 
-  it('render author, comment', () => {
-    screen.getByText('장어 3번째 게시글의 댓글');
+  it('render comment', () => {
+    screen.getByText('3번째 게시글의 댓글');
   });
 
   it('render recomment', () => {
-    screen.getByText('장어 3번째 게시글의 1번째 댓글의 대댓글');
+    screen.getByText('3번째 게시글의 1번째 댓글의 대댓글');
   });
 
   it('render submit button', () => {

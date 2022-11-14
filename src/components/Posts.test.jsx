@@ -9,43 +9,49 @@ const previousPage = jest.fn();
 
 describe('posts', () => {
   beforeEach(() => {
-    const posts = [
-      {
-        id: 1,
-        postInformation: {
-          title: '대한민국 카타르 월드컵 4강 진출',
+    const posts = {
+      posts: [
+        {
+          id: 1,
+          postInformation: {
+            title: '대한민국 카타르 월드컵 4강 진출',
+          },
+          categoryId: 1,
+          hit: 52,
+          imageUrl: 'imageUrl',
+          userId: {
+            userId: 3,
+          },
+          createdAt: '2022-11-01',
         },
-        categoryId: 1,
-        hit: 52,
-        imageUrl: 'imageUrl',
-        userId: {
+      ],
+
+      categories: [
+        {
+          id: 1,
+          name: 'EPL',
+        },
+      ],
+
+      users: [
+        {
+          id: 3,
+          identification: 'jel1y',
+          name: '굉민재',
+          profileImage: 'profileImage',
+        },
+      ],
+
+      likes: [
+        {
+          id: 5,
+          postId: 1,
           userId: 3,
         },
-        createdAt: '2022-11-01',
-      },
-    ];
+      ],
+    };
+
     const commentNumber = [1, 1, 1, 1, 2];
-    const likes = [
-      {
-        id: 5,
-        postId: 1,
-        userId: 3,
-      },
-    ];
-    const categories = [
-      {
-        id: 1,
-        name: 'EPL',
-      },
-    ];
-    const users = [
-      {
-        id: 3,
-        identification: 'jel1y',
-        name: '굉민재',
-        profileImage: 'profileImage',
-      },
-    ];
 
     const recommentNumber = [1, 1, 1];
 
@@ -59,9 +65,6 @@ describe('posts', () => {
       posts={posts}
       commentNumber={commentNumber}
       recommentNumber={recommentNumber}
-      likes={likes}
-      users={users}
-      categories={categories}
       navigate={navigate}
       changePageNumber={changePageNumber}
       nextPage={nextPage}

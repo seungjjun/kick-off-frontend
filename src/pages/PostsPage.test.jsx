@@ -11,9 +11,7 @@ const nextPage = jest.fn();
 const previousPage = jest.fn();
 
 let posts = [];
-let likes = [];
-let users = [];
-let categories = [];
+
 let comments = [];
 let recomments = [];
 
@@ -31,9 +29,6 @@ jest.mock('../hooks/usePostStore', () => () => ({
   pageButton,
   comments,
   recomments,
-  users,
-  likes,
-  categories,
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -44,21 +39,47 @@ jest.mock('react-router-dom', () => ({
 
 describe('postsPage', () => {
   beforeEach(() => {
-    posts = [
-      {
-        postInformation: {
-          title: '손흥민 득점왕 수상',
+    posts = {
+      posts: [
+        {
+          id: 1,
+          postInformation: {
+            title: '손흥민 득점왕 수상',
+          },
+          categoryId: 1,
+          hit: 25,
+          imageUrl: 'imageUrl',
+          userId: {
+            userId: 3,
+          },
+          createdAt: '2022-11-01',
         },
-        id: 1,
-        categoryId: 1,
-        hit: 25,
-        imageUrl: 'imageUrl',
-        userId: {
+      ],
+
+      categories: [
+        {
+          id: 1,
+          name: 'EPL',
+        },
+      ],
+
+      users: [
+        {
+          id: 3,
+          identification: 'jel1y',
+          name: '굉민재',
+          profileImage: 'profileImage',
+        },
+      ],
+
+      likes: [
+        {
+          id: 5,
+          postId: 1,
           userId: 3,
         },
-        createdAt: '2022-11-01',
-      },
-    ];
+      ],
+    };
 
     comments = [
       {
@@ -67,30 +88,6 @@ describe('postsPage', () => {
         userId: 3,
         postId: 1,
         commentDate: '2022-11-01',
-      },
-    ];
-
-    likes = [
-      {
-        id: 5,
-        postId: 1,
-        userId: 3,
-      },
-    ];
-
-    categories = [
-      {
-        id: 1,
-        name: 'EPL',
-      },
-    ];
-
-    users = [
-      {
-        id: 3,
-        identification: 'jel1y',
-        name: '굉민재',
-        profileImage: 'profileImage',
       },
     ];
 

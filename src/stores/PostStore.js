@@ -33,7 +33,7 @@ export default class PostStore extends Store {
 
     const { posts } = data;
 
-    this.posts = posts.posts;
+    this.posts = data.posts;
 
     this.categories = posts.categories;
     this.comments = posts.comments;

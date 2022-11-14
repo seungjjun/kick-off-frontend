@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import HotPosts from './HotPosts';
+
 const Container = styled.div`
 
 `;
@@ -53,7 +55,7 @@ const WriteButton = styled.button`
 `;
 
 export default function Posts({
-  posts, commentNumber, recommentNumber, likes, users, categories, navigate,
+  posts, commentNumber, recommentNumber, navigate,
   changePageNumber, nextPage, previousPage, pageButtons, isPreviousPage, isNextPage,
 }) {
   const handleClickPost = (id) => {
@@ -82,7 +84,7 @@ export default function Posts({
 
   return (
     <Container>
-      {Object.keys(posts).length === 0 || Object.keys(categories).length === 0 ? (
+      {Object.keys(posts).length === 0 || posts.posts === undefined ? (
         <p>게시글이 없습니다.</p>
       ) : (
         <section>
@@ -90,9 +92,12 @@ export default function Posts({
             <button type="button" onClick={handleClickSchedule}>경기일정</button>
             <WriteButton type="button" onClick={handleClickWrite}>글쓰기</WriteButton>
           </div>
+          <HotPosts
+            posts={posts}
+          />
           <article>
             <List>
-              {posts.map((post) => (
+              {posts.posts.map((post) => (
                 <Post
                   key={post.id}
                 >
@@ -118,14 +123,14 @@ export default function Posts({
                       ]
                     </Title>
                     <Category>
-                      {categories.find((category) => category.id === post.categoryId).name}
+                      {posts.categories.find((category) => category.id === post.categoryId).name}
                       {' '}
                       /
                       {' '}
-                      {users.find((user) => user.id === post.userId.userId).name}
+                      {posts.users.find((user) => user.id === post.userId.userId).name}
                     </Category>
                     <Create>
-                      {likes.filter((like) => like.postId === post.id).length}
+                      {posts.likes.filter((like) => like.postId === post.id).length}
                       {' '}
                       {post.createdAt}
                       {' '}
@@ -140,15 +145,17 @@ export default function Posts({
             {isPreviousPage ? (
               <button type="button" onClick={handleClickPreviousPage}>이전</button>
             ) : null}
-            {pageButtons.map((pageButton) => (
-              <button
-                key={pageButton}
-                type="button"
-                onClick={(event) => handleClickPage(event)}
-              >
-                {pageButton}
-              </button>
-            ))}
+            <ul>
+              {pageButtons.map((pageButton) => (
+                <button
+                  key={pageButton}
+                  type="button"
+                  onClick={(event) => handleClickPage(event)}
+                >
+                  {pageButton}
+                </button>
+              ))}
+            </ul>
             {isNextPage ? (
               <button type="button" onClick={handleClickNextPage}>다음</button>
             ) : null}
@@ -156,6 +163,5 @@ export default function Posts({
         </section>
       )}
     </Container>
-
   );
 }
