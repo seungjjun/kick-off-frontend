@@ -14,7 +14,7 @@ describe('PostStore', () => {
       it('게시글의 정보를 확인할 수 있다.', async () => {
         await postStore.fetchPosts();
 
-        const { posts } = postStore;
+        const { posts } = postStore.posts;
 
         expect(posts.posts[0].title).toBe('손흥민 득점왕');
         expect(posts.categories.name).toBe('EPL');

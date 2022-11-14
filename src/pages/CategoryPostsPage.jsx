@@ -28,6 +28,7 @@ export default function CategoryPostsPage() {
   const { pageNumber } = postStore;
 
   useEffect(() => {
+    postStore.changePageNumber(pageNumber);
     postStore.fetchCategoryPosts(categoryId, pageNumber);
     commentStore.fetchComments();
     commentStore.fetchRecomments();

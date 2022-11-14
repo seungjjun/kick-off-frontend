@@ -50,7 +50,7 @@ export default function CategoryPosts({
 
   return (
     <div>
-      {Object.keys(posts).length === 0 || Object.keys(categories).length === 0 ? (
+      {Object.keys(posts).length === 0 || Object.keys(categories).length === 0 || posts.categoryPosts === null ? (
         <p>게시글이 없습니다</p>
       ) : (
         <section>

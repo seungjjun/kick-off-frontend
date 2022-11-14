@@ -1,18 +1,24 @@
 import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import Menu from './Menu';
+// import Menu from './Category';
+
+const HeaderBox = styled.div`
+  width: 1080px;
+  height: 150px;
+`;
 
 export default function Header() {
-  const [isShow, setIsShow] = useState(false);
+  // const [isShow, setIsShow] = useState(false);
 
-  const handleClickMenu = () => {
-    setIsShow(!isShow);
-  };
+  // const handleClickMenu = () => {
+  //   setIsShow(!isShow);
+  // };
 
   return (
-    <div>
+    <HeaderBox>
       <nav>
         <ul>
           <li>
@@ -25,7 +31,7 @@ export default function Header() {
             <Link to="/signup">회원가입</Link>
           </li>
           <li>
-            <button
+            {/* <button
               type="button"
               onClick={handleClickMenu}
             >
@@ -33,10 +39,10 @@ export default function Header() {
             </button>
             {isShow ? (
               <Menu />
-            ) : null}
+            ) : null} */}
           </li>
         </ul>
       </nav>
-    </div>
+    </HeaderBox>
   );
 }

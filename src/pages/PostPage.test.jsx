@@ -136,23 +136,19 @@ describe('PostPage', () => {
   });
 
   it('render title', () => {
-    screen.getByText('제목: 이강인 손흥민과 한 팀??');
+    screen.getByText('이강인 손흥민과 한 팀??');
   });
 
   it('render content', () => {
-    screen.getByText('내용: 이강인 토트넘 이적 루머');
+    screen.getByText('이강인 토트넘 이적 루머');
   });
 
-  it('render hit', () => {
-    screen.getByText('조회수: 50');
+  it('render author', () => {
+    screen.getAllByText('이강인');
   });
 
-  it('render category, author', () => {
-    screen.getByText('SerieA / 이강인');
-  });
-
-  it('render createDate', () => {
-    screen.getByText('등록날짜: 2022-10-31');
+  it('render createDate and hit', () => {
+    screen.getByText('2022-10-31 조회 50');
   });
 
   it('render like button', () => {
@@ -166,7 +162,7 @@ describe('PostPage', () => {
   });
 
   it('render comment', () => {
-    screen.getByText('이강인 1번째 게시글의 댓글');
+    screen.getByText('1번째 게시글의 댓글');
   });
 
   it('render recomment button', () => {

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 import { Reset } from 'styled-reset';
 
+import styled from 'styled-components';
+
 import GlobalStyle from './styles/GlobalStyle';
 
 import useUserStore from './hooks/useUserStore';
@@ -19,6 +21,28 @@ import SchedulePage from './pages/SchedulePage';
 import ChattingRoomPage from './pages/ChattingRoomPage';
 import CategoryPostsPage from './pages/CategoryPostsPage';
 import PostEditFormPage from './pages/PostEditFormPage';
+import Category from './components/Category';
+
+const Container = styled.div`
+  max-width: 1080px;
+  min-height: 100vh;
+  margin: 0 auto;
+`;
+
+const Menu = styled.div`
+  display: inline-block;
+  width: 180px;
+  vertical-align: text-top;
+  border-top: 1px solid #CCC;
+  margin-right: 2em;
+`;
+
+const Content = styled.div`
+  display: inline-block;
+  vertical-align: text-top;
+  margin: 0 auto;
+  width: 860px;
+`;
 
 export default function App() {
   // const [schedule, setSchedule] = useState(null);
@@ -53,19 +77,24 @@ export default function App() {
   }
 
   return (
-    <div>
+    <Container>
       <Reset />
       <GlobalStyle />
       <Header />
-      <Routes>
-        <Route path="/" element={<PostsPage />} />
-        <Route path="/posts" element={<CategoryPostsPage />} />
-        <Route path="/post/:postId" element={<PostPage />} />
-        <Route path="/write" element={<PostFormPage user={user} />} />
-        <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
-        <Route path="/schedule" element={<SchedulePage />} />
-        <Route path="/room/:roomId" element={<ChattingRoomPage user={user} gameId={gameId} />} />
-      </Routes>
-    </div>
+      <Menu>
+        <Category />
+      </Menu>
+      <Content>
+        <Routes>
+          <Route path="/" element={<PostsPage />} />
+          <Route path="/posts" element={<CategoryPostsPage />} />
+          <Route path="/post/:postId" element={<PostPage />} />
+          <Route path="/write" element={<PostFormPage user={user} />} />
+          <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
+          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/room/:roomId" element={<ChattingRoomPage user={user} gameId={gameId} />} />
+        </Routes>
+      </Content>
+    </Container>
   );
 }

@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom';
 
+import styled from 'styled-components';
+
 import { postStore } from '../stores/PostStore';
 
-export default function Menu() {
-  const handleClickTotalBoard = () => {
-    postStore.changePageNumber(0);
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+  gap: 0.7em;
+`;
+
+export default function Category() {
+  const handleClickTotalBoard = async () => {
+    await postStore.changePageNumber(0);
   };
 
   const handleClickCategory = () => {
@@ -14,7 +23,7 @@ export default function Menu() {
   return (
     <div>
       <nav>
-        <ul>
+        <List>
           <li>
             <Link to="/" onClick={handleClickTotalBoard}>전체 게시판</Link>
           </li>
@@ -30,7 +39,7 @@ export default function Menu() {
           <li>
             <Link to="/posts?category=5" onClick={handleClickCategory}>Bundesliga</Link>
           </li>
-        </ul>
+        </List>
       </nav>
     </div>
   );
