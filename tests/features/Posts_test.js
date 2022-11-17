@@ -1,4 +1,8 @@
-Feature('전체 게시판 - 사용자는 다양한 정보를 얻기 위해 등록된 게시글을 확인할 수 있다.');
+Feature('전체 게시글 목록 - 축구 관련 정보를 얻으려는 사람이 내가 원하는 정보를 찾기 위해서 다른 사용자가 등록한 게시글 목록을 확인할 수 있다.');
+
+Before(({ I }) => {
+  I.setupDatabase();
+});
 
 Scenario('게시글이 존재할 경우', ({ I }) => {
   // Given
@@ -7,55 +11,37 @@ Scenario('게시글이 존재할 경우', ({ I }) => {
   // When
 
   // Then
-  I.see('손흥민 득점왕 수상');
+  I.see('카타르 월드컵 개최 일주일 전');
 
-  I.see('EPL');
+  I.see('2022-11-14');
 
-  I.see('굉민재');
-});
-
-Scenario('화제 게시글이 존재할 경우', ({ I }) => {
-  // Given
-  I.amOnPage('/');
-
-  // When
-
-  // Then
-  I.see('화제');
-
-  I.see('굉민재 김장하다!!');
-
-  I.see('SerieA');
-
-  I.see('굉민재');
+  I.see('10');
 });
 
 Scenario('게시글이 10개 이상 존재할 경우', ({ I }) => {
+  I.settingPostsTen();
+
   // Given
   I.amOnPage('/');
-
-  // 게시글 11개 세팅
 
   // When
   I.click('2');
 
   // Then
-  I.see('대한민국 카타르 월드컵 4강 진출!');
-
-  I.see('전체게시판');
-
-  I.see('대한민국');
+  I.see('카타르 월드컵 개최 일주일 전');
 });
 
 Scenario('게시글이 100개 이상 존재할 경우', ({ I }) => {
+  I.settingPosts();
+
   // Given
   I.amOnPage('/');
-
-  // 게시글 101개 세팅
 
   // When
   I.click('다음');
 
   // Then
+  I.see('이전');
+
   I.see('11');
 });

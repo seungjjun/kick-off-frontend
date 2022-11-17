@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+
 import styled from 'styled-components';
 
 import CommentEditForm from './CommentEditForm';
@@ -139,8 +140,20 @@ export default function Comment({
                         답글쓰기
                       </RecommentWriteButton>
                     </CommentDate>
-                    <button type="button" onClick={() => handleClcikCommentModify(comment.id)}>수정</button>
-                    <button type="button" onClick={() => handleClickCommentDelete(comment.id)}>삭제</button>
+                    <button
+                      id="update-comment"
+                      type="button"
+                      onClick={() => handleClcikCommentModify(comment.id)}
+                    >
+                      수정
+                    </button>
+                    <button
+                      id="delete-comment"
+                      type="button"
+                      onClick={() => handleClickCommentDelete(comment.id)}
+                    >
+                      삭제
+                    </button>
                   </>
                 )}
                 {comments.commentEditState === comment.id ? (
@@ -177,8 +190,20 @@ export default function Comment({
                     <CommentDate>
                       {recomment.commentDate}
                     </CommentDate>
-                    <button type="button" onClick={() => handleClcikRecommentModify(recomment.id)}>수정</button>
-                    <button type="button" onClick={() => handleClickRecommentDelete(recomment.id)}>삭제</button>
+                    <button
+                      id="update-recomment"
+                      type="button"
+                      onClick={() => handleClcikRecommentModify(recomment.id)}
+                    >
+                      수정
+                    </button>
+                    <button
+                      id="delete-recomment"
+                      type="button"
+                      onClick={() => handleClickRecommentDelete(recomment.id)}
+                    >
+                      삭제
+                    </button>
                     {recomments.recommentEditState === recomment.id ? (
                       <RecommentEditForm
                         recommentId={recomment.id}

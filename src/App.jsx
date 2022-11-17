@@ -14,6 +14,7 @@ import useScheduleStore from './hooks/useScheduleStore';
 
 import Header from './components/Header';
 
+import LoginFormPage from './pages/LoginFormPage';
 import PostsPage from './pages/PostsPage';
 import PostFormPage from './pages/PostFormPage';
 import PostPage from './pages/PostPage';
@@ -46,6 +47,8 @@ const Content = styled.div`
 
 export default function App() {
   // const [schedule, setSchedule] = useState(null);
+  // const accessToken = localStorage.getItem('accessToken');
+
   const [gameId, setGameId] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -58,6 +61,7 @@ export default function App() {
       setLoading(true);
 
       await scheduleStore.fetchSchedule();
+
       userStore.fetchUser();
 
       setGameId(scheduleStore.gameId);
@@ -87,6 +91,7 @@ export default function App() {
       <Content>
         <Routes>
           <Route path="/" element={<PostsPage />} />
+          <Route path="/login" element={<LoginFormPage />} />
           <Route path="/posts" element={<CategoryPostsPage />} />
           <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/write" element={<PostFormPage user={user} />} />
