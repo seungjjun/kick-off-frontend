@@ -2,30 +2,29 @@ Feature('댓글 리스트 - 사용자는 게시글에 대한 다양한 의견을
 
 Before(({ I }) => {
   // 로그인
-  I.amOnPage('/');
 
-  // 게시글 1개(제목: 카타르 월드컵 개최 일주일 전) 댓글 1개(안녕하세요!) 세팅
 });
 
 Scenario('올바르게 등록된 댓글을 확인', ({ I }) => {
   // Given
+  I.setupDatabase();
 
   // When
-  I.click('카타르 월드컵 개최 일주일 전');
+  I.amOnPage('/post/1');
 
   // Then
-  I.see('안녕하세요!');
+  I.see('대한민국 16강 응원합니다.');
 });
 
 Scenario('댓글이 20개가 넘어갈 경우', ({ I }) => {
   // Given
-  // 댓글 21개 세팅
+  I.settingPostsTen();
 
   // When
-  I.click('카타르 월드컵 개최 일주일 전');
+  I.amOnPage('/post/1');
 
   // Then
-  I.see('안녕하세요!');
+  I.see('대한민국 16강 응원합니다.');
 
   I.see('2');
 });

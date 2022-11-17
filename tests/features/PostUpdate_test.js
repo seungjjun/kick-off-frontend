@@ -1,25 +1,23 @@
-Feature('게시글 수정 - 사용자는 자신이 등록한 게시글의 잘못된 정보를 수정하기 위해 게시글을 수정 할 수 있다.');
+Feature('게시글 수정 - 축구 관련 정보를 공유하려는 사람이 잘못된 정보를 올바르게 수정하기 위해서 자신이 작성한 게시글을 수정할 수 있다.');
 
 Before(({ I }) => {
   // 로그인
   I.amOnPage('/');
 
-  // 게시글 1개 세팅 (제목: 카타르 월드컵 개최 일주일 전)
+  I.setupDatabase();
 });
 
 Scenario('올바르게 게시글을 수정한 경우', ({ I }) => {
   // Given
-  I.click('카타르 월드컵 개최 일주일 전');
+  I.amOnPage('/post/1');
 
   I.click('수정');
 
   // When
-  I.click('게시판을 선택해 주세요');
+  I.selectOption('#select-category', '2');
 
-  I.click('EPL');
-
-  I.fillField('제목', '카타르 월드컵 연기???');
-  I.fillField('내용', '카타르 월드컵 내년 8월으로 연기 확정');
+  I.fillField('#input-title', '카타르 월드컵 연기???');
+  I.fillField('#input-content', '카타르 월드컵 내년 8월으로 연기 확정');
 
   I.click('[type=submit]');
 
@@ -29,24 +27,29 @@ Scenario('올바르게 게시글을 수정한 경우', ({ I }) => {
 
 Scenario('내용을 바꾸지 않고 게시글을 수정할 경우', ({ I }) => {
   // Given
-  I.click('카타르 월드컵 개최 일주일 전');
+  I.amOnPage('/post/1');
 
   // When
   I.click('수정');
 
+  I.selectOption('#select-category', '2');
+
+  I.click('[type=submit]');
+  I.click('[type=submit]');
   I.click('[type=submit]');
 
   // Then
   I.see('카타르 월드컵 개최 일주일 전');
+  I.see('월드컵 기대가 됩니다.');
 });
 
 Scenario('제목을 지우고 게시글을 수정할 경우', ({ I }) => {
   // Given
-  I.click('카타르 월드컵 개최 일주일 전');
+  I.amOnPage('/post/1');
 
   I.click('수정');
   // When
-  I.fillField('제목', '');
+  I.fillField('#input-title', '');
 
   I.click('[type=submit]');
 

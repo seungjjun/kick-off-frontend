@@ -6,6 +6,14 @@ import config from '../config';
 const baseUrl = config.apiBaseUrl;
 
 export default class UserApiService {
+  constructor() {
+    this.accessToken = '';
+  }
+
+  setAccessToken(accessToken) {
+    this.accessToken = accessToken;
+  }
+
   async fetchUsers() {
     const url = `${baseUrl}/users`;
 
@@ -18,6 +26,17 @@ export default class UserApiService {
     const url = `${baseUrl}/users/me`;
 
     const { data } = await axios.get(url);
+
+    return data;
+  }
+
+  async login({ userId, password }) {
+    const url = `${baseUrl}/session`;
+
+    const { data } = await axios.post(url, {
+      identification: userId,
+      password,
+    });
 
     return data;
   }

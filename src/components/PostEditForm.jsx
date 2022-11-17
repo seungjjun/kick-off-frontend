@@ -31,7 +31,10 @@ export default function PostEditForm({
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <select onChange={handleChange}>
+        <select
+          id="select-category"
+          onChange={handleChange}
+        >
           <option value="">
             게시판을 선택해 주세요
           </option>

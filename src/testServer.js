@@ -7,6 +7,36 @@ import config from './config';
 const baseUrl = config.apiBaseUrl;
 
 const server = setupServer(
+  rest.post(`${baseUrl}/session`, async (req, res, ctx) => {
+    const { identification, password } = await req.json();
+    if (identification === 'jel1y' && password === 'Qwe1234!') {
+      return res(ctx.json({
+        accessToekn: 'ACCESS.TOKEN',
+        name: '노승준',
+        profileImage: 'profileImage',
+        gradeName: 'World Class',
+      }));
+    }
+
+    if (identification === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '아이디를 입력해주세요',
+        }),
+      );
+    }
+
+    if (password === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '비밀번호를 입력해주세요',
+        }),
+      );
+    }
+  }),
+
   rest.get(`${baseUrl}/posts`, (req, res, ctx) => res(ctx.json({
     posts: {
       posts: {

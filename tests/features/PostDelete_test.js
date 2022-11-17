@@ -1,15 +1,12 @@
 Feature('게시글 삭제 - 사용자는 자신이 등록한 게시글의 잘못된 정보를 수정하기 위해 게시글을 삭제할 수 있다.');
 
 Before(({ I }) => {
-  // 로그인
-  I.amOnPage('/');
-
-  // 게시글 1개 세팅 (제목: 카타르 월드컵 개최 일주일 전)
+  I.setupDatabase();
 });
 
 Scenario('올바르게 게시글을 삭제한 경우', ({ I }) => {
   // Given
-  I.click('카타르 월드컵 개최 일주일 전');
+  I.amOnPage('/post/1');
 
   // When
   I.click('삭제');

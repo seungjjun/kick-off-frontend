@@ -84,10 +84,10 @@ export default function Post({
       ) : (
         <PostContainer>
           <Option />
-          {/* <div>
+          <div>
             <button type="button" onClick={handleClcikModify}>수정</button>
             <button type="button" onClick={handleClickDelete}>삭제</button>
-          </div> */}
+          </div>
           <PostHeader>
             <Category>
               {posts.category.name}
