@@ -71,15 +71,25 @@ const CommentSubmitButton = styled.button`
 `;
 
 export default function Comment({
-  posts, pages, comments, recomments,
+  posts, pages, comments, recomments, accessToken, navigate,
 }) {
   const { register, handleSubmit } = useForm();
 
   const createComment = (data) => {
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
     comments.submitComment(data);
   };
 
   const handleClickRecomment = (commentId) => {
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
     recomments.changeRecommentFormState(commentId);
   };
 

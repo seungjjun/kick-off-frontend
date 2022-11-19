@@ -63,9 +63,14 @@ const LikeButton = styled.button`
 `;
 
 export default function Post({
-  posts, pages, comments, recomments, countLike, modifyPost, deletePost,
+  posts, pages, comments, recomments, countLike, modifyPost, deletePost, accessToken, navigate,
 }) {
   const handleClickLike = () => {
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
     countLike();
   };
 
@@ -90,7 +95,7 @@ export default function Post({
           </div>
           <PostHeader>
             <Category>
-              {posts.category.name}
+              {posts.board.boardName.value}
               {' '}
               {'>'}
             </Category>
@@ -129,6 +134,8 @@ export default function Post({
             pages={pages}
             comments={comments}
             recomments={recomments}
+            accessToken={accessToken}
+            navigate={navigate}
           />
         </PostContainer>
       )}

@@ -3,9 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import PostPage from './PostPage';
 
 const fetchPost = jest.fn();
-const fetchPosts = jest.fn();
 const deletePost = jest.fn();
-const fetchUser = jest.fn();
+const fetchUsers = jest.fn();
 const fetchLike = jest.fn();
 
 const countLike = jest.fn();
@@ -16,7 +15,7 @@ const navigate = jest.fn();
 
 let location = {};
 let post = {};
-let category = {};
+let board = {};
 let user = {};
 let likes = {};
 let users = [];
@@ -27,12 +26,14 @@ let recomments = {};
 let page = {};
 let pageButton = [];
 
+let accessToken = '';
+
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPost,
-  fetchPosts,
   deletePost,
   post,
-  category,
+  user,
+  board,
 }));
 
 jest.mock('../hooks/useCommentStore', () => () => ({
@@ -46,9 +47,9 @@ jest.mock('../hooks/useCommentStore', () => () => ({
 }));
 
 jest.mock('../hooks/useUserStore', () => () => ({
-  fetchUser,
-  user,
+  fetchUsers,
   users,
+  user,
 }));
 
 jest.mock('../hooks/useLikeStore', () => () => ({
@@ -66,6 +67,12 @@ jest.mock('react-router-dom', () => ({
   },
 }));
 
+jest.mock('usehooks-ts', () => ({
+  useLocalStorage() {
+    return accessToken;
+  },
+}));
+
 describe('PostPage', () => {
   beforeEach(() => {
     post = {
@@ -78,8 +85,10 @@ describe('PostPage', () => {
       createdAt: '2022-10-31',
     };
 
-    category = {
-      name: 'SerieA',
+    board = {
+      boardName: {
+        value: 'SerieA',
+      },
     };
 
     user = {
@@ -132,6 +141,8 @@ describe('PostPage', () => {
 
     pageButton = [1, 2, 3];
 
+    accessToken = 'ACCESS.TOKEN';
+
     render(<PostPage />);
   });
 
@@ -143,11 +154,11 @@ describe('PostPage', () => {
     screen.getByText('이강인 토트넘 이적 루머');
   });
 
-  it('render author', () => {
-    screen.getAllByText('이강인');
+  it('render category', () => {
+    screen.getByText('SerieA >');
   });
 
-  it('render createDate and hit', () => {
+  it('render createDate', () => {
     screen.getByText('2022-10-31 조회 50');
   });
 

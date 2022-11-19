@@ -6,6 +6,8 @@ const countLike = jest.fn();
 const modifyPost = jest.fn();
 const deletePost = jest.fn();
 
+const navigate = jest.fn();
+
 const context = describe;
 
 describe('Post', () => {
@@ -20,8 +22,10 @@ describe('Post', () => {
         createdAt: '2022-10-31',
       },
 
-      category: {
-        name: 'SerieA',
+      board: {
+        boardName: {
+          value: 'SerieA',
+        },
       },
 
       user: {
@@ -44,6 +48,8 @@ describe('Post', () => {
 
     const comments = {};
 
+    const accessToken = 'ACCESS.TOKEN';
+
     render(<Post
       posts={posts}
       pages={pages}
@@ -51,6 +57,8 @@ describe('Post', () => {
       countLike={countLike}
       modifyPost={modifyPost}
       deletePost={deletePost}
+      accessToken={accessToken}
+      navigate={navigate}
     />);
   });
 

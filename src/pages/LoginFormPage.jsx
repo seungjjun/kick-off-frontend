@@ -5,6 +5,7 @@ import { useLocalStorage } from 'usehooks-ts';
 import LoginForm from '../components/LoginForm';
 
 import useUserStore from '../hooks/useUserStore';
+import { userApiService } from '../services/UserApiService';
 
 export default function LoginFormPage() {
   const [, setAccessToken] = useLocalStorage('accessToken', '');
@@ -22,6 +23,7 @@ export default function LoginFormPage() {
 
     if (accessToken) {
       setAccessToken(accessToken);
+      userApiService.setAccessToken(accessToken);
 
       navigate('/');
     }

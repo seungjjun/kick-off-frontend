@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useLocalStorage } from 'usehooks-ts';
+
 import Post from '../components/Post';
 
 import usePostStore from '../hooks/usePostStore';
@@ -11,8 +13,12 @@ import useCommentStore from '../hooks/useCommentStore';
 import useUserStore from '../hooks/useUserStore';
 
 import useLikeStore from '../hooks/useLikeStore';
+import useBoardStore from '../hooks/useBoardStore';
 
 export default function PostPage() {
+  const [accessToken] = useLocalStorage('accessToken', '');
+
+  const boardStore = useBoardStore();
   const postStore = usePostStore();
   const commentStore = useCommentStore();
   const userStore = useUserStore();
@@ -36,8 +42,10 @@ export default function PostPage() {
     navigate(`/posts/edit/${postId}`);
   };
 
-  const deletePost = (postId) => {
+  const deletePost = async (postId) => {
     postStore.deletePost(postId);
+
+    await boardStore.fetchPosts();
 
     navigate('/');
   };
@@ -113,7 +121,7 @@ export default function PostPage() {
     commentStore.fetchComment(postId, commentPageNumber);
     commentStore.fetchRecomment(postId);
     commentStore.setRecommentVisibleState();
-    userStore.fetchUser();
+    userStore.fetchUsers();
     likeStore.fetchLike();
   }, [commentPageNumber]);
 
@@ -126,11 +134,11 @@ export default function PostPage() {
 
   const posts = {
     post: postStore.post,
-    category: postStore.category,
+    board: postStore.board,
     likes: likeStore.likes,
     comments: commentStore.comments,
     recomments: commentStore.recomments,
-    user: userStore.user,
+    user: postStore.user,
     users: userStore.users,
     userName: userStore.user.name,
   };
@@ -171,6 +179,8 @@ export default function PostPage() {
       countLike={countLike}
       modifyPost={modifyPost}
       deletePost={deletePost}
+      accessToken={accessToken}
+      navigate={navigate}
     />
   );
 }

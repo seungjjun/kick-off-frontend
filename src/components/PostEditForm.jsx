@@ -2,8 +2,8 @@
 import { useForm } from 'react-hook-form';
 
 export default function PostEditForm({
-  category, navigate, submit, changeCategory, upload,
-  image, title, content, titleChange, contentChange,
+  navigate, submit, changeBoard, upload, image,
+  title, content, titleChange, contentChange,
 }) {
   const { register, handleSubmit } = useForm();
 
@@ -12,14 +12,14 @@ export default function PostEditForm({
   };
 
   const handleChange = (target) => {
-    changeCategory(target.target.value);
+    changeBoard(target.target.value);
   };
 
   const onSubmit = (data) => {
-    if (category === '') {
-      alert('게시판을 선택해주세요');
-      return;
-    }
+    // if (category === '') {
+    //   alert('게시판을 선택해주세요');
+    //   return;
+    // }
 
     submit(data);
   };
@@ -32,7 +32,7 @@ export default function PostEditForm({
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <select
-          id="select-category"
+          id="select-board"
           onChange={handleChange}
         >
           <option value="">

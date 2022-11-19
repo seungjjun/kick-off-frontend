@@ -1,14 +1,16 @@
 import {
+  fireEvent,
   render, screen,
 } from '@testing-library/react';
 
 import PostFormPage from './PostFormPage';
 
 const navigate = jest.fn();
-const fetchPosts = jest.fn();
-const changeCategory = jest.fn();
+const changeBoard = jest.fn();
 const write = jest.fn();
 const upload = jest.fn();
+
+const context = describe;
 
 jest.mock('react-router-dom', () => ({
   useNavigate() {
@@ -17,17 +19,34 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../hooks/usePostStore', () => () => ({
-  fetchPosts,
-  changeCategory,
   write,
   upload,
 }));
 
+jest.mock('../hooks/useBoardStore', () => () => ({
+  changeBoard,
+}));
+
 describe('PostFormPage', () => {
-  it('render category', () => {
+  it('render board select', () => {
     render(<PostFormPage />);
 
     expect(screen.getByRole('option', { name: '게시판을 선택해 주세요' }).selected).toBeTruthy();
+  });
+
+  context('when click board', () => {
+    it('change board function called', () => {
+      // fireEvent.change(screen.getByTestId('select-board', {
+      //   target: { value: '2' },
+      // }));
+
+      // screen.getByRole('option');
+
+      // fireEvent.change(select, {
+      //   target: { value: 2 },
+      // });
+      // expect()
+    });
   });
 
   it('render input title', () => {

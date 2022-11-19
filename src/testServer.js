@@ -37,57 +37,102 @@ const server = setupServer(
     }
   }),
 
-  rest.get(`${baseUrl}/posts`, (req, res, ctx) => res(ctx.json({
-    posts: {
-      posts: {
-        categories: {
-          id: 1,
-          name: 'EPL',
+  rest.get(`${baseUrl}/boards`, (req, res, ctx) => res(ctx.json({
+    board: [
+      {
+        id: 1,
+        boardName: {
+          value: '전체게시판',
         },
-        comments: [
-          {
-            id: 1,
-            content: '1번째 게시글의 댓글',
-            userId: 3,
-            postId: 1,
-            commentDate: '2022-11-01',
-          },
-          {
-            id: 2,
-            content: '2번째 게시글의 댓글',
-            userId: 3,
-            postId: 2,
-            commentDate: '2022-11-01',
-          },
-        ],
-        likes: [
-          {
-            id: 5,
-            postId: 1,
-            userId: 3,
-          },
-        ],
-        posts: [
-          {
-            id: 1,
-            title: '손흥민 득점왕',
-            categoryId: 1,
-            hit: 25,
-            imageUrl: 'imageUrl',
-            userId: 3,
-          },
-        ],
-        users: [
-          {
-            id: 3,
-            identification: 'jel1y',
-            name: 'son7',
-            profileImage: 'profileImage',
-          },
-        ],
       },
+      {
+        id: 2,
+        boardName: {
+          value: 'EPL',
+        },
+      },
+      {
+        id: 3,
+        boardName: {
+          value: 'SerieA',
+        },
+      },
+    ],
+  }))),
+
+  rest.get(`${baseUrl}/board/1/posts`, (req, res, ctx) => res(ctx.json({
+    posts: {
+      posts: [
+        {
+          id: 1,
+          postInformation: {
+            title: '손흥민 득점왕',
+          },
+          boardId: 1,
+          hit: 100,
+          imageUrl: 'imageUrl',
+          userId: {
+            userId: 1,
+          },
+          createdAt: '2022-11-22',
+        },
+      ],
+
+      comments: [
+        {
+          id: 1,
+          content: '1번째 게시글의 댓글',
+          userId: 3,
+          postId: 1,
+          commentDate: '2022-11-01',
+        },
+        {
+          id: 2,
+          content: '2번째 게시글의 댓글',
+          userId: 3,
+          postId: 2,
+          commentDate: '2022-11-01',
+        },
+      ],
+
+      recomments: [
+        {
+          id: 3,
+          content: '1번째 댓글의 대댓글',
+          commentId: 1,
+          postId: 1,
+          userId: 3,
+        },
+      ],
+
+      boards: [
+        {
+          id: 1,
+          boardName: {
+            value: 'EPL',
+          },
+        },
+      ],
+
+      users: [
+        {
+          id: 1,
+          identification: 'jel1y',
+          name: 'son7',
+
+        },
+      ],
+
+      likes: [
+        {
+          id: 1,
+          postId: 1,
+          userId: 1,
+        },
+      ],
     },
-    postPageDto: [
+
+    page: [
       {
         currentLastPage: 3,
         currentPageNumber: 1,
@@ -103,31 +148,32 @@ const server = setupServer(
       title, content, categoryId, image, userId,
     } = await req.json();
     return res(ctx.json({
-      postId: 5,
+      id: 5,
     }));
   }),
 
   rest.get(`${baseUrl}/posts/1`, async (req, res, ctx) => res(ctx.json({
-    id: 1,
-    title: '대만힌국 16강 진출',
-    content: '카타르 월드컵 대한민국 16강 진출',
-    hit: 10,
-    createdAt: '2017-02-16',
-    imageUrl: 'imageUrl',
-    category: {
+    post: {
       id: 1,
-      name: 'EPL',
-    },
-    likes: {
-      id: 2,
-      postId: 1,
-      userId: 4,
-    },
-    user: {
-      id: 4,
-      identification: 'jel1y',
-      name: 'son7',
-      profileImage: 'profileImage',
+      board: {
+        id: 1,
+        boardName: {
+          value: '전체게시판',
+        },
+      },
+      postInformation: {
+        title: '대만힌국 16강 진출',
+        content: '카타르 월드컵 대한민국 16강 진출',
+      },
+      user: {
+        id: 4,
+        identification: 'jel1y',
+        name: 'son7',
+        profileImage: 'profileImage',
+      },
+      createdAt: '2017-02-16',
+      imageUrl: 'imageUrl',
+      hit: 10,
     },
   }))),
 

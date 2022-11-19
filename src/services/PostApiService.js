@@ -6,18 +6,6 @@ import config from '../config';
 const baseUrl = config.apiBaseUrl;
 
 export default class PostApiService {
-  async fetchPosts(pageNumber) {
-    const url = `${baseUrl}/posts`;
-
-    const { data } = await axios.get(url, {
-      params: {
-        page: pageNumber,
-      },
-    });
-
-    return data;
-  }
-
   async fetchPost(postId) {
     const url = `${baseUrl}/posts/${postId}`;
 
@@ -26,25 +14,13 @@ export default class PostApiService {
     return data;
   }
 
-  async fetchCategoryPosts(categoryId, pageNumber) {
-    const url = `${baseUrl}/category/${categoryId}`;
-
-    const { data } = await axios.get(url, {
-      params: {
-        page: pageNumber,
-      },
-    });
-
-    return data;
-  }
-
-  async write(title, content, categoryId, imageUrl, userId) {
+  async write(title, content, boardId, imageUrl, userId) {
     const url = `${baseUrl}/post`;
 
     const { data } = await axios.post(url, {
       title,
       content,
-      categoryId,
+      boardId,
       imageUrl,
       userId,
     });
@@ -52,13 +28,13 @@ export default class PostApiService {
     return data;
   }
 
-  async patch(title, content, categoryId, imageUrl, postId) {
+  async patch(title, content, boardId, imageUrl, postId) {
     const url = `${baseUrl}/posts/${postId}`;
 
     await axios.patch(url, {
       title,
       content,
-      categoryId,
+      boardId,
       imageUrl,
     });
   }

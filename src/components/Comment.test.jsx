@@ -22,6 +22,8 @@ const submitComment = jest.fn();
 
 const submitRecomment = jest.fn();
 
+const navigate = jest.fn();
+
 const context = describe;
 
 describe('comment', () => {
@@ -100,11 +102,15 @@ describe('comment', () => {
       changeCommentNumber,
     };
 
+    const accessToken = 'ACCESS.TOKEN';
+
     render(<Comment
       posts={posts}
       pages={pages}
       comments={comments}
       recomments={recomments}
+      accessToken={accessToken}
+      navigate={navigate}
     />);
   });
 

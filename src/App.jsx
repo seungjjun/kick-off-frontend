@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react';
 
 import { Reset } from 'styled-reset';
 
+import { useLocalStorage } from 'usehooks-ts';
+
 import styled from 'styled-components';
+
+import { userApiService } from './services/UserApiService';
 
 import GlobalStyle from './styles/GlobalStyle';
 
@@ -15,14 +19,13 @@ import useScheduleStore from './hooks/useScheduleStore';
 import Header from './components/Header';
 
 import LoginFormPage from './pages/LoginFormPage';
-import PostsPage from './pages/PostsPage';
 import PostFormPage from './pages/PostFormPage';
 import PostPage from './pages/PostPage';
 import SchedulePage from './pages/SchedulePage';
 import ChattingRoomPage from './pages/ChattingRoomPage';
-import CategoryPostsPage from './pages/CategoryPostsPage';
 import PostEditFormPage from './pages/PostEditFormPage';
-import Category from './components/Category';
+import BoardPage from './pages/BoardPage';
+import BoardListPage from './pages/BoardListPage';
 
 const Container = styled.div`
   max-width: 1080px;
@@ -46,8 +49,7 @@ const Content = styled.div`
 `;
 
 export default function App() {
-  // const [schedule, setSchedule] = useState(null);
-  // const accessToken = localStorage.getItem('accessToken');
+  const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
   const [gameId, setGameId] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -62,7 +64,11 @@ export default function App() {
 
       await scheduleStore.fetchSchedule();
 
-      userStore.fetchUser();
+      if (accessToken) {
+        userApiService.setAccessToken(accessToken);
+
+        userStore.fetchUser();
+      }
 
       setGameId(scheduleStore.gameId);
 
@@ -70,7 +76,7 @@ export default function App() {
     };
 
     fetchSchedule();
-  }, []);
+  }, [accessToken]);
 
   const { user } = userStore;
 
@@ -84,15 +90,15 @@ export default function App() {
     <Container>
       <Reset />
       <GlobalStyle />
-      <Header />
+      <Header accessToken={accessToken} setAccessToken={setAccessToken} />
       <Menu>
-        <Category />
+        <BoardListPage />
       </Menu>
       <Content>
         <Routes>
-          <Route path="/" element={<PostsPage />} />
+          <Route path="/" element={<BoardPage />} />
+          <Route path="/board" element={<BoardPage />} />
           <Route path="/login" element={<LoginFormPage />} />
-          <Route path="/posts" element={<CategoryPostsPage />} />
           <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/write" element={<PostFormPage user={user} />} />
           <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />

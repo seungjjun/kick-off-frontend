@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import usePostStore from '../hooks/usePostStore';
 
+import useBoardStore from '../hooks/useBoardStore';
+
 import PostForm from '../components/PostForm';
 
 export default function PostFormPage({ user }) {
@@ -11,12 +13,14 @@ export default function PostFormPage({ user }) {
 
   const postStore = usePostStore();
 
+  const boardStore = useBoardStore();
+
   const navigate = useNavigate();
 
   const formData = new FormData();
 
-  const changeCategory = (value) => {
-    postStore.changeCategory(value);
+  const changeBoard = (value) => {
+    boardStore.changeBoard(value);
   };
 
   const upload = async (e) => {
@@ -32,21 +36,19 @@ export default function PostFormPage({ user }) {
     await postStore.write(
       data.title,
       data.content,
-      postStore.categoryId,
+      boardStore.boardId,
       image,
       user.id,
     );
 
-    postStore.fetchPosts();
     navigate(`/post/${postStore.postId}`);
   };
 
   return (
     <PostForm
-      postStore={postStore}
       navigate={navigate}
       submit={submit}
-      changeCategory={changeCategory}
+      changeBoard={changeBoard}
       upload={upload}
       image={image}
     />
