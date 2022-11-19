@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 // import Menu from './Category';
@@ -10,12 +11,19 @@ const HeaderBox = styled.div`
   height: 150px;
 `;
 
-export default function Header() {
+export default function Header({ accessToken, setAccessToken }) {
+  const navigate = useNavigate();
+
   // const [isShow, setIsShow] = useState(false);
 
   // const handleClickMenu = () => {
   //   setIsShow(!isShow);
   // };
+
+  const handleClickLogout = () => {
+    setAccessToken('');
+    navigate('/');
+  };
 
   return (
     <HeaderBox>
@@ -24,12 +32,23 @@ export default function Header() {
           <li>
             <Link to="/">KiCK OFF</Link>
           </li>
-          <li>
-            <Link to="/login">로그인</Link>
-          </li>
-          <li>
-            <Link to="/signup">회원가입</Link>
-          </li>
+          {accessToken ? (
+            <button
+              type="button"
+              onClick={handleClickLogout}
+            >
+              로그아웃
+            </button>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">로그인</Link>
+              </li>
+              <li>
+                <Link to="/signup">회원가입</Link>
+              </li>
+            </>
+          )}
           <li>
             {/* <button
               type="button"

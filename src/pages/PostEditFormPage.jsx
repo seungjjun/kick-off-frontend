@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 import usePostStore from '../hooks/usePostStore';
 
+import useBoardStore from '../hooks/useBoardStore';
+
 import PostEditForm from '../components/PostEditForm';
 
 export default function PostEditFormPage() {
@@ -12,6 +14,8 @@ export default function PostEditFormPage() {
   const [image, setImage] = useState('');
 
   const postStore = usePostStore();
+
+  const boardStore = useBoardStore();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,8 +32,8 @@ export default function PostEditFormPage() {
     setImage(postStore.post.imageUrl);
   }, []);
 
-  const changeCategory = (value) => {
-    postStore.changeCategory(value);
+  const changeBoard = (value) => {
+    boardStore.changeBoard(value);
   };
 
   const upload = async (e) => {
@@ -45,7 +49,7 @@ export default function PostEditFormPage() {
     await postStore.patch(
       data.title,
       data.content,
-      postStore.categoryId,
+      boardStore.boardId,
       image,
       postId,
     );
@@ -64,10 +68,9 @@ export default function PostEditFormPage() {
 
   return (
     <PostEditForm
-      category={postStore.category}
       navigate={navigate}
       submit={submit}
-      changeCategory={changeCategory}
+      changeBoard={changeBoard}
       upload={upload}
       image={image}
       title={title}

@@ -6,7 +6,7 @@ module.exports = () => actor({
   },
 
   settingPostsTen() {
-    this.amOnPage(`${backdoorBaseUrl}/setting-posts-ten`);
+    this.amOnPage(`${backdoorBaseUrl}/setting-posts10`);
   },
 
   settingPosts() {
@@ -15,5 +15,13 @@ module.exports = () => actor({
 
   settingRecomments() {
     this.amOnPage(`${backdoorBaseUrl}/setting-recomments`);
+  },
+
+  login() {
+    this.amOnPage('/login');
+
+    this.fillField('#input-userId', 'jel1y');
+    this.fillField('#input-password', 'Qwe1234!');
+    this.click('[type=submit]');
   },
 });
