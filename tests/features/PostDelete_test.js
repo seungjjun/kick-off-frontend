@@ -18,6 +18,9 @@ Scenario('올바르게 게시글을 삭제한 경우', ({ I }) => {
 });
 
 Scenario('자신의 게시글이 아닌 다른 사용자의 게시글을 삭제하려는 경우', ({ I }) => {
+  // Given
+  I.login2();
+
   // When
   I.amOnPage('/post/1');
 

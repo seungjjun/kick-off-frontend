@@ -77,6 +77,12 @@ describe('comment', () => {
           content: '3번째 게시글의 1번째 댓글의 대댓글',
         },
       ],
+
+      loginUser: {
+        id: 1,
+        identification: 'jel1y',
+        name: '이강인',
+      },
     };
 
     const comments = {

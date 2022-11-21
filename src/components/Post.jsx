@@ -90,7 +90,7 @@ export default function Post({
         <PostContainer>
           <Option />
           <div>
-            {accessToken ? (
+            {posts.loginUser.identification === posts.user.identification && accessToken ? (
               <>
                 <button id="post-update" type="button" onClick={handleClcikModify}>수정</button>
                 <button id="post-delete" type="button" onClick={handleClickDelete}>삭제</button>

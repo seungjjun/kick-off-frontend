@@ -140,6 +140,7 @@ export default function PostPage() {
     recomments: commentStore.recomments,
     user: postStore.user,
     users: userStore.users,
+    loginUser: userStore.user,
     userName: userStore.user.name,
   };
 
