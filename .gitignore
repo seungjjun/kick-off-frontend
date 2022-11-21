@@ -132,4 +132,4 @@ dist
 output/
 
 # api
-./src/services/ScheduleApiService.js
+ScheduleApiService.js
