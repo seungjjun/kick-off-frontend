@@ -9,7 +9,7 @@ Scenario('게시글의 세부 정보를 불러올 경우', ({ I }) => {
   I.amOnPage('/post/1');
 
   // Then
-  I.see('전체 게시판');
+  I.see('전체게시판');
   I.see('카타르 월드컵 개최 일주일 전');
   I.see('son7');
   I.see('2022-11-14');
@@ -17,12 +17,14 @@ Scenario('게시글의 세부 정보를 불러올 경우', ({ I }) => {
 
 Scenario('게시글의 조회수가 늘어나는 것을 확인할 경우', ({ I }) => {
   // Given
-  I.amOnPage('/');
-  I.see('10');
+  I.amOnPage('/post/1');
+
+  I.see('11');
 
   // When
+  I.amOnPage('/');
   I.amOnPage('/post/1');
 
   // Then
-  I.see('11');
+  I.see('12');
 });

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -6,31 +6,71 @@ import useScheduleStore from '../hooks/useScheduleStore';
 
 import Schedule from '../components/Schedule';
 
-export default function SchedulePage() {
+export default function SchedulePage({ accessToken }) {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  const todayDate = new Date();
+
   const scheduleStore = useScheduleStore();
 
   const navigate = useNavigate();
 
+  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate()}`;
+
   useEffect(() => {
-    scheduleStore.fetchSchedule();
+    scheduleStore.fetchTodaySchedule(today);
+    scheduleStore.setPeriodGames();
   }, []);
 
+  const fillZero = (date) => (date.toString().length === 1
+    ? date.toString().padStart(2, '0')
+    : date.toString());
+
+  const checkScheduleByPeriod = () => {
+    const startYear = startDate.getFullYear();
+    const startMonth = fillZero(startDate.getMonth() + 1);
+    const startDay = fillZero(startDate.getDate());
+
+    const endYear = endDate.getFullYear();
+    const endMonth = fillZero(endDate.getMonth() + 1);
+    const endDay = fillZero(endDate.getDate());
+
+    const from = `${startYear}-${startMonth}-${startDay}`;
+    const to = `${endYear}-${endMonth}-${endDay}`;
+
+    scheduleStore.fetchPeriodSchedule(from, to);
+  };
+
   const compare = (gameId) => {
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
+    scheduleStore.changeRoomId(gameId);
+
     navigate(`/room/${gameId}`);
   };
 
-  const { gameTime } = scheduleStore;
-  const { todayHomaTeam } = scheduleStore;
-  const { todayAwayTeam } = scheduleStore;
-  const { gameId } = scheduleStore;
+  const games = {
+    todayGames: scheduleStore.todayGames,
+    periodGames: scheduleStore.periodGames,
+  };
+
+  const setPeriod = {
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+  };
 
   return (
     <Schedule
       compare={compare}
-      gameTime={gameTime}
-      todayHomaTeam={todayHomaTeam}
-      todayAwayTeam={todayAwayTeam}
-      gameId={gameId}
+      games={games}
+      checkScheduleByPeriod={checkScheduleByPeriod}
+      setPeriod={setPeriod}
     />
   );
 }

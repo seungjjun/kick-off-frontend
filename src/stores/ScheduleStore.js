@@ -5,22 +5,45 @@ export default class ScheduleStore extends Store {
   constructor() {
     super();
 
+    this.roomId = 0;
+
     this.schedule = [];
-    this.gameId = 0;
-    this.gameTime = 0;
-    this.todayHomaTeam = '';
-    this.todayAwayTeam = '';
+
+    this.todayGames = [];
+    this.periodGames = [];
   }
 
-  async fetchSchedule() {
-    const data = await scheduleApiService.fetchSchedule();
+  async fetchTodaySchedule(today) {
+    const data = await scheduleApiService.fetchTodaySchedule(today);
 
     this.schedule = data.response;
-    this.gameId = this.schedule[157].fixture.id;
-    this.gameTime = this.schedule[157].fixture.date.substring(11, 16);
-    this.todayHomaTeam = this.schedule[157].teams.home;
-    this.todayAwayTeam = this.schedule[157].teams.away;
+
+    this.todayGames = [...this.schedule];
+
+    this.publish();
   }
+
+  async fetchPeriodSchedule(from, to) {
+    const data = await scheduleApiService.fetchPeriodSchedule(from, to);
+
+    this.schedule = data.response;
+
+    this.periodGames = [...this.schedule];
+
+    this.publish();
+  }
+
+  changeRoomId = (roomId) => {
+    this.roomId = roomId;
+
+    this.publish();
+  };
+
+  setPeriodGames = () => {
+    this.periodGames = [];
+
+    this.publish();
+  };
 }
 
 export const scheduleStore = new ScheduleStore();

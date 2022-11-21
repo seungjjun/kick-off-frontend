@@ -62,15 +62,13 @@ export default function App() {
     const fetchSchedule = async () => {
       setLoading(true);
 
-      await scheduleStore.fetchSchedule();
-
       if (accessToken) {
         userApiService.setAccessToken(accessToken);
 
         userStore.fetchUser();
       }
 
-      setGameId(scheduleStore.gameId);
+      await setGameId(scheduleStore.roomId);
 
       setLoading(false);
     };
@@ -102,7 +100,7 @@ export default function App() {
           <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/write" element={<PostFormPage user={user} />} />
           <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
-          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/schedule" element={<SchedulePage accessToken={accessToken} />} />
           <Route path="/room/:roomId" element={<ChattingRoomPage user={user} gameId={gameId} />} />
         </Routes>
       </Content>

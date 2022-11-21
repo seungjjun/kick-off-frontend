@@ -6,6 +6,8 @@ Before(({ I }) => {
 
 Scenario('올바르게 대댓글을 수정한 경우', ({ I }) => {
   // Given
+  I.login();
+
   I.amOnPage('/post/1');
 
   I.click('답글쓰기');
@@ -23,4 +25,12 @@ Scenario('올바르게 대댓글을 수정한 경우', ({ I }) => {
 
   // Then
   I.see('이강인 토트넘 이적 루머로 밝혀져..');
+});
+
+Scenario('자신의 대댓글이 아닌 다른 사용자의 대댓글을 수정하려는 경우', ({ I }) => {
+  // When
+  I.amOnPage('/post/1');
+
+  // Then
+  I.dontSee('#update-recomment');
 });
