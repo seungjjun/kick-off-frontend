@@ -74,7 +74,7 @@ const NextButton = styled.button`
 `;
 
 export default function Board({
-  accessToken, posts, navigate, commentNumber, recommentNumber, pagination,
+  accessToken, boardId, posts, navigate, commentNumber, recommentNumber, pagination,
 }) {
   const postList = posts.posts;
 
@@ -89,6 +89,10 @@ export default function Board({
     }
 
     navigate('/write');
+  };
+
+  const handleClickSchedule = () => {
+    navigate('/schedule');
   };
 
   const handleClickPage = (event) => {
@@ -107,6 +111,9 @@ export default function Board({
     <section>
       <div>
         <button type="button" onClick={handleClickWrite}>글쓰기</button>
+        {boardId !== '1' && boardId !== undefined ? (
+          <button type="button" onClick={handleClickSchedule}>경기일정</button>
+        ) : null}
       </div>
       <article>
         {Object.keys(posts).length === 0 || postList.length === 0 ? (

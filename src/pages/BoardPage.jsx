@@ -70,6 +70,7 @@ export default function BoardPage() {
   return (
     <Board
       accessToken={accessToken}
+      boardId={boardId}
       posts={boardStore.posts}
       navigate={navigate}
       commentNumber={commentNumber}

@@ -90,8 +90,14 @@ export default function Post({
         <PostContainer>
           <Option />
           <div>
-            <button type="button" onClick={handleClcikModify}>수정</button>
-            <button type="button" onClick={handleClickDelete}>삭제</button>
+            {accessToken ? (
+              <>
+                <button id="post-update" type="button" onClick={handleClcikModify}>수정</button>
+                <button id="post-delete" type="button" onClick={handleClickDelete}>삭제</button>
+              </>
+            ) : (
+              null
+            )}
           </div>
           <PostHeader>
             <Category>

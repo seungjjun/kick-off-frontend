@@ -6,6 +6,8 @@ Before(({ I }) => {
 
 Scenario('올바르게 대댓글을 등록한 경우', ({ I }) => {
   // Given
+  I.login();
+
   I.amOnPage('/post/1');
 
   // When
