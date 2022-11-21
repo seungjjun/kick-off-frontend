@@ -16,7 +16,7 @@ export default function SchedulePage({ accessToken }) {
 
   const navigate = useNavigate();
 
-  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate()}`;
+  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate() - 7}`;
 
   useEffect(() => {
     scheduleStore.fetchTodaySchedule(today);
@@ -39,7 +39,7 @@ export default function SchedulePage({ accessToken }) {
     const from = `${startYear}-${startMonth}-${startDay}`;
     const to = `${endYear}-${endMonth}-${endDay}`;
 
-    scheduleStore.fetchPeriodSchedule(from, to);
+    scheduleStore.fetchPeriodSchedule(startYear, from, to);
   };
 
   const compare = (gameId) => {

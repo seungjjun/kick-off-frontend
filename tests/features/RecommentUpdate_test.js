@@ -28,6 +28,9 @@ Scenario('올바르게 대댓글을 수정한 경우', ({ I }) => {
 });
 
 Scenario('자신의 대댓글이 아닌 다른 사용자의 대댓글을 수정하려는 경우', ({ I }) => {
+  // Given
+  I.login2();
+
   // When
   I.amOnPage('/post/1');
 

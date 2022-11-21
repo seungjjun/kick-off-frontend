@@ -30,6 +30,7 @@ describe('Post', () => {
 
       user: {
         name: '이강인',
+        identification: 'jel1y',
       },
 
       likes: [
@@ -38,6 +39,12 @@ describe('Post', () => {
           length: 1,
         },
       ],
+
+      loginUser: {
+        id: 1,
+        identification: 'jel1y',
+        name: '이강인',
+      },
 
       comments: [],
     };

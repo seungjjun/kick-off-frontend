@@ -47,6 +47,9 @@ Scenario('내용을 바꾸지 않고 게시글을 수정할 경우', ({ I }) => 
 });
 
 Scenario('자신의 글이 아닌 글을 수정하려는 경우', ({ I }) => {
+  // Given
+  I.login2();
+
   // When
   I.amOnPage('/post/1');
 

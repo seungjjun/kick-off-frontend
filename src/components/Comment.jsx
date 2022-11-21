@@ -150,20 +150,26 @@ export default function Comment({
                         답글쓰기
                       </RecommentWriteButton>
                     </CommentDate>
-                    <button
-                      id="update-comment"
-                      type="button"
-                      onClick={() => handleClcikCommentModify(comment.id)}
-                    >
-                      수정
-                    </button>
-                    <button
-                      id="delete-comment"
-                      type="button"
-                      onClick={() => handleClickCommentDelete(comment.id)}
-                    >
-                      삭제
-                    </button>
+                    {posts.loginUser.id === comment.userId && accessToken ? (
+                      <>
+                        <button
+                          id="update-comment"
+                          type="button"
+                          onClick={() => handleClcikCommentModify(comment.id)}
+                        >
+                          수정
+                        </button>
+                        <button
+                          id="delete-comment"
+                          type="button"
+                          onClick={() => handleClickCommentDelete(comment.id)}
+                        >
+                          삭제
+                        </button>
+                      </>
+                    ) : (
+                      null
+                    )}
                   </>
                 )}
                 {comments.commentEditState === comment.id ? (
@@ -200,20 +206,26 @@ export default function Comment({
                     <CommentDate>
                       {recomment.commentDate}
                     </CommentDate>
-                    <button
-                      id="update-recomment"
-                      type="button"
-                      onClick={() => handleClcikRecommentModify(recomment.id)}
-                    >
-                      수정
-                    </button>
-                    <button
-                      id="delete-recomment"
-                      type="button"
-                      onClick={() => handleClickRecommentDelete(recomment.id)}
-                    >
-                      삭제
-                    </button>
+                    {posts.loginUser.id === recomment.userId && accessToken ? (
+                      <>
+                        <button
+                          id="update-recomment"
+                          type="button"
+                          onClick={() => handleClcikRecommentModify(recomment.id)}
+                        >
+                          수정
+                        </button>
+                        <button
+                          id="delete-recomment"
+                          type="button"
+                          onClick={() => handleClickRecommentDelete(recomment.id)}
+                        >
+                          삭제
+                        </button>
+                      </>
+                    ) : (
+                      null
+                    )}
                     {recomments.recommentEditState === recomment.id ? (
                       <RecommentEditForm
                         recommentId={recomment.id}

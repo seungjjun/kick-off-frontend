@@ -24,4 +24,12 @@ module.exports = () => actor({
     this.fillField('#input-password', 'Qwe1234!');
     this.click('[type=submit]');
   },
+
+  login2() {
+    this.amOnPage('/login');
+
+    this.fillField('#input-userId', 'stw550');
+    this.fillField('#input-password', 'Qwe1234!');
+    this.click('[type=submit]');
+  },
 });

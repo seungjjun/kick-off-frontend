@@ -23,8 +23,8 @@ export default class ScheduleStore extends Store {
     this.publish();
   }
 
-  async fetchPeriodSchedule(from, to) {
-    const data = await scheduleApiService.fetchPeriodSchedule(from, to);
+  async fetchPeriodSchedule(startYear, from, to) {
+    const data = await scheduleApiService.fetchPeriodSchedule(startYear, from, to);
 
     this.schedule = data.response;
 
