@@ -16,7 +16,7 @@ export default function SchedulePage({ accessToken }) {
 
   const navigate = useNavigate();
 
-  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate() - 7}`;
+  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate() - 9}`;
 
   useEffect(() => {
     scheduleStore.fetchTodaySchedule(today);
@@ -42,13 +42,15 @@ export default function SchedulePage({ accessToken }) {
     scheduleStore.fetchPeriodSchedule(startYear, from, to);
   };
 
-  const compare = (gameId) => {
+  const compare = async (gameId) => {
     if (!accessToken) {
       navigate('/login');
       return;
     }
 
     scheduleStore.changeRoomId(gameId);
+
+    scheduleStore.fetchMatchInformation(gameId);
 
     navigate(`/room/${gameId}`);
   };

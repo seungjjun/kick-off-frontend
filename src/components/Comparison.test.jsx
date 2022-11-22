@@ -1,17 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
-import ChattingRoom from './ChattingRoom';
+import Comparison from './Comparison';
 
-const messageChange = jest.fn();
+const context = describe;
 
-const publishMessage = jest.fn();
-
-describe('chattingRoom', () => {
+describe('Comparison', () => {
   beforeEach(() => {
-    const message = 'input';
-
-    const chatMessages = ['메시지1', '메시지2'];
-
     const predictions = [
       {
         teams: {
@@ -165,31 +159,44 @@ describe('chattingRoom', () => {
         ],
       },
     ];
-
-    render(<ChattingRoom
-      message={message}
-      messageChange={messageChange}
-      chatMessages={chatMessages}
-      publishMessage={publishMessage}
+    render(<Comparison
       predictions={predictions}
     />);
   });
 
-  it('render send button', () => {
-    screen.getByText('전송');
-  });
-
-  it('click send button', () => {
-    fireEvent.change(screen.getByDisplayValue('input'), {
-      target: { value: '안녕하세요' },
+  context('when compare match', () => {
+    it('render team name', () => {
+      screen.getByText('대전 시티즌');
     });
 
-    fireEvent.click(screen.getByText('전송'));
+    it('render both teams record', () => {
+      screen.getByText('5승1무3패 4승2무3패');
+    });
 
-    expect(publishMessage).toBeCalled();
-  });
+    it('render recent match result', () => {
+      screen.getByText('DLWWL 최근경기 WDWWD');
 
-  it('render message', () => {
-    screen.getByText('메시지1');
+      screen.getByText('최근 양팀 맞대결');
+
+      screen.getByText('대전 시티즌');
+      screen.getByText('1 2022-05-17 2');
+      screen.getByText('FC서울');
+    });
+
+    it('render average goals', () => {
+      screen.getByText('1.5평균득점1.6');
+    });
+
+    it('render average goals against', () => {
+      screen.getByText('1.4평균실점1.8');
+    });
+
+    it('render goals minute', () => {
+      screen.getByText('득점 시간대');
+
+      screen.getByText('15.12%');
+      screen.getByText('0 ~ 15');
+      screen.getByText('16.67%');
+    });
   });
 });

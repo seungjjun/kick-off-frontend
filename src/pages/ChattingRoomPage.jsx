@@ -3,9 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import SockJs from 'sockjs-client';
 import Stomp from 'stompjs';
 
+import useScheduleStore from '../hooks/useScheduleStore';
+
 import ChattingRoom from '../components/ChattingRoom';
 
 export default function ChattingRoomPage({ user, gameId }) {
+  const scheduleStore = useScheduleStore();
+
   const [message, setMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
 
@@ -65,6 +69,7 @@ export default function ChattingRoomPage({ user, gameId }) {
       messageChange={messageChange}
       chatMessages={chatMessages}
       publishMessage={publishMessage}
+      predictions={scheduleStore.predictionsMatch}
     />
   );
 }
