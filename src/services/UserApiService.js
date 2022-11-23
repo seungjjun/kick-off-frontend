@@ -56,6 +56,24 @@ export default class UserApiService {
 
     return data;
   }
+
+  async updateProfile(userId, name, profileImage) {
+    const url = `${baseUrl}/users/${userId}`;
+
+    const { data } = await axios.patch(url, {
+      name,
+      profileImage,
+    });
+
+    return data;
+  }
+
+  async upload(formData) {
+    const url = `${baseUrl}/upload`;
+    const { data } = await axios.post(url, formData);
+
+    return data;
+  }
 }
 
 export const userApiService = new UserApiService();
