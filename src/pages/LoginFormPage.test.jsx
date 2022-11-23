@@ -1,4 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import {
+  fireEvent, render, screen, waitFor,
+} from '@testing-library/react';
 
 import LoginFormPage from './LoginFormPage';
 
@@ -8,6 +10,8 @@ const navigate = jest.fn();
 
 const isLoginFail = false;
 const loginErrorMessge = '아이디 혹은 비밀번호가 맞지 않습니다.';
+
+const context = describe;
 
 jest.mock('../hooks/useUserStore', () => () => ({
   isLoginFail,
@@ -38,5 +42,23 @@ describe('LoginFormPage', () => {
     screen.getByText('로그인하기');
 
     screen.getByText('회원가입');
+  });
+
+  context('when click login button', () => {
+    it('sumbit login data', async () => {
+      fireEvent.change(screen.getByPlaceholderText('아이디'), {
+        target: { value: 'jel1y' },
+      });
+
+      fireEvent.change(screen.getByPlaceholderText('비밀번호'), {
+        target: { value: 'Qwe1234!' },
+      });
+
+      fireEvent.click(screen.getByText('로그인하기'));
+
+      await waitFor(() => {
+        expect(login).toBeCalled();
+      });
+    });
   });
 });

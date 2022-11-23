@@ -10,9 +10,13 @@ export default class UserStore extends Store {
 
     this.users = [];
 
+    this.myInformation = {};
+
     this.name = '';
     this.profileImage = '';
     this.gradeName = '';
+
+    this.componentState = '';
 
     this.loginState = '';
     this.loginErrorMessge = '';
@@ -51,9 +55,29 @@ export default class UserStore extends Store {
     }
   }
 
+  async fetchMyInformation(userId) {
+    const data = await userApiService.fetchMyInformation(userId);
+
+    this.myInformation = data.myInformation;
+
+    this.publish();
+  }
+
   changeLoginState(state, { errorMessage = '' } = {}) {
     this.loginErrorMessge = errorMessage;
     this.loginState = state;
+    this.publish();
+  }
+
+  changeComponentState(componentState) {
+    this.componentState = componentState;
+
+    this.publish();
+  }
+
+  setComponentState() {
+    this.componentState = '작성글';
+
     this.publish();
   }
 

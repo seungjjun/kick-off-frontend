@@ -84,7 +84,7 @@ describe('Board', () => {
     it('render posts information', () => {
       screen.getByText('이강인 맨시티 이적...!! [7]');
       screen.getByText('EPL');
-      screen.getByText('son7 / 1');
+      screen.getByText('son7');
     });
 
     it('render page button', () => {

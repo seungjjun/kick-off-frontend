@@ -44,6 +44,18 @@ export default class UserApiService {
 
     return data;
   }
+
+  async fetchMyInformation(userId) {
+    const url = `${baseUrl}/users/${userId}`;
+
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data;
+  }
 }
 
 export const userApiService = new UserApiService();

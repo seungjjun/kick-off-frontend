@@ -18,16 +18,18 @@ import useScheduleStore from './hooks/useScheduleStore';
 
 import Header from './components/Header';
 
+import BoardPage from './pages/BoardPage';
+import UserPage from './pages/UserPage';
 import LoginFormPage from './pages/LoginFormPage';
-import PostFormPage from './pages/PostFormPage';
 import PostPage from './pages/PostPage';
+import PostFormPage from './pages/PostFormPage';
 import SchedulePage from './pages/SchedulePage';
 import ChattingRoomPage from './pages/ChattingRoomPage';
 import PostEditFormPage from './pages/PostEditFormPage';
-import BoardPage from './pages/BoardPage';
 import BoardListPage from './pages/BoardListPage';
 
 const Container = styled.div`
+  min-width: 1072px;
   max-width: 1080px;
   min-height: 100vh;
   margin: 0 auto;
@@ -88,7 +90,11 @@ export default function App() {
     <Container>
       <Reset />
       <GlobalStyle />
-      <Header accessToken={accessToken} setAccessToken={setAccessToken} />
+      <Header
+        accessToken={accessToken}
+        setAccessToken={setAccessToken}
+        user={userStore.user}
+      />
       <Menu>
         <BoardListPage />
       </Menu>
@@ -96,6 +102,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<BoardPage />} />
           <Route path="/board" element={<BoardPage />} />
+          <Route path="/users" element={<UserPage />} />
           <Route path="/login" element={<LoginFormPage />} />
           <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/write" element={<PostFormPage user={user} />} />
