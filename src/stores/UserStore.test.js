@@ -53,5 +53,43 @@ describe('UserStore', () => {
         expect(userStore.loginErrorMessge).toBe('비밀번호를 입력해주세요');
       });
     });
+
+    context('사용자의 정보를 확인하려는 경우', () => {
+      it('사용자의 정보를 확인할 수 있다.', async () => {
+        await userStore.fetchMyInformation(1);
+
+        const { myInformation } = userStore;
+
+        expect(myInformation.user.identification).toBe('jel1y');
+        expect(myInformation.user.name).toBe('son');
+      });
+
+      it('사용자가 작성한 게시글을 확인할 수 있다.', async () => {
+        await userStore.fetchMyInformation(1);
+
+        const { myInformation } = userStore;
+
+        expect(myInformation.posts[0].postInformation.title).toBe('아르헨티나 월드컵 우승');
+        expect(myInformation.posts[0].createdAt).toBe('2022-12-19');
+      });
+
+      it('사용자가 작성한 댓글을 확인할 수 있다.', async () => {
+        await userStore.fetchMyInformation(1);
+
+        const { myInformation } = userStore;
+
+        expect(myInformation.comments[0].content).toBe('대한민국은..?');
+        expect(myInformation.comments[0].commentDate).toBe('2022-12-20');
+      });
+
+      it('사용자가 좋아요한 게시글을 확인할 수 있다.', async () => {
+        await userStore.fetchMyInformation(1);
+
+        const { myInformation } = userStore;
+
+        expect(myInformation.likedPosts[0].postInformation.title).toBe('2022년 마지막 날');
+        expect(myInformation.likedPosts[0].createdAt).toBe('2022-12-31');
+      });
+    });
   });
 });

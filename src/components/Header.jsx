@@ -11,18 +11,16 @@ const HeaderBox = styled.div`
   height: 150px;
 `;
 
-export default function Header({ accessToken, setAccessToken }) {
+export default function Header({ accessToken, setAccessToken, user }) {
   const navigate = useNavigate();
-
-  // const [isShow, setIsShow] = useState(false);
-
-  // const handleClickMenu = () => {
-  //   setIsShow(!isShow);
-  // };
 
   const handleClickLogout = () => {
     setAccessToken('');
     navigate('/');
+  };
+
+  const handleClickMyPage = (userId) => {
+    navigate(`/users?id=${userId}`);
   };
 
   return (
@@ -33,12 +31,21 @@ export default function Header({ accessToken, setAccessToken }) {
             <Link to="/">KiCK OFF</Link>
           </li>
           {accessToken ? (
-            <button
-              type="button"
-              onClick={handleClickLogout}
-            >
-              로그아웃
-            </button>
+            <li>
+              <button
+                type="button"
+                onClick={handleClickLogout}
+              >
+                로그아웃
+              </button>
+              <button
+                type="button"
+                onClick={() => handleClickMyPage(user.id)}
+              >
+                내 정보
+              </button>
+              <span>{user.name}</span>
+            </li>
           ) : (
             <>
               <li>

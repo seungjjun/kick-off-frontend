@@ -41,14 +41,22 @@ const Title = styled.p`
   cursor: pointer;
 `;
 
-const Category = styled.p`
+const Category = styled.button`
   margin-top: 1em;
+  font-size: 0.7em;
+  border: none;
+  background-color: #FFF;
+`;
+
+const UserName = styled.p`
+  margin-top: 0.8em;
   font-size: 0.7em;
 `;
 
-const Create = styled.p`
-  margin-top: 0.8em;
-  font-size: 0.7em;
+const Name = styled.button`
+  font-size: 1em;
+  border: none;
+  background-color: #FFF;
 `;
 
 const Pagination = styled.div`
@@ -107,6 +115,19 @@ export default function Board({
     pagination.previousPage();
   };
 
+  const handleClickBoard = (boardId) => {
+    navigate(`/board?id=${boardId}`);
+  };
+
+  const handleClickName = (userId) => {
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
+    navigate(`/users?id=${userId}`);
+  };
+
   return (
     <section>
       <div>
@@ -143,16 +164,18 @@ export default function Board({
                 + recommentNumber.filter((recomment) => recomment === post.id).length}
                     ]
                   </Title>
-                  <Category>
+                  <Category type="button" onClick={() => handleClickBoard(post.boardId)}>
                     {posts.boards.find((board) => board.id === post.boardId).boardName.value}
                   </Category>
-                  <Create>
-                    {posts.users.find((user) => user.id === post.userId.userId).name}
+                  <UserName>
+                    <Name type="button" onClick={() => handleClickName(post.userId.userId)}>
+                      {posts.users.find((user) => user.id === post.userId.userId).name}
+                    </Name>
                     {' '}
                     /
                     {' '}
                     {posts.likes.filter((like) => like.postId === post.id).length}
-                  </Create>
+                  </UserName>
                 </ContentBox>
               </Item>
             ))}

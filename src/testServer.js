@@ -349,6 +349,47 @@ const server = setupServer(
       },
     ],
   }))),
+
+  rest.get(`${baseUrl}/users/1`, async (req, res, ctx) => res(ctx.json({
+    myInformation: {
+      posts: [
+        {
+          id: 1,
+          postInformation: {
+            title: '아르헨티나 월드컵 우승',
+          },
+          createdAt: '2022-12-19',
+          hit: 41,
+        },
+      ],
+
+      comments: [
+        {
+          id: 2,
+          content: '대한민국은..?',
+          commentDate: '2022-12-20',
+        },
+      ],
+
+      likedPosts: [
+        {
+          id: 1,
+          postInformation: {
+            title: '2022년 마지막 날',
+          },
+          createdAt: '2022-12-31',
+          hit: 42,
+        },
+      ],
+
+      user: {
+        id: 1,
+        identification: 'jel1y',
+        name: 'son',
+        myToken: true,
+      },
+    },
+  }))),
 );
 
 export default server;
