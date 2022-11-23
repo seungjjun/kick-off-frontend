@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -9,11 +9,18 @@ import usePostStore from '../hooks/usePostStore';
 import useUserStore from '../hooks/useUserStore';
 
 export default function UserPage() {
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
+
+  const [isUpdate, setIsUpdate] = useState(false);
+
   const userStore = useUserStore();
 
   const postStore = usePostStore();
 
   const navigate = useNavigate();
+
+  const formData = new FormData();
 
   const location = useLocation();
 
@@ -30,10 +37,50 @@ export default function UserPage() {
   useEffect(() => {
     userStore.fetchMyInformation(userId);
     userStore.setComponentState();
-  }, [path]);
+
+    // setName(userStore.myInformation.user.name);
+  }, [location]);
+
+  const nameChange = (name) => {
+    setName(name);
+  };
 
   const changeComponentState = (componentState) => {
     userStore.changeComponentState(componentState);
+  };
+
+  const changeEditState = () => {
+    setIsUpdate(!isUpdate);
+    userStore.setEditState();
+  };
+
+  const upload = async (e) => {
+    const img = e.target.files[0];
+    formData.append('multipartFile', img);
+
+    await postStore.upload(formData);
+
+    setImage(postStore.imageUrl);
+  };
+
+  const submit = async (data) => {
+    await userStore.updateProfile(userId, data.name, image);
+
+    setIsUpdate(!isUpdate);
+
+    userStore.fetchMyInformation(userId);
+  };
+
+  const edits = {
+    submit,
+    upload,
+    image,
+    changeEditState,
+    isUpdate,
+    editState: userStore.editState,
+    errorMessage: userStore.nicknameErrorMessage,
+    name,
+    nameChange,
   };
 
   return (
@@ -43,6 +90,7 @@ export default function UserPage() {
       componentState={userStore.componentState}
       navigate={navigate}
       deletePost={deletePost}
+      edits={edits}
     />
   );
 }

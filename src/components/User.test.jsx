@@ -3,6 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import User from './User';
 
 const changeComponentState = jest.fn();
+const navigate = jest.fn();
+const deletePost = jest.fn();
+
 let componentState = '';
 
 const context = describe;
@@ -57,10 +60,19 @@ describe('User', () => {
       ],
     };
 
+    const edits = {
+      changeEditState: jest.fn(),
+      isUpdate: false,
+
+    };
+
     render(<User
       myInformation={myInformation}
       changeComponentState={changeComponentState}
       componentState={componentState}
+      navigate={navigate}
+      deletePost={deletePost}
+      edits={edits}
     />);
   });
 

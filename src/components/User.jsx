@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 
 import LikedPosts from './LikedPosts';
+import UserProfileEditForm from './UserProfileEditForm';
 
 import WrittenComments from './WrittenComments';
 
@@ -39,10 +40,14 @@ const PostNumber = styled.span`
 `;
 
 export default function User({
-  myInformation, changeComponentState, componentState, navigate, deletePost,
+  myInformation, changeComponentState, componentState, navigate, deletePost, edits,
 }) {
   const handleClickComponentState = (e) => {
     changeComponentState(e.target.innerText);
+  };
+
+  const handleClickProfileUpdate = () => {
+    edits.changeEditState();
   };
 
   if (Object.keys(myInformation).length === 0) {
@@ -70,6 +75,20 @@ export default function User({
             {myInformation.comments.length}
           </span>
         </BasicInformation>
+        <div>
+          {edits.isUpdate ? (
+            <UserProfileEditForm
+              edits={edits}
+            />
+          ) : (
+            null
+          )}
+          {myInformation.user.isMyToken ? (
+            <button type="button" onClick={handleClickProfileUpdate}>프로필 수정</button>
+          ) : (
+            null
+          )}
+        </div>
       </Information>
       <div>
         <button type="button" onClick={handleClickComponentState}>작성글</button>

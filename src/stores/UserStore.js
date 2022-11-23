@@ -20,6 +20,9 @@ export default class UserStore extends Store {
 
     this.loginState = '';
     this.loginErrorMessge = '';
+
+    this.editState = '';
+    this.nicknameErrorMessage = '';
   }
 
   async fetchUsers() {
@@ -63,9 +66,34 @@ export default class UserStore extends Store {
     this.publish();
   }
 
+  async updateProfile(userId, name, image) {
+    try {
+      await userApiService.updateProfile(userId, name, image);
+    } catch (e) {
+      const { message } = e.response.data;
+
+      this.changeProfileState('duplication', { errorMessage: message });
+    }
+  }
+
+  async upload(formData) {
+    const imageUrl = await userApiService.upload(formData);
+
+    this.imageUrl = imageUrl;
+
+    this.publish();
+  }
+
   changeLoginState(state, { errorMessage = '' } = {}) {
     this.loginErrorMessge = errorMessage;
     this.loginState = state;
+    this.publish();
+  }
+
+  changeProfileState(state, { errorMessage = '' } = {}) {
+    this.nicknameErrorMessage = errorMessage;
+    this.editState = state;
+
     this.publish();
   }
 
@@ -77,6 +105,12 @@ export default class UserStore extends Store {
 
   setComponentState() {
     this.componentState = '작성글';
+
+    this.publish();
+  }
+
+  setEditState() {
+    this.editState = '';
 
     this.publish();
   }

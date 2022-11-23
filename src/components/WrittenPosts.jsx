@@ -164,7 +164,7 @@ export default function WrittenPosts({ myInformation, navigate, deletePost }) {
           <span>전체선택</span>
         </CheckBoxButtons>
         <PostButtons>
-          {myInformation.user.myToken ? (
+          {myInformation.user.isMyToken ? (
             <button type="button" onClick={handleClickDelete}>삭제</button>
           ) : (
             null
