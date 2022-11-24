@@ -48,6 +48,12 @@ export default class PostStore extends Store {
     this.publish();
   }
 
+  async deleteCheckedPost(checkedPosts) {
+    await postApiService.deletePosts(checkedPosts);
+
+    this.publish();
+  }
+
   async upload(formData) {
     const imageUrl = await postApiService.upload(formData);
 

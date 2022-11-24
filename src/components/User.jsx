@@ -40,7 +40,7 @@ const PostNumber = styled.span`
 `;
 
 export default function User({
-  myInformation, changeComponentState, componentState, navigate, deletePost, edits,
+  myInformation, changeComponentState, componentState, navigate, deleteCheckedPost, edits,
 }) {
   const handleClickComponentState = (e) => {
     changeComponentState(e.target.innerText);
@@ -100,7 +100,7 @@ export default function User({
           <WrittenPosts
             myInformation={myInformation}
             navigate={navigate}
-            deletePost={deletePost}
+            deleteCheckedPost={deleteCheckedPost}
           />
         ) : componentState === '작성 댓글' ? (
           <WrittenComments

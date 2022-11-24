@@ -28,12 +28,6 @@ export default function UserPage() {
 
   const userId = path.split('=')[1];
 
-  const deletePost = async (postId) => {
-    postStore.deletePost(postId);
-
-    userStore.fetchMyInformation(userId);
-  };
-
   useEffect(() => {
     userStore.fetchMyInformation(userId);
     userStore.setComponentState();
@@ -69,6 +63,13 @@ export default function UserPage() {
     setIsUpdate(!isUpdate);
 
     userStore.fetchMyInformation(userId);
+    userStore.fetchUser();
+  };
+
+  const deleteCheckedPost = async (checkPosts) => {
+    await postStore.deleteCheckedPost(checkPosts);
+
+    await userStore.fetchMyInformation(userId);
   };
 
   const edits = {
@@ -89,7 +90,7 @@ export default function UserPage() {
       changeComponentState={changeComponentState}
       componentState={userStore.componentState}
       navigate={navigate}
-      deletePost={deletePost}
+      deleteCheckedPost={deleteCheckedPost}
       edits={edits}
     />
   );

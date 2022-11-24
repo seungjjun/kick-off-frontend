@@ -1,10 +1,6 @@
-import { useState } from 'react';
-
 import { Link, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
-
-// import Menu from './Category';
 
 const HeaderBox = styled.div`
   width: 1080px;
@@ -56,17 +52,6 @@ export default function Header({ accessToken, setAccessToken, user }) {
               </li>
             </>
           )}
-          <li>
-            {/* <button
-              type="button"
-              onClick={handleClickMenu}
-            >
-              Menu
-            </button>
-            {isShow ? (
-              <Menu />
-            ) : null} */}
-          </li>
         </ul>
       </nav>
     </HeaderBox>
