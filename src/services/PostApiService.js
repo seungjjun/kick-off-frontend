@@ -45,6 +45,17 @@ export default class PostApiService {
     await axios.delete(url);
   }
 
+  async deletePosts(checkedPosts) {
+    const url = `${baseUrl}/posts`;
+
+    const postsId = [...checkedPosts];
+    await axios.delete(url, {
+      data: {
+        postsId,
+      },
+    });
+  }
+
   async upload(formData) {
     const url = `${baseUrl}/upload`;
     const { data } = await axios.post(url, formData);

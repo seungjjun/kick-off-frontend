@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -24,6 +26,13 @@ const Tbody = styled.tbody`
 const Tr = styled.tr`
   display: flex;
   width: 100%;
+`;
+
+const Nothing = styled.tr`
+  display: flex;
+  justify-content: center;
+  margin-top: 2.2em;
+  color: #CCC;
 `;
 
 const CheckBox = styled.th`
@@ -91,9 +100,9 @@ const ButtonBox = styled.div`
 
 const CheckBoxButtons = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
 
-  span {
+  label {
     display: flex;
     align-items: center;
     margin-left: 1em;
@@ -115,13 +124,43 @@ const PostButtons = styled.div`
   }
 `;
 
-export default function WrittenPosts({ myInformation, navigate, deletePost }) {
+export default function WrittenPosts({ myInformation, navigate, deleteCheckedPost }) {
+  const [checkPosts, setCheckPosts] = useState([]);
+
   const handleClickTitle = (postId) => {
     navigate(`/post/${postId}`);
   };
 
   const handleClickDelete = () => {
-    deletePost(postId);
+    deleteCheckedPost(checkPosts);
+
+    setCheckPosts([]);
+  };
+
+  const handleClickWrite = () => {
+    navigate('/write');
+  };
+
+  const handleChangeCheck = (checked, postId) => {
+    if (checked) {
+      setCheckPosts([...checkPosts, postId]);
+    }
+
+    if (!checked) {
+      setCheckPosts(checkPosts.filter((post) => post !== postId));
+    }
+  };
+
+  const handleChangeAllCheck = (checked) => {
+    if (checked) {
+      const postIds = [];
+      myInformation.posts.map((post) => postIds.push(post.id));
+      setCheckPosts(postIds);
+    }
+
+    if (!checked) {
+      setCheckPosts([]);
+    }
   };
 
   return (
@@ -137,31 +176,48 @@ export default function WrittenPosts({ myInformation, navigate, deletePost }) {
           </Tr>
         </Thead>
         <Tbody>
-          {myInformation.posts.map((post) => (
-            <List key={post.id}>
-              <Select>
-                <input type="checkbox" />
-              </Select>
-              <Title onClick={() => handleClickTitle(post.id)}>
-                {post.postInformation.title}
-              </Title>
-              <Author>
-                {myInformation.user.name}
-              </Author>
-              <PostDate>
-                {post.createdAt}
-              </PostDate>
-              <Hit>
-                {post.hit}
-              </Hit>
-            </List>
-          ))}
+          {myInformation.posts.length === 0 ? (
+            <Nothing>
+              <td>
+                작성한 게시글이 없습니다
+              </td>
+            </Nothing>
+          ) : (
+            myInformation.posts.map((post) => (
+              <List key={post.id}>
+                <Select>
+                  <input
+                    data-testid="checkbox"
+                    type="checkbox"
+                    onChange={(e) => handleChangeCheck(e.target.checked, post.id)}
+                    checked={checkPosts.indexOf(post.id) >= 0}
+                  />
+                </Select>
+                <Title onClick={() => handleClickTitle(post.id)}>
+                  {post.postInformation.title}
+                </Title>
+                <Author>
+                  {myInformation.user.name}
+                </Author>
+                <PostDate>
+                  {post.createdAt}
+                </PostDate>
+                <Hit>
+                  {post.hit}
+                </Hit>
+              </List>
+            ))
+          )}
         </Tbody>
       </Table>
       <ButtonBox>
         <CheckBoxButtons>
-          <input type="checkbox" />
-          <span>전체선택</span>
+          <label htmlFor="checkPost">전체선택</label>
+          <input
+            id="checkPost"
+            type="checkbox"
+            onChange={(e) => handleChangeAllCheck(e.target.checked)}
+          />
         </CheckBoxButtons>
         <PostButtons>
           {myInformation.user.isMyToken ? (
@@ -169,7 +225,7 @@ export default function WrittenPosts({ myInformation, navigate, deletePost }) {
           ) : (
             null
           )}
-          <button type="button">글쓰기</button>
+          <button type="button" onClick={handleClickWrite}>글쓰기</button>
         </PostButtons>
       </ButtonBox>
     </Container>

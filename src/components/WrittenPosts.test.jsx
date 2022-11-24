@@ -1,5 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+
 import WrittenPosts from './WrittenPosts';
+
+const navigate = jest.fn();
+
+const deleteCheckedPost = jest.fn();
+
+const context = describe;
 
 describe('WrittenPosts', () => {
   beforeEach(() => {
@@ -17,11 +24,14 @@ describe('WrittenPosts', () => {
 
       user: {
         name: '피카츄',
+        isMyToken: true,
       },
     };
 
     render(<WrittenPosts
       myInformation={myInformation}
+      navigate={navigate}
+      deleteCheckedPost={deleteCheckedPost}
     />);
   });
 
@@ -38,5 +48,15 @@ describe('WrittenPosts', () => {
     screen.getByText('피카츄');
     screen.getByText('2022-11-25');
     screen.getByText(912);
+  });
+
+  context('when delete checked post', () => {
+    it('delete function called', () => {
+      fireEvent.click(screen.getByTestId('checkbox'));
+
+      fireEvent.click(screen.getByText('삭제'));
+
+      expect(deleteCheckedPost).toBeCalled();
+    });
   });
 });
