@@ -41,7 +41,7 @@ const PostNumber = styled.span`
 
 export default function User({
   myInformation, changeComponentState, componentState, navigate,
-  deleteCheckedPost, deleteCheckedComment, deleteCheckedRecomment, edits,
+  deleteCheckedPost, deleteCheckedComment, deleteCheckedRecomment, cancelCheckedPost, edits,
 }) {
   const handleClickComponentState = (e) => {
     changeComponentState(e.target.innerText);
@@ -116,6 +116,7 @@ export default function User({
           <LikedPosts
             myInformation={myInformation}
             navigate={navigate}
+            cancelCheckedPost={cancelCheckedPost}
           />
         ) : null}
       </ActivityInformation>

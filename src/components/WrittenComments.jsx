@@ -1,5 +1,87 @@
 import { useState } from 'react';
+
 import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Table = styled.table`
+    height: 400px;
+    width: 100%;
+    border: 1px solid #CCC;
+`;
+
+const Thead = styled.thead`
+    display: flex;
+    margin-top: 1em;
+    width: 100%;
+`;
+
+const Tr = styled.tr`
+  display: flex;
+  width: 100%;
+`;
+
+const CheckBox = styled.th`
+    width: 5%;
+    text-align: center;
+`;
+
+const CommentBox = styled.th`
+    width: 60%;
+    text-align: center;
+`;
+
+const CommentDateBox = styled.th`
+    width: 35%;
+    text-align: center;
+`;
+
+const Tbody = styled.tbody`
+  display: block;
+`;
+
+const Nothing = styled.tr`
+  display: flex;
+  justify-content: center;
+  margin-top: 2.2em;
+  color: #CCC;
+`;
+
+const List = styled.tr`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+`;
+
+const Select = styled.td`
+    width: 5%;
+    text-align: center;
+`;
+
+const CommentContent = styled.td`
+    width: 60%;
+    text-align: center;
+    cursor: pointer;
+`;
+
+const CommentDate = styled.td`
+    width: 35%;
+    text-align: center;
+`;
+
+const RecommentContent = styled.td`
+    width: 60%;
+    text-align: center;
+    cursor: pointer;
+`;
+
+const RecommentDate = styled.td`
+    width: 35%;
+    text-align: center;
+`;
 
 const ButtonBox = styled.div`
   display: flex;
@@ -59,9 +141,9 @@ export default function WrittenComments({
     }
   };
 
-  const handleClickDelete = () => {
-    deleteCheckedRecomment(checkedRecomments);
-    deleteCheckedComment(checkedComments);
+  const handleClickDelete = async () => {
+    await deleteCheckedComment(checkedComments);
+    await deleteCheckedRecomment(checkedRecomments);
 
     setCheckedComments([]);
     setCheckedRecomments([]);
@@ -96,64 +178,64 @@ export default function WrittenComments({
   };
 
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>선택</th>
-            <th>댓글</th>
-            <th>작성일</th>
-          </tr>
-        </thead>
-        <tbody>
+    <Container>
+      <Table>
+        <Thead>
+          <Tr>
+            <CheckBox>선택</CheckBox>
+            <CommentBox>댓글</CommentBox>
+            <CommentDateBox>작성일</CommentDateBox>
+          </Tr>
+        </Thead>
+        <Tbody>
           {myInformation.recomments.length === 0 && myInformation.comments
             .filter((comment) => comment.deleted === false).length === 0 ? (
-              <tr>
+              <Nothing>
                 <td>
                   작성한 댓글이 없습니다.
                 </td>
-              </tr>
+              </Nothing>
             ) : (
               <>
                 {myInformation.comments.filter((comment) => comment.deleted === false)
                   .map((comment) => (
-                    <tr key={comment.id}>
-                      <td>
+                    <List key={comment.id}>
+                      <Select>
                         <input
                           type="checkbox"
                           onChange={(e) => handleChangeCommentCheck(e.target.checked, comment.id)}
                           checked={checkedComments.indexOf(comment.id) >= 0}
                         />
-                      </td>
-                      <td onClick={() => handleClickContent(comment.postId)}>
+                      </Select>
+                      <CommentContent onClick={() => handleClickContent(comment.postId)}>
                         {comment.content}
-                      </td>
-                      <td>
+                      </CommentContent>
+                      <CommentDate>
                         {comment.commentDate}
-                      </td>
-                    </tr>
+                      </CommentDate>
+                    </List>
                   ))}
                 {myInformation.recomments.map((recomment) => (
-                  <tr key={recomment.id}>
-                    <td>
+                  <List key={recomment.id}>
+                    <Select>
                       <input
                         type="checkbox"
                         onChange={(e) => handleChangeRecommentCheck(e.target.checked, recomment.id)}
                         checked={checkedRecomments.indexOf(recomment.id) >= 0}
                       />
-                    </td>
-                    <td onClick={() => handleClickContent(recomment.postId)}>
+                    </Select>
+                    <RecommentContent onClick={() => handleClickContent(recomment.postId)}>
                       {recomment.content}
-                    </td>
-                    <td>
+                    </RecommentContent>
+                    <RecommentDate>
                       {recomment.commentDate}
-                    </td>
-                  </tr>
+                    </RecommentDate>
+                  </List>
                 ))}
               </>
             )}
-        </tbody>
-      </table>
+        </Tbody>
+      </Table>
       <ButtonBox>
         <CheckBoxButtons>
           <label htmlFor="checkPost">전체선택</label>
@@ -172,6 +254,6 @@ export default function WrittenComments({
           <button type="button" onClick={handleClickWrite}>글쓰기</button>
         </CommentButtons>
       </ButtonBox>
-    </div>
+    </Container>
   );
 }
