@@ -90,6 +90,26 @@ export default class CommentApiService {
 
     await axios.delete(url);
   }
+
+  async deleteComments(checkedComments) {
+    const url = `${baseUrl}/comments`;
+
+    await axios.delete(url, {
+      data: {
+        commentId: checkedComments,
+      },
+    });
+  }
+
+  async deleteRecomments(checkedRecomments) {
+    const url = `${baseUrl}/recomments`;
+
+    await axios.delete(url, {
+      data: {
+        recommentId: checkedRecomments,
+      },
+    });
+  }
 }
 
 export const commentApiService = new CommentApiService();

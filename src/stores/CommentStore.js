@@ -94,8 +94,20 @@ export default class CommentStore extends Store {
     this.publish();
   }
 
+  async deleteCheckedComment(checkedComments) {
+    await commentApiService.deleteComments(checkedComments);
+
+    this.publish();
+  }
+
   async deleteRecomment(recommentId) {
     await commentApiService.deleteRecomment(recommentId);
+
+    this.publish();
+  }
+
+  async deleteCheckedRecomment(checkedRecomments) {
+    await commentApiService.deleteRecomments(checkedRecomments);
 
     this.publish();
   }

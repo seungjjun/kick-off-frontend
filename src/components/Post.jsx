@@ -145,7 +145,6 @@ export default function Post({
           />
         </PostContainer>
       )}
-
     </Container>
   );
 }
