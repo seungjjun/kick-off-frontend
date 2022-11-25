@@ -10,6 +10,8 @@ import useCommentStore from '../hooks/useCommentStore';
 
 import useUserStore from '../hooks/useUserStore';
 
+import useLikeStore from '../hooks/useLikeStore';
+
 export default function UserPage() {
   const [image, setImage] = useState('');
   const [name, setName] = useState('');
@@ -21,6 +23,8 @@ export default function UserPage() {
   const postStore = usePostStore();
 
   const commentStore = useCommentStore();
+
+  const likeStore = useLikeStore();
 
   const navigate = useNavigate();
 
@@ -86,6 +90,12 @@ export default function UserPage() {
     await commentStore.deleteCheckedRecomment(checkedRecomments);
   };
 
+  const cancelCheckedPost = async (checkedPosts) => {
+    await likeStore.cancelCheckedPost(checkedPosts);
+
+    userStore.fetchMyInformation(userId);
+  };
+
   const edits = {
     submit,
     upload,
@@ -107,6 +117,7 @@ export default function UserPage() {
       deleteCheckedPost={deleteCheckedPost}
       deleteCheckedComment={deleteCheckedComment}
       deleteCheckedRecomment={deleteCheckedRecomment}
+      cancelCheckedPost={cancelCheckedPost}
       edits={edits}
     />
   );

@@ -22,6 +22,16 @@ export default class LikeApiService {
     });
     return data;
   }
+
+  async cancelCheckedPost(checkedPosts) {
+    const url = `${baseUrl}/likes`;
+
+    await axios.delete(url, {
+      data: {
+        likeId: checkedPosts,
+      },
+    });
+  }
 }
 
 export const likeApiService = new LikeApiService();

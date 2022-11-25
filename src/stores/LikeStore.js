@@ -24,6 +24,12 @@ export default class LikeStore extends Store {
 
     this.publish();
   }
+
+  async cancelCheckedPost(checkedPosts) {
+    await likeApiService.cancelCheckedPost(checkedPosts);
+
+    this.publish();
+  }
 }
 
 export const likeStore = new LikeStore();

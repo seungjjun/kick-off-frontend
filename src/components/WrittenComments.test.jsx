@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  fireEvent, render, screen, waitFor,
+} from '@testing-library/react';
 
 import WrittenComments from './WrittenComments';
 
@@ -81,11 +83,13 @@ describe('WrittenComments', () => {
   });
 
   context('when click delete button', () => {
-    it('comment delete function called', () => {
+    it('comment delete function called', async () => {
       fireEvent.click(screen.getByText('삭제'));
 
-      expect(deleteCheckedComment).toBeCalled();
-      expect(deleteCheckedRecomment).toBeCalled();
+      await waitFor(() => {
+        expect(deleteCheckedComment).toBeCalled();
+        expect(deleteCheckedRecomment).toBeCalled();
+      });
     });
   });
 });
