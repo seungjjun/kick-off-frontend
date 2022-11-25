@@ -49,6 +49,7 @@ export default class PostApiService {
     const url = `${baseUrl}/posts`;
 
     const postsId = [...checkedPosts];
+
     await axios.delete(url, {
       data: {
         postsId,

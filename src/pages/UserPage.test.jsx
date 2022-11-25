@@ -60,10 +60,12 @@ describe('UserPage', () => {
         {
           id: 1,
           content: '메시가 월드컵을 우승하다니...!',
+          deleted: false,
         },
         {
           id: 2,
           content: '호날두는 조별탈락..',
+          deleted: false,
         },
       ],
 
@@ -88,7 +90,7 @@ describe('UserPage', () => {
     it('render my information', () => {
       screen.getAllByText('messi');
       screen.getByText('작성글 수 1');
-      screen.getByText('작성 댓글 수 2');
+      screen.getByText('작성 댓글 수 3');
     });
   });
 

@@ -50,6 +50,14 @@ describe('WrittenPosts', () => {
     screen.getByText(912);
   });
 
+  context('when click post', () => {
+    it('move to post page', () => {
+      fireEvent.click(screen.getByText('손흥민 가나전 해트트릭'));
+
+      expect(navigate).toBeCalledWith('/post/1');
+    });
+  });
+
   context('when delete checked post', () => {
     it('delete function called', () => {
       fireEvent.click(screen.getByTestId('checkbox'));

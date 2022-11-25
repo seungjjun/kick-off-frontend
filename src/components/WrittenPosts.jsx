@@ -147,7 +147,7 @@ export default function WrittenPosts({ myInformation, navigate, deleteCheckedPos
     }
 
     if (!checked) {
-      setCheckPosts(checkPosts.filter((post) => post !== postId));
+      setCheckPosts(checkPosts.filter((checkedPostId) => checkedPostId !== postId));
     }
   };
 

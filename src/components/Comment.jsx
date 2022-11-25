@@ -129,15 +129,15 @@ export default function Comment({
           : posts.comments.map((comment) => (
             <List key={comment.id}>
               <li key={comment.id}>
-                {posts.users.map((user) => (
-                  user.id === comment.userId ? (
-                    user.name
-                  ) : null
-                ))}
                 {comment.deleted ? (
                   <RemoveComment>삭제된 댓글입니다.</RemoveComment>
                 ) : (
                   <>
+                    {posts.users.map((user) => (
+                      user.id === comment.userId ? (
+                        user.name
+                      ) : null
+                    ))}
                     <CommentContent>
                       {comment.content}
                     </CommentContent>

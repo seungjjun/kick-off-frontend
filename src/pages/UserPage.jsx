@@ -6,6 +6,8 @@ import User from '../components/User';
 
 import usePostStore from '../hooks/usePostStore';
 
+import useCommentStore from '../hooks/useCommentStore';
+
 import useUserStore from '../hooks/useUserStore';
 
 export default function UserPage() {
@@ -17,6 +19,8 @@ export default function UserPage() {
   const userStore = useUserStore();
 
   const postStore = usePostStore();
+
+  const commentStore = useCommentStore();
 
   const navigate = useNavigate();
 
@@ -69,7 +73,17 @@ export default function UserPage() {
   const deleteCheckedPost = async (checkPosts) => {
     await postStore.deleteCheckedPost(checkPosts);
 
-    await userStore.fetchMyInformation(userId);
+    userStore.fetchMyInformation(userId);
+  };
+
+  const deleteCheckedComment = async (checkedComments) => {
+    await commentStore.deleteCheckedComment(checkedComments);
+
+    userStore.fetchMyInformation(userId);
+  };
+
+  const deleteCheckedRecomment = async (checkedRecomments) => {
+    await commentStore.deleteCheckedRecomment(checkedRecomments);
   };
 
   const edits = {
@@ -91,6 +105,8 @@ export default function UserPage() {
       componentState={userStore.componentState}
       navigate={navigate}
       deleteCheckedPost={deleteCheckedPost}
+      deleteCheckedComment={deleteCheckedComment}
+      deleteCheckedRecomment={deleteCheckedRecomment}
       edits={edits}
     />
   );

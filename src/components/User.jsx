@@ -40,7 +40,8 @@ const PostNumber = styled.span`
 `;
 
 export default function User({
-  myInformation, changeComponentState, componentState, navigate, deleteCheckedPost, edits,
+  myInformation, changeComponentState, componentState, navigate,
+  deleteCheckedPost, deleteCheckedComment, deleteCheckedRecomment, edits,
 }) {
   const handleClickComponentState = (e) => {
     changeComponentState(e.target.innerText);
@@ -72,7 +73,9 @@ export default function User({
           <span>
             작성 댓글 수
             {' '}
-            {myInformation.comments.length}
+            {myInformation.comments.filter((comment) => comment.deleted === false).length
+            + myInformation.recomments.length}
+
           </span>
         </BasicInformation>
         <div>
@@ -106,6 +109,8 @@ export default function User({
           <WrittenComments
             myInformation={myInformation}
             navigate={navigate}
+            deleteCheckedComment={deleteCheckedComment}
+            deleteCheckedRecomment={deleteCheckedRecomment}
           />
         ) : componentState === '좋아요한 글' ? (
           <LikedPosts
