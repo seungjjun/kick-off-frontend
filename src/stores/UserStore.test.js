@@ -91,5 +91,49 @@ describe('UserStore', () => {
         expect(myInformation.likedPosts[0].createdAt).toBe('2022-12-31');
       });
     });
+
+    context('회원가입을 성공적으로 할 경우', () => {
+      it('회원가입한 사용자의 닉네임을 확인할 수 있다.', async () => {
+        await userStore.register({
+          name: 'son', identification: 'jel1y', password: 'Qwe1234!', confirmPassword: 'Qwe1234!',
+        });
+
+        expect(userStore.name).toBe('son');
+      });
+    });
+
+    context('회원가입을 실패할 경우', () => {
+      it('닉네임을 입력해달라는 에러 메시지를 확인할 수 있다.', async () => {
+        await userStore.register({
+          name: '', identification: 'jel1y', password: 'Qwe1234!', confirmPassword: 'Qwe1234!',
+        });
+
+        expect(userStore.errorMessage).toBe('닉네임을 입력해주세요.');
+      });
+
+      it('아이디를 입력해달라는 에러 메시지를 확인할 수 있다.', async () => {
+        await userStore.register({
+          name: 'son', identification: '', password: 'Qwe1234!', confirmPassword: 'Qwe1234!',
+        });
+
+        expect(userStore.errorMessage).toBe('아이디를 입력해주세요.');
+      });
+
+      it('비밀번호를 입력해달라는 에러 메시지를 확인할 수 있다.', async () => {
+        await userStore.register({
+          name: 'son', identification: 'jel1y', password: '', confirmPassword: 'Qwe1234!',
+        });
+
+        expect(userStore.errorMessage).toBe('비밀번호를 입력해주세요.');
+      });
+
+      it('비밀번호가 일치하지않다는 에러 메시지를 확인할 수 있다.', async () => {
+        await userStore.register({
+          name: 'son', identification: 'jel1y', password: 'Qwe1234!', confirmPassword: 'xxx!',
+        });
+
+        expect(userStore.errorMessage).toBe('비밀번호가 일치하지 않습니다.');
+      });
+    });
   });
 });

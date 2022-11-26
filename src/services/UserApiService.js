@@ -68,6 +68,26 @@ export default class UserApiService {
     return data;
   }
 
+  async register({
+    name, identification, password, confirmPassword,
+  }) {
+    const url = `${baseUrl}/users`;
+    const { data } = await axios.post(url, {
+      name, identification, password, confirmPassword,
+    });
+    return data.name;
+  }
+
+  async kakaoLogin(code) {
+    const url = `${baseUrl}/auth/token`;
+
+    const { data } = await axios.get(url, {
+      params: { code },
+    });
+
+    return data;
+  }
+
   async upload(formData) {
     const url = `${baseUrl}/upload`;
     const { data } = await axios.post(url, formData);

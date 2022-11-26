@@ -19,6 +19,14 @@ const Information = styled.div`
   border: 1px solid #CCC;
 `;
 
+const BasicProfileImage = styled.div`
+width: 5em;
+height: 5em;
+background: url('https://user-images.githubusercontent.com/104769120/203972344-e8de6516-2d57-4afd-b1ef-63a7471f3e5a.png');
+background-size: cover;
+border-radius: 50%;
+`;
+
 const ActivityInformation = styled.div`
   /* border: 1px solid #CCC; */
   /* height: 400px; */
@@ -56,12 +64,15 @@ export default function User({
       <p>정보를 불러오는 중 입니다..</p>
     );
   }
-
   return (
     <Container>
       <Information>
         <div>
-          <ProfileImage src={myInformation.user.profileImage} alt="userProfileImage" />
+          {myInformation.user.profileImage === null ? (
+            <BasicProfileImage />
+          ) : (
+            <ProfileImage src={myInformation.user.profileImage} alt="userProfileImage" />
+          )}
         </div>
         <BasicInformation>
           <p>{myInformation.user.name}</p>

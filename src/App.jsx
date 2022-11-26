@@ -27,6 +27,8 @@ import SchedulePage from './pages/SchedulePage';
 import ChattingRoomPage from './pages/ChattingRoomPage';
 import PostEditFormPage from './pages/PostEditFormPage';
 import BoardListPage from './pages/BoardListPage';
+import SignupPage from './pages/SignUpPage';
+import KaKaoLoginPage from './pages/KaKaoLoginPage';
 
 const Container = styled.div`
   min-width: 1072px;
@@ -103,7 +105,9 @@ export default function App() {
           <Route path="/" element={<BoardPage />} />
           <Route path="/board" element={<BoardPage />} />
           <Route path="/users" element={<UserPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginFormPage />} />
+          <Route path="/auth/kakao" element={<KaKaoLoginPage />} />
           <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/write" element={<PostFormPage user={user} />} />
           <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />

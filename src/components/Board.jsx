@@ -24,8 +24,8 @@ const ImageBox = styled.div`
 const BlankImageBox = styled.div`
   width: 4.5em;
   height: 3.8em;
-  background-size: contain;
-  background: url('https://user-images.githubusercontent.com/104769120/200729388-cf5186bd-0a9e-4d3a-a1b8-00f24dddb193.png') no-repeat center;
+  background: url('https://user-images.githubusercontent.com/104769120/200729388-cf5186bd-0a9e-4d3a-a1b8-00f24dddb193.png');
+  background-size: cover;
 `;
 
 const PostImage = styled.img`
@@ -151,7 +151,7 @@ export default function Board({
                       alt="uploadImage"
                     />
                   )
-                    : <BlankImageBox />}
+                    : <BlankImageBox onClick={() => handleClickPost(post.id)} />}
                 </ImageBox>
                 <ContentBox>
                   <Title
