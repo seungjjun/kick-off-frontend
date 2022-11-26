@@ -57,6 +57,17 @@ export default class PostApiService {
     });
   }
 
+  async searchPosts(keyword) {
+    const url = `${baseUrl}/posts/search`;
+
+    const { data } = await axios.get(url, {
+      params: { keyword },
+    });
+
+    console.log(data);
+    return data;
+  }
+
   async upload(formData) {
     const url = `${baseUrl}/upload`;
     const { data } = await axios.post(url, formData);

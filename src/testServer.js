@@ -37,6 +37,52 @@ const server = setupServer(
     }
   }),
 
+  rest.post(`${baseUrl}/users`, async (req, res, ctx) => {
+    const {
+      name, identification, password, confirmPassword,
+    } = await req.json();
+
+    if (name === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '닉네임을 입력해주세요.',
+        }),
+      );
+    }
+
+    if (identification === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '아이디를 입력해주세요.',
+        }),
+      );
+    }
+
+    if (password === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '비밀번호를 입력해주세요.',
+        }),
+      );
+    }
+
+    if (password !== confirmPassword) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '비밀번호가 일치하지 않습니다.',
+        }),
+      );
+    }
+
+    return res(ctx.json({
+      name,
+    }));
+  }),
+
   rest.get(`${baseUrl}/boards`, (req, res, ctx) => res(ctx.json({
     board: [
       {

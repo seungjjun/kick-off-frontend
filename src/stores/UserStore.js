@@ -21,6 +21,9 @@ export default class UserStore extends Store {
     this.loginState = '';
     this.loginErrorMessge = '';
 
+    this.registrationState = '';
+    this.errorMessage = '';
+
     this.editState = '';
     this.nicknameErrorMessage = '';
   }
@@ -76,6 +79,35 @@ export default class UserStore extends Store {
     }
   }
 
+  async register({
+    name, identification, password, confirmPassword,
+  }) {
+    try {
+      const data = await userApiService.register({
+        name, identification, password, confirmPassword,
+      });
+
+      this.name = data;
+    } catch (e) {
+      const { message } = e.response.data;
+      this.errorMessage = message;
+      this.changeRegistrationState('existing', { errorMessage: message });
+    }
+  }
+
+  async kakaoLogin(code) {
+    try {
+      const data = await userApiService.kakaoLogin(code);
+
+      this.name = data.name;
+      this.publish();
+
+      return data.accessToken;
+    } catch (error) {
+      return '';
+    }
+  }
+
   async upload(formData) {
     const imageUrl = await userApiService.upload(formData);
 
@@ -103,6 +135,13 @@ export default class UserStore extends Store {
     this.publish();
   }
 
+  changeRegistrationState(state, { errorMessage = '' } = {}) {
+    this.errorMessage = errorMessage;
+    this.registrationState = state;
+
+    this.publish();
+  }
+
   setComponentState() {
     this.componentState = '작성글';
 
@@ -117,6 +156,10 @@ export default class UserStore extends Store {
 
   get isLoginFail() {
     return this.loginState === 'fail';
+  }
+
+  get isExistingUserId() {
+    return this.registrationState === 'existing';
   }
 }
 
