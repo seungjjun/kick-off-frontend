@@ -11,27 +11,26 @@ import { userApiService } from '../services/UserApiService';
 export default function KaKaoLoginPage() {
   const [, setAccessToken] = useLocalStorage('accessToken', '');
 
-  console.log('두번');
   const navigate = useNavigate();
 
   const userStore = useUserStore();
 
   const authorizationCode = new URL(window.location.href).searchParams.get('code');
 
+  const kakaoAccessToken = async () => {
+    const accessToken = await userStore.kakaoLogin(authorizationCode);
+
+    setAccessToken(accessToken);
+
+    userApiService.setAccessToken(accessToken);
+
+    if (accessToken) {
+      navigate('/');
+    }
+  };
+
   useEffect(() => {
-    const ab = async () => {
-      console.log('렌더링');
-
-      const accessToken = await userStore.kakaoLogin(authorizationCode);
-
-      setAccessToken(accessToken);
-      userApiService.setAccessToken(accessToken);
-
-      if (accessToken) {
-        navigate('/');
-      }
-    };
-    ab();
+    kakaoAccessToken();
   }, []);
 
   return (

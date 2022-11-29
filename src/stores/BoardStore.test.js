@@ -56,4 +56,37 @@ describe('BoardStore', () => {
       });
     });
   });
+
+  describe('searchPosts', () => {
+    context('게시글을 제목을 기준으로 검색할 경우', () => {
+      it('검색한 게시글을 확인할 수 있다', async () => {
+        await boardStore.searchPosts('16강', 1, 1);
+
+        const { posts } = boardStore;
+
+        expect(posts.posts[0].postInformation.title).toBe('대한민국 16강 경우의 수...');
+      });
+    });
+
+    context('게시글을 내용을 기준으로 검색할 경우', () => {
+      it('검색한 게시글을 확인할 수 있다', async () => {
+        await boardStore.searchPosts('포르투갈', 1, 1);
+
+        const { posts } = boardStore;
+
+        expect(posts.posts[0].postInformation.content).toBe('포르투갈전 무조건 이겨야..');
+      });
+    });
+
+    context('게시글을 작성자를 기준으로 검색할 경우', () => {
+      it('검색한 게시글을 확인할 수 있다', async () => {
+        await boardStore.searchPosts('벤투', 1, 1);
+
+        const { posts } = boardStore;
+
+        expect(posts.posts[0].postInformation.title).toBe('대한민국 16강 경우의 수...');
+        expect(posts.posts[0].postInformation.content).toBe('포르투갈전 무조건 이겨야..');
+      });
+    });
+  });
 });

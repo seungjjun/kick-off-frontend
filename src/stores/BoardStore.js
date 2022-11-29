@@ -7,6 +7,7 @@ export default class BoardStore extends Store {
     super();
 
     this.boards = [];
+    this.boardName = '전체게시판';
     this.boardId = 0;
 
     this.posts = {};
@@ -18,6 +19,9 @@ export default class BoardStore extends Store {
     this.page = {};
     this.pageNumber = 0;
     this.pageButton = [];
+
+    this.keywordType = 'title';
+    this.keyword = '';
   }
 
   async fetchBoards() {
@@ -36,6 +40,19 @@ export default class BoardStore extends Store {
     this.comments = data.posts.comments;
     this.recomments = data.posts.reComments;
 
+    this.page = data.page;
+
+    this.makePage();
+
+    this.publish();
+  }
+
+  async searchPosts({ keyword, boardId, pageNumber }) {
+    const data = await boardApiService.searchPosts({
+      keyword, keywordType: this.keywordType, boardId, pageNumber,
+    });
+
+    this.posts = data.posts;
     this.page = data.page;
 
     this.makePage();
@@ -62,6 +79,18 @@ export default class BoardStore extends Store {
     this.publish();
   }
 
+  changeKeyword(keyword) {
+    this.keyword = keyword;
+
+    this.publish();
+  }
+
+  changeKeywordType(type) {
+    this.keywordType = type;
+
+    this.publish();
+  }
+
   nextPage() {
     this.pageNumber = this.page.lastPage;
 
@@ -70,6 +99,12 @@ export default class BoardStore extends Store {
 
   previousPage() {
     this.pageNumber = this.page.startPage - 11;
+
+    this.publish();
+  }
+
+  setKeyword() {
+    this.keyword = '';
 
     this.publish();
   }

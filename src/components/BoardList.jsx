@@ -10,8 +10,8 @@ const List = styled.ul`
 `;
 
 export default function BoardList({ boardList, changeBoard }) {
-  const handleClickBoard = () => {
-    changeBoard();
+  const handleClickBoard = (boardName) => {
+    changeBoard(boardName);
   };
 
   return (
@@ -22,7 +22,7 @@ export default function BoardList({ boardList, changeBoard }) {
             <li key={board.id}>
               <Link
                 to={`/board?id=${board.id}`}
-                onClick={handleClickBoard}
+                onClick={() => handleClickBoard(board.boardName.value)}
               >
                 {board.boardName.value}
               </Link>

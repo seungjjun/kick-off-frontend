@@ -72,7 +72,7 @@ export default function App() {
         userStore.fetchUser();
       }
 
-      await setGameId(scheduleStore.roomId);
+      setGameId(scheduleStore.roomId);
 
       setLoading(false);
     };

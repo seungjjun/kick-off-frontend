@@ -223,6 +223,55 @@ const server = setupServer(
     },
   }))),
 
+  rest.get(`${baseUrl}/posts/1/search`, async (req, res, ctx) => res(ctx.json({
+    posts: {
+      posts: [
+        {
+          id: 1,
+          postInformation: {
+            title: '대한민국 16강 경우의 수...',
+            content: '포르투갈전 무조건 이겨야..',
+          },
+          boardId: 1,
+          hit: 400,
+          imageUrl: 'imageUrl',
+          userId: {
+            userId: 1,
+          },
+          createdAt: '2022-11-29',
+        },
+      ],
+
+      boards: [
+        {
+          id: 1,
+          boardName: {
+            value: '전체게시판',
+          },
+        },
+      ],
+
+      users: [
+        {
+          id: 1,
+          identification: 'jel1y',
+          name: '벤투',
+
+        },
+      ],
+    },
+
+    page: [
+      {
+        currentLastPage: 2,
+        currentPageNumber: 1,
+        lastPage: 2,
+        startPage: 1,
+        totalPageNumber: 11,
+      },
+    ],
+  }))),
+
   rest.post(`${baseUrl}/upload`, async (req, res, ctx) => {
     const { imageUrl } = await req.json();
     return res(ctx.json({

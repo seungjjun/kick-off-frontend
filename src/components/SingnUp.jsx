@@ -3,6 +3,51 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  margin: auto;
+  width: 60%;
+  flex-direction: column;
+  text-align: center;
+`;
+
+const Title = styled.h2`
+  font-size: 1.4em;
+  margin-bottom: 1.2em;
+  font-weight: bold;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 1.1em;
+    text-align: start;
+    margin-bottom: 0.5em;
+    color: #CCC;
+  }
+
+  input {
+    padding: 1em 1em;
+    margin-bottom: 1.2em;
+  }
+`;
+
+const Error = styled.p`
+  text-align: start;
+  margin-bottom: 1.2em;
+  color: red;
+`;
+
+const RegisterButton = styled.button`
+  margin-top: 1em;
+  padding: 1em 0;
+  color: #FFF;
+`;
+
 export default function SignUp({ submit, errorMessage, isExistingUserId }) {
   const {
     register, watch, handleSubmit, formState: { errors },
@@ -13,13 +58,14 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
   };
 
   return (
-    <div>
-      <h2>signup</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="input-name">닉네임 :</label>
+    <Container>
+      <Title>SIGN UP</Title>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="input-name">닉네임</label>
         <input
           id="input-name"
           type="text"
+          placeholder="닉네임 (2 ~ 10자)"
           errors={errors.name}
           {...register('name', {
             required: { value: true, message: '닉네임을 입력해주세요.' },
@@ -27,11 +73,11 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
           })}
         />
         {errors.name ? (
-          <p>{errors.name.message}</p>
+          <Error>{errors.name.message}</Error>
         ) : (
           null
         )}
-        <label htmlFor="input-identification">아이디 :</label>
+        <label htmlFor="input-identification">아이디</label>
         <input
           id="input-identification"
           type="text"
@@ -43,18 +89,19 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
           })}
         />
         {errors.identification ? (
-          <p>{errors.identification.message}</p>
+          <Error>{errors.identification.message}</Error>
         ) : isExistingUserId ? (
-          <p>{errorMessage}</p>
+          <Error>{errorMessage}</Error>
         ) : null}
         <label
           htmlFor="input-password"
         >
-          비밀번호 :
+          비밀번호
         </label>
         <input
           id="input-password"
           type="password"
+          placeholder="8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다."
           error={errors.password}
           {...register('password', {
             required: { value: true, message: '비밀번호를 입력해주세요' },
@@ -65,18 +112,19 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
           })}
         />
         {errors.password ? (
-          <p>{errors.password.message}</p>
+          <Error>{errors.password.message}</Error>
         ) : (
-          <p>8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다.</p>
+          null
         )}
         <label
           htmlFor="input-confirmPassword"
         >
-          비밀번호 확인 :
+          비밀번호 확인
         </label>
         <input
           id="input-confirmPassword"
           type="password"
+          placeholder="비밀번호 확인"
           error={errors.confirmPassword}
           {...register('confirmPassword', {
             required: true,
@@ -84,12 +132,12 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
           })}
         />
         {errors.confirmPassword ? (
-          <p>비밀번호가 일치하지 않습니다</p>
+          <Error>비밀번호가 일치하지 않습니다</Error>
         ) : null}
-        <button type="submit">
+        <RegisterButton type="submit">
           회원가입
-        </button>
-      </form>
-    </div>
+        </RegisterButton>
+      </Form>
+    </Container>
   );
 }

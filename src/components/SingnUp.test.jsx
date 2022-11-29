@@ -23,28 +23,28 @@ describe('SingnUp', () => {
 
   context('when sign up', () => {
     it('render sign up form', () => {
-      screen.getByLabelText('닉네임 :');
-      screen.getByLabelText('아이디 :');
-      screen.getByLabelText('비밀번호 :');
-      screen.getByLabelText('비밀번호 확인 :');
+      screen.getByLabelText('닉네임');
+      screen.getByLabelText('아이디');
+      screen.getByLabelText('비밀번호');
+      screen.getByLabelText('비밀번호 확인');
 
       screen.getByText('회원가입');
     });
 
     it('submit called', async () => {
-      fireEvent.change(screen.getByLabelText('닉네임 :'), {
+      fireEvent.change(screen.getByLabelText('닉네임'), {
         target: { value: '노승준' },
       });
 
-      fireEvent.change(screen.getByLabelText('아이디 :'), {
+      fireEvent.change(screen.getByLabelText('아이디'), {
         target: { value: 'jel1y' },
       });
 
-      fireEvent.change(screen.getByLabelText('비밀번호 :'), {
+      fireEvent.change(screen.getByLabelText('비밀번호'), {
         target: { value: 'Qwe1234!' },
       });
 
-      fireEvent.change(screen.getByLabelText('비밀번호 확인 :'), {
+      fireEvent.change(screen.getByLabelText('비밀번호 확인'), {
         target: { value: 'Qwe1234!' },
       });
 

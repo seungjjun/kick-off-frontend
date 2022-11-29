@@ -20,6 +20,26 @@ const Option = styled.img`
   background: url('https://user-images.githubusercontent.com/104769120/201584619-e6526904-1907-4690-be3c-6302aa1eea86.png') no-repeat; */
 `;
 
+const MyPostButtons = styled.div`
+  display: flex;
+  justify-content: end;
+  gap: 1em;
+
+  button {
+    color: #FFF;
+    padding: 0.5em 1em;
+    border-radius: 6px;
+  }
+`;
+
+const PostUpdateButton = styled.button`
+  /* background-color: #FFF; */
+`;
+
+const PostDeleteButton = styled.button`
+  /* background-color: #FFF; */
+`;
+
 const PostHeader = styled.div`
   margin-block: 1em;
   padding-bottom: 1em;
@@ -89,16 +109,16 @@ export default function Post({
       ) : (
         <PostContainer>
           <Option />
-          <div>
+          <MyPostButtons>
             {posts.loginUser.identification === posts.user.identification && accessToken ? (
               <>
-                <button id="post-update" type="button" onClick={handleClcikModify}>수정</button>
-                <button id="post-delete" type="button" onClick={handleClickDelete}>삭제</button>
+                <PostUpdateButton id="post-update" type="button" onClick={handleClcikModify}>수정</PostUpdateButton>
+                <PostDeleteButton id="post-delete" type="button" onClick={handleClickDelete}>삭제</PostDeleteButton>
               </>
             ) : (
               null
             )}
-          </div>
+          </MyPostButtons>
           <PostHeader>
             <Category>
               {posts.board.boardName.value}

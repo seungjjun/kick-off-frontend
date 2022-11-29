@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { useEffect } from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,7 +16,15 @@ export default function BoardPage() {
 
   const path = location.search;
 
-  const boardId = path.split('=')[1];
+  let boardId = path.split('=')[1];
+
+  if (!location.search) {
+    boardId = 1;
+  }
+
+  if (location.search.includes('&')) {
+    boardId = path.split('=')[1].split('&')[0];
+  }
 
   const boardStore = useBoardStore();
 
@@ -23,15 +32,44 @@ export default function BoardPage() {
 
   const { pageNumber } = boardStore;
 
+  const { keyword } = boardStore;
+
   useEffect(() => {
-    boardStore.changePageNumber(pageNumber);
-    boardStore.fetchPosts(pageNumber, boardId);
+    if (!keyword) {
+      boardStore.changePageNumber(pageNumber);
+      boardStore.fetchPosts(pageNumber, boardId);
+    }
+
+    if (keyword) {
+      boardStore.searchPosts({ keyword, boardId, pageNumber });
+    }
 
     boardStore.makePage();
   }, [location, pageNumber]);
 
-  const changePageNumber = (pageNubmer) => {
+  const changePageNumber = async (pageNubmer) => {
     boardStore.changePageNumber(pageNubmer);
+
+    navigate(`/board?id=${boardId}&page=${pageNubmer + 1}`);
+
+    if (boardStore.keyword) {
+      navigate(`/board?id=${boardId}&keyword=${boardStore.keyword}&page=${pageNubmer + 1}`);
+    }
+  };
+
+  const changeKeywordType = (type) => {
+    boardStore.changeKeywordType(type);
+  };
+
+  const submit = async (data) => {
+    const { keyword } = data;
+    boardStore.changeKeyword(keyword);
+
+    navigate(`/board?id=${boardId}&keyword=${keyword}&page=1`);
+
+    await boardStore.searchPosts({
+      keyword, boardId, pageNumber: 0,
+    });
   };
 
   const nextPage = () => {
@@ -70,12 +108,15 @@ export default function BoardPage() {
   return (
     <Board
       accessToken={accessToken}
+      boardName={boardStore.boardName}
       boardId={boardId}
       posts={boardStore.posts}
       navigate={navigate}
       commentNumber={commentNumber}
       recommentNumber={recommentNumber}
       pagination={pagination}
+      submit={submit}
+      changeKeywordType={changeKeywordType}
     />
   );
 }

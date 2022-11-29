@@ -1,6 +1,17 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
+const Container = styled.div`
+  display: flex;
+`;
+
+const Form = styled.form` 
+  display: flex;
+  flex-direction: column;
+  margin-left: 13em;
+`;
 export default function UserProfileEditForm({ edits }) {
   const { register, handleSubmit } = useForm();
 
@@ -13,8 +24,9 @@ export default function UserProfileEditForm({ edits }) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <Container>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="input-name">닉네임</label>
         <input
           id="input-name"
           type="text"
@@ -41,7 +53,7 @@ export default function UserProfileEditForm({ edits }) {
             : null}
         </div>
         <button type="submit">수정완료</button>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 }

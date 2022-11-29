@@ -110,6 +110,22 @@ describe('Board', () => {
     });
   });
 
+  context('when click board name', () => {
+    it('navigate call', () => {
+      fireEvent.click(screen.getByText('EPL'));
+
+      expect(navigate).toBeCalledWith('/board?id=1');
+    });
+  });
+
+  context('when click  nickname', () => {
+    it('navigate call', () => {
+      fireEvent.click(screen.getByText('son7'));
+
+      expect(navigate).toBeCalledWith('/users?id=1');
+    });
+  });
+
   context('when click page button', () => {
     it('previous page function call', () => {
       fireEvent.click(screen.getByText('이전'));

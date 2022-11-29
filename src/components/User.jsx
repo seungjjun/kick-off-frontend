@@ -16,15 +16,27 @@ const Container = styled.div`
 
 const Information = styled.div`
   display: flex;
+  padding: 1em;
   border: 1px solid #CCC;
+  /* justify-content: space-between; */
+`;
+
+const MyButtons = styled.div`
+  
+  button {
+    margin-right: 0.8em;
+    border: 1px solid #FFF;
+    background-color: #FFF;
+    color: #979797;
+  }
 `;
 
 const BasicProfileImage = styled.div`
-width: 5em;
-height: 5em;
-background: url('https://user-images.githubusercontent.com/104769120/203972344-e8de6516-2d57-4afd-b1ef-63a7471f3e5a.png');
-background-size: cover;
-border-radius: 50%;
+  width: 5em;
+  height: 5em;
+  background: url('https://user-images.githubusercontent.com/104769120/203972344-e8de6516-2d57-4afd-b1ef-63a7471f3e5a.png');
+  background-size: cover;
+  border-radius: 50%;
 `;
 
 const ActivityInformation = styled.div`
@@ -41,6 +53,17 @@ const ProfileImage = styled.img`
 const BasicInformation = styled.section`
   margin-left: 1em;
   align-self: center;
+`;
+
+const ProfileEditForm = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ProfileEditButton = styled.button`
+  border: 1px solid #FFF;
+  background-color: #FFF;
+  margin-left: 27em;
 `;
 
 const PostNumber = styled.span`
@@ -89,7 +112,7 @@ export default function User({
 
           </span>
         </BasicInformation>
-        <div>
+        <ProfileEditForm>
           {edits.isUpdate ? (
             <UserProfileEditForm
               edits={edits}
@@ -98,17 +121,17 @@ export default function User({
             null
           )}
           {myInformation.user.isMyToken ? (
-            <button type="button" onClick={handleClickProfileUpdate}>프로필 수정</button>
+            <ProfileEditButton type="button" onClick={handleClickProfileUpdate}>프로필 수정</ProfileEditButton>
           ) : (
             null
           )}
-        </div>
+        </ProfileEditForm>
       </Information>
-      <div>
+      <MyButtons>
         <button type="button" onClick={handleClickComponentState}>작성글</button>
         <button type="button" onClick={handleClickComponentState}>작성 댓글</button>
         <button type="button" onClick={handleClickComponentState}>좋아요한 글</button>
-      </div>
+      </MyButtons>
       <ActivityInformation>
         {componentState === '작성글' ? (
           <WrittenPosts

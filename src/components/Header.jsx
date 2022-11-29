@@ -5,6 +5,37 @@ import styled from 'styled-components';
 const HeaderBox = styled.div`
   width: 1080px;
   height: 150px;
+  margin-top: 1.2em;
+`;
+
+const List = styled.ul`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Title = styled.li`
+  a {
+      font-size: 1.5em;
+      color: #64C2EB;
+  }
+`;
+
+const AfterLogin = styled.li`
+  button {
+    margin-right: 1em;
+    border: none;
+    background-color: #FFF;
+  }
+`;
+
+const BeforeLogin = styled.div`
+  font-size: 0.9em;
+  display: flex;
+
+  li {
+    margin-left: 2em;
+  }
+  
 `;
 
 export default function Header({ accessToken, setAccessToken, user }) {
@@ -22,12 +53,12 @@ export default function Header({ accessToken, setAccessToken, user }) {
   return (
     <HeaderBox>
       <nav>
-        <ul>
-          <li>
+        <List>
+          <Title>
             <Link to="/">KiCK OFF</Link>
-          </li>
+          </Title>
           {accessToken ? (
-            <li>
+            <AfterLogin>
               <button
                 type="button"
                 onClick={handleClickLogout}
@@ -41,18 +72,18 @@ export default function Header({ accessToken, setAccessToken, user }) {
                 내 정보
               </button>
               <span>{user.name}</span>
-            </li>
+            </AfterLogin>
           ) : (
-            <>
+            <BeforeLogin>
               <li>
                 <Link to="/login">로그인</Link>
               </li>
               <li>
                 <Link to="/signup">회원가입</Link>
               </li>
-            </>
+            </BeforeLogin>
           )}
-        </ul>
+        </List>
       </nav>
     </HeaderBox>
   );

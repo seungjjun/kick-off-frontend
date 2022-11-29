@@ -25,6 +25,23 @@ export default class BoardApiService {
 
     return data;
   }
+
+  async searchPosts({
+    keyword, keywordType, boardId = 1, pageNumber = 0,
+  }) {
+    const url = `${baseUrl}/posts/${boardId}/search`;
+
+    const { data } = await axios.get(url, {
+      params: {
+        page: pageNumber,
+        keywordType,
+        keyword,
+      },
+    });
+
+    console.log(data);
+    return data;
+  }
 }
 
 export const boardApiService = new BoardApiService();
