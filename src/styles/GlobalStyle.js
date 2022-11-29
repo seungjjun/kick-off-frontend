@@ -16,6 +16,9 @@ const GlobalStyle = createGlobalStyle`
   }
   
   button {
+    border-radius: 5px;  
+    border: 1px solid #64C2EB;
+    background-color: #64C2EB;
     cursor: pointer;
   }
   /* button:hover {

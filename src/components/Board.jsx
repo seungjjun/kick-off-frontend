@@ -1,4 +1,25 @@
 import styled from 'styled-components';
+import SearchForm from './SearchForm';
+
+const BoardName = styled.h2`
+  font-size: 1.6em;
+`;
+
+const SideButtons = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 0.5em 0;
+  gap: 1em;
+
+  button {
+    padding: 0.3em 1em;
+    color: #FFF;
+  }
+`;
+
+const Article = styled.article`
+  /* height: 800px; */
+`;
 
 const List = styled.ul`
   display: flex;
@@ -12,7 +33,7 @@ const Item = styled.li`
 const Nothing = styled.p`
     display: flex;
     justify-content: center;
-    margin-top: 5em;
+    margin: 5em;
 `;
 
 const ImageBox = styled.div`
@@ -82,7 +103,8 @@ const NextButton = styled.button`
 `;
 
 export default function Board({
-  accessToken, boardId, posts, navigate, commentNumber, recommentNumber, pagination,
+  accessToken, boardName, boardId, posts, navigate, commentNumber, recommentNumber,
+  pagination, submit, changeKeywordType,
 }) {
   const postList = posts.posts;
 
@@ -104,7 +126,9 @@ export default function Board({
   };
 
   const handleClickPage = (event) => {
-    pagination.changePageNumber(event.target.innerText - 1);
+    const page = event.target.innerText - 1;
+
+    pagination.changePageNumber(page);
   };
 
   const handleClickNextPage = () => {
@@ -130,13 +154,14 @@ export default function Board({
 
   return (
     <section>
-      <div>
+      <BoardName>{boardName}</BoardName>
+      <SideButtons>
         <button type="button" onClick={handleClickWrite}>글쓰기</button>
         {boardId !== '1' && boardId !== undefined ? (
           <button type="button" onClick={handleClickSchedule}>경기일정</button>
         ) : null}
-      </div>
-      <article>
+      </SideButtons>
+      <Article>
         {Object.keys(posts).length === 0 || postList.length === 0 ? (
           <Nothing>게시글이 없습니다</Nothing>
         ) : (
@@ -181,7 +206,11 @@ export default function Board({
             ))}
           </List>
         )}
-      </article>
+      </Article>
+      <SearchForm
+        submit={submit}
+        changeKeywordType={changeKeywordType}
+      />
       <Pagination>
         {pagination.isPreviousPage ? (
           <PreviousButton type="button" onClick={handleClickPreviousPage}>이전</PreviousButton>

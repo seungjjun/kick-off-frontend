@@ -1,5 +1,79 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+`;
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+const Select = styled.select`
+  display: flex;
+  padding: 0.5em 1.2em;
+  margin-bottom: 1em;
+  border: 1px solid #CCC;
+  color: #979797;
+`;
+
+const InputTitle = styled.input`
+  display: flex;
+  width: 100%;
+  margin-bottom: 1em;
+  padding: 0.7em 1em;
+  border: 1px solid #CCC;
+`;
+
+const ContentBox = styled.textarea`
+  display: block;
+  padding: 1.4em 1em;
+  width: 100%;
+  height: 300px;
+  border: 1px solid #CCC;
+`;
+
+const InputFile = styled.input`
+  display: flex;
+  margin-top: 1em;
+`;
+
+const UploadImage = styled.div`
+  display: flex;
+  margin-top: 1em;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid #CCC;
+
+  button {
+    padding: 0.8em 0;
+    color: #FFF;
+  }
+`;
+
+const CancelButton = styled.button`
+  width: 47%;
+`;
+
+const SubmitButton = styled.button`
+  width: 47%;
+`;
 
 export default function PostEditForm({
   navigate, submit, changeBoard, upload, image,
@@ -29,9 +103,9 @@ export default function PostEditForm({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <select
+    <Container>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Select
           id="select-board"
           onChange={handleChange}
         >
@@ -45,8 +119,8 @@ export default function PostEditForm({
           <option value="3">LaLiga</option>
           <option value="4">SerieA</option>
           <option value="5">Bundesliga</option>
-        </select>
-        <input
+        </Select>
+        <InputTitle
           id="input-title"
           type="text"
           value={title}
@@ -55,7 +129,7 @@ export default function PostEditForm({
             onChange: (e) => titleChange(e.target.value),
           })}
         />
-        <textarea
+        <ContentBox
           id="input-content"
           type="text"
           value={content}
@@ -64,20 +138,22 @@ export default function PostEditForm({
             onChange: (e) => contentChange(e.target.value),
           })}
         />
-        <input
+        <InputFile
           type="file"
           accept="image/*"
           placeholder="파일 선택"
           id="image"
           onChange={handleChangeImage}
         />
-        <div>
+        <UploadImage>
           {image ? <img src={image} alt="uploadImage" />
             : null}
-        </div>
-        <button type="button" onClick={handleClickCancel}>수정취소</button>
-        <button type="submit">수정완료</button>
-      </form>
-    </div>
+        </UploadImage>
+        <Buttons>
+          <CancelButton type="button" onClick={handleClickCancel}>수정취소</CancelButton>
+          <SubmitButton type="submit">수정완료</SubmitButton>
+        </Buttons>
+      </Form>
+    </Container>
   );
 }

@@ -29,7 +29,7 @@ describe('LoginForm', () => {
 
     screen.getByPlaceholderText('비밀번호');
 
-    screen.getByText('로그인하기');
+    screen.getByText('로그인');
 
     screen.getByText('회원가입');
   });
@@ -44,7 +44,7 @@ describe('LoginForm', () => {
         target: { value: 'Qwe1234!' },
       });
 
-      fireEvent.click(screen.getByText('로그인하기'));
+      fireEvent.click(screen.getByText('로그인'));
 
       await waitFor(() => {
         expect(submit).toBeCalled();

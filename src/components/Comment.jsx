@@ -24,6 +24,7 @@ const CommentContent = styled.p`
 `;
 
 const CommentDate = styled.p`
+  display: inline;
   color: #979797;
 `;
 
@@ -34,6 +35,26 @@ const RecommentWriteButton = styled.button`
   background-color: #FFF;
 `;
 
+const CommentButtons = styled.div`
+  display: inline;
+  margin-left: 1em;
+
+  button {
+    border: 1px solid #FFF;
+    background-color: #FFF;
+    color: #979797;
+    margin-right: 0.3em;
+  }
+`;
+
+const CommentUpdateButton = styled.button`
+
+`;
+
+const CommentDeleteButton = styled.button`
+
+`;
+
 const RecommentList = styled.li`
   margin: 0.7em 0 1em 1.2em;
 `;
@@ -41,6 +62,18 @@ const RecommentList = styled.li`
 const PageButtonList = styled.ul`
   display: flex;
   justify-content: center;
+`;
+
+const RecommentButtons = styled.div`
+  display: inline;
+  margin-left: 1em;
+
+  button {
+    border: 1px solid #FFF;
+    background-color: #FFF;
+    color: #979797;
+    margin-right: 0.3em;
+  }
 `;
 
 const PageButton = styled.p`
@@ -151,22 +184,22 @@ export default function Comment({
                       </RecommentWriteButton>
                     </CommentDate>
                     {posts.loginUser.id === comment.userId && accessToken ? (
-                      <>
-                        <button
+                      <CommentButtons>
+                        <CommentUpdateButton
                           id="update-comment"
                           type="button"
                           onClick={() => handleClcikCommentModify(comment.id)}
                         >
                           수정
-                        </button>
-                        <button
+                        </CommentUpdateButton>
+                        <CommentDeleteButton
                           id="delete-comment"
                           type="button"
                           onClick={() => handleClickCommentDelete(comment.id)}
                         >
                           삭제
-                        </button>
-                      </>
+                        </CommentDeleteButton>
+                      </CommentButtons>
                     ) : (
                       null
                     )}
@@ -207,7 +240,7 @@ export default function Comment({
                       {recomment.commentDate}
                     </CommentDate>
                     {posts.loginUser.id === recomment.userId && accessToken ? (
-                      <>
+                      <RecommentButtons>
                         <button
                           id="update-recomment"
                           type="button"
@@ -222,7 +255,7 @@ export default function Comment({
                         >
                           삭제
                         </button>
-                      </>
+                      </RecommentButtons>
                     ) : (
                       null
                     )}
