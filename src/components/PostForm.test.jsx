@@ -4,29 +4,60 @@ import {
 
 import PostForm from './PostForm';
 
+const navigate = jest.fn();
+const submit = jest.fn();
+const changeBoard = jest.fn();
+const upload = jest.fn();
+
+let image = '';
+
 const context = describe;
 
 describe('PostForm', () => {
+  beforeEach(() => {
+    const boardList = [
+      {
+        id: 1,
+        boardName: {
+          value: '전체 게시판',
+        },
+      },
+
+      {
+        id: 2,
+        boardName: {
+          value: 'EPL',
+        },
+      },
+
+      {
+        id: 3,
+        boardName: {
+          value: 'LaLiga',
+        },
+      },
+    ];
+
+    image = 'image';
+
+    render(<PostForm
+      boardList={boardList}
+      navigate={navigate}
+      submit={submit}
+      changeBoard={changeBoard}
+      upload={upload}
+      image={image}
+    />);
+  });
+
+  it('render board list', () => {
+    screen.getByText('전체 게시판');
+    screen.getByText('EPL');
+    screen.getByText('LaLiga');
+  });
+
   context('when write post form', () => {
-    it('submit form', async () => {
-      const postStore = jest.fn();
-      const navigate = jest.fn();
-      const submit = jest.fn();
-      const changeCategory = jest.fn();
-      const upload = jest.fn();
-      let image = '';
-
-      render(<PostForm
-        postStore={postStore}
-        navigate={navigate}
-        submit={submit}
-        changeCategory={changeCategory}
-        upload={upload}
-        image={image}
-      />);
-
-      image = 'image';
-
+    it('submit function called', async () => {
       expect(screen.getByRole(
         'option',
         { name: '게시판을 선택해 주세요' },
@@ -50,16 +81,6 @@ describe('PostForm', () => {
 
   context('when click cancle button', () => {
     it('navigate to be called', () => {
-      const postStore = jest.fn();
-      const navigate = jest.fn();
-      const submit = jest.fn();
-
-      render(<PostForm
-        postStore={postStore}
-        navigate={navigate}
-        submit={submit}
-      />);
-
       fireEvent.click(screen.getByText('취소'));
 
       expect(navigate).toBeCalledWith('/');

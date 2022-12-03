@@ -7,7 +7,8 @@ import useScheduleStore from '../hooks/useScheduleStore';
 
 import ChattingRoom from '../components/ChattingRoom';
 
-export default function ChattingRoomPage({ user, gameId }) {
+export default function ChattingRoomPage({ myInformation, gameId }) {
+  // console.log();
   const scheduleStore = useScheduleStore();
 
   const [message, setMessage] = useState('');
@@ -30,7 +31,7 @@ export default function ChattingRoomPage({ user, gameId }) {
       stompClient.current.send(
         '/pub/chat/enter',
         {}
-        , JSON.stringify({ roomId: gameId, writer: user.name }),
+        , JSON.stringify({ roomId: gameId, writer: myInformation.user.name }),
       );
     });
 
@@ -50,7 +51,7 @@ export default function ChattingRoomPage({ user, gameId }) {
     stompClient.current.send(
       '/pub/chat/message',
       {}
-      , JSON.stringify({ roomId: gameId, writer: user.name, message }),
+      , JSON.stringify({ roomId: gameId, writer: myInformation.user.name, message }),
     );
     setMessage('');
   };

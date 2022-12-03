@@ -80,6 +80,10 @@ export default function BoardPage() {
     boardStore.previousPage();
   };
 
+  const moveToUserPage = (userName, userId) => {
+    navigate(`/users?nickname=${userName}`, { state: userId });
+  };
+
   const { comments } = boardStore;
   const { recomments } = boardStore;
 
@@ -117,6 +121,7 @@ export default function BoardPage() {
       pagination={pagination}
       submit={submit}
       changeKeywordType={changeKeywordType}
+      moveToUserPage={moveToUserPage}
     />
   );
 }

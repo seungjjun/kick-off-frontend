@@ -12,12 +12,14 @@ describe('UserStore', () => {
   describe('fetchUser', () => {
     context('자신의 정보를 불러올 경우', () => {
       it('자신의 정보를 확인할 수 있다.', async () => {
-        await userStore.fetchUser();
+        await userStore.fetchMyInformation();
 
-        expect(userStore.user.id).toBe(1);
-        expect(userStore.user.identification).toBe('jel1y');
-        expect(userStore.user.name).toBe('Pikachu');
-        expect(userStore.user.profileImage).toBe('imageUrl');
+        const { myInformation } = userStore;
+
+        expect(myInformation.user.id).toBe(1);
+        expect(myInformation.user.identification).toBe('jel1y');
+        expect(myInformation.user.name).toBe('Pikachu');
+        expect(myInformation.user.profileImage).toBe('imageUrl');
       });
     });
 
@@ -56,7 +58,7 @@ describe('UserStore', () => {
 
     context('사용자의 정보를 확인하려는 경우', () => {
       it('사용자의 정보를 확인할 수 있다.', async () => {
-        await userStore.fetchMyInformation(1);
+        await userStore.fetchUser();
 
         const { myInformation } = userStore;
 
@@ -65,7 +67,7 @@ describe('UserStore', () => {
       });
 
       it('사용자가 작성한 게시글을 확인할 수 있다.', async () => {
-        await userStore.fetchMyInformation(1);
+        await userStore.fetchUser();
 
         const { myInformation } = userStore;
 
@@ -74,7 +76,7 @@ describe('UserStore', () => {
       });
 
       it('사용자가 작성한 댓글을 확인할 수 있다.', async () => {
-        await userStore.fetchMyInformation(1);
+        await userStore.fetchUser();
 
         const { myInformation } = userStore;
 
@@ -83,7 +85,7 @@ describe('UserStore', () => {
       });
 
       it('사용자가 좋아요한 게시글을 확인할 수 있다.', async () => {
-        await userStore.fetchMyInformation(1);
+        await userStore.fetchUser();
 
         const { myInformation } = userStore;
 

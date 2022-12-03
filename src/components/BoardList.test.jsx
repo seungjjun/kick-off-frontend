@@ -26,6 +26,7 @@ describe('BoardList', () => {
         boardName: {
           value: 'K-League',
         },
+        parentId: null,
       },
 
       {
@@ -33,6 +34,7 @@ describe('BoardList', () => {
         boardName: {
           value: 'EPL',
         },
+        parentId: null,
       },
     ];
 

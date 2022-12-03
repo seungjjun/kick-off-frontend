@@ -6,6 +6,7 @@ const navigate = jest.fn();
 const changePageNumber = jest.fn();
 const nextPage = jest.fn();
 const previousPage = jest.fn();
+const moveToUserPage = jest.fn();
 
 const context = describe;
 
@@ -36,6 +37,7 @@ describe('Board', () => {
           boardName: {
             value: 'EPL',
           },
+          parentId: null,
         },
       ],
 
@@ -77,6 +79,7 @@ describe('Board', () => {
       commentNumber={commentNumber}
       recommentNumber={recommentNumber}
       pagination={pagination}
+      moveToUserPage={moveToUserPage}
     />);
   });
 
@@ -118,11 +121,12 @@ describe('Board', () => {
     });
   });
 
-  context('when click  nickname', () => {
+  context('when click nickname', () => {
     it('navigate call', () => {
       fireEvent.click(screen.getByText('son7'));
 
-      expect(navigate).toBeCalledWith('/users?id=1');
+      expect(moveToUserPage).toBeCalled();
+      expect(navigate).toBeCalled();
     });
   });
 

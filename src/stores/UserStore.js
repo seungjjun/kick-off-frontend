@@ -36,10 +36,10 @@ export default class UserStore extends Store {
     this.publish();
   }
 
-  async fetchUser() {
-    const user = await userApiService.fetchUser();
+  async fetchUser(userName) {
+    const user = await userApiService.fetchUser(userName);
 
-    this.user = user;
+    this.myInformation = user.myInformation;
 
     this.publish();
   }
@@ -61,17 +61,20 @@ export default class UserStore extends Store {
     }
   }
 
-  async fetchMyInformation(userId) {
-    const data = await userApiService.fetchMyInformation(userId);
+  async fetchMyInformation() {
+    const data = await userApiService.fetchMyInformation();
 
     this.myInformation = data.myInformation;
 
+    this.user = data.myInformation.user;
     this.publish();
   }
 
   async updateProfile(userId, name, image) {
     try {
       await userApiService.updateProfile(userId, name, image);
+
+      this.editState = '';
     } catch (e) {
       const { message } = e.response.data;
 

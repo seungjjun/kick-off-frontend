@@ -34,10 +34,10 @@ export default function UserPage() {
 
   const path = location.search;
 
-  const userId = path.split('=')[1];
+  const userName = path.split('=')[1];
 
   useEffect(() => {
-    userStore.fetchMyInformation(userId);
+    userStore.fetchUser(userName);
     userStore.setComponentState();
 
     // setName(userStore.myInformation.user.name);
@@ -66,24 +66,25 @@ export default function UserPage() {
   };
 
   const submit = async (data) => {
-    await userStore.updateProfile(userId, data.name, image);
+    await userStore.updateProfile(userStore.myInformation.user.id, data.name, image);
 
-    setIsUpdate(!isUpdate);
+    if (userStore.editState !== 'duplication') {
+      setIsUpdate(!isUpdate);
 
-    userStore.fetchMyInformation(userId);
-    userStore.fetchUser();
+      userStore.fetchUser(data.name);
+    }
   };
 
   const deleteCheckedPost = async (checkPosts) => {
     await postStore.deleteCheckedPost(checkPosts);
 
-    userStore.fetchMyInformation(userId);
+    userStore.fetchUser(userName);
   };
 
   const deleteCheckedComment = async (checkedComments) => {
     await commentStore.deleteCheckedComment(checkedComments);
 
-    userStore.fetchMyInformation(userId);
+    userStore.fetchUser(userName);
   };
 
   const deleteCheckedRecomment = async (checkedRecomments) => {
@@ -93,7 +94,7 @@ export default function UserPage() {
   const cancelCheckedPost = async (checkedPosts) => {
     await likeStore.cancelCheckedPost(checkedPosts);
 
-    userStore.fetchMyInformation(userId);
+    userStore.fetchUser(userName);
   };
 
   const edits = {

@@ -103,8 +103,11 @@ export default class BoardStore extends Store {
     this.publish();
   }
 
-  setKeyword() {
+  setKeyword(boardName) {
     this.keyword = '';
+
+    this.boardName = boardName;
+    this.pageNumber = 0;
 
     this.publish();
   }

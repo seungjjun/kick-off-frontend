@@ -3,9 +3,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import UserPage from './UserPage';
 
 const navigate = jest.fn();
-const fetchMyInformation = jest.fn();
+const fetchUser = jest.fn();
 const setComponentState = jest.fn();
 const changeComponentState = jest.fn();
+const updateProfile = jest.fn();
 
 const deletePost = jest.fn();
 
@@ -25,11 +26,12 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../hooks/useUserStore', () => () => ({
-  fetchMyInformation,
+  fetchUser,
   setComponentState,
   changeComponentState,
   myInformation,
   componentState,
+  updateProfile,
 }));
 
 jest.mock('../hooks/usePostStore', () => () => ({
@@ -78,7 +80,7 @@ describe('UserPage', () => {
 
     location = {
       pathname: '/users',
-      search: '?id=1',
+      search: '?nickname=messi',
     };
 
     componentState = '작성글';

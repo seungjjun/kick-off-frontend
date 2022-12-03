@@ -24,8 +24,11 @@ describe('Header', () => {
   context('when have a accesstoken', () => {
     beforeEach(() => {
       const user = {
-        id: 1,
-        name: '황인범',
+        user: {
+          id: 1,
+          name: '황인범',
+          grade: '아마추어',
+        },
       };
 
       const accessToken = 'ACCESS.TOKEN';
@@ -48,6 +51,10 @@ describe('Header', () => {
 
     it('render user name', () => {
       screen.getByText('황인범');
+    });
+
+    it('render user grade', () => {
+      screen.getByText(/아마추어/);
     });
   });
 

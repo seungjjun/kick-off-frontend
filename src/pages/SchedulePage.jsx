@@ -16,7 +16,7 @@ export default function SchedulePage({ accessToken }) {
 
   const navigate = useNavigate();
 
-  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate() - 14}`;
+  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate() - 16}`;
 
   useEffect(() => {
     scheduleStore.fetchTodaySchedule(today);

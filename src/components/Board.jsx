@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 import styled from 'styled-components';
 import SearchForm from './SearchForm';
 
@@ -104,7 +105,7 @@ const NextButton = styled.button`
 
 export default function Board({
   accessToken, boardName, boardId, posts, navigate, commentNumber, recommentNumber,
-  pagination, submit, changeKeywordType,
+  pagination, submit, changeKeywordType, moveToUserPage,
 }) {
   const postList = posts.posts;
 
@@ -143,13 +144,13 @@ export default function Board({
     navigate(`/board?id=${boardId}`);
   };
 
-  const handleClickName = (userId) => {
+  const handleClickName = (userName, userId) => {
     if (!accessToken) {
       navigate('/login');
       return;
     }
 
-    navigate(`/users?id=${userId}`);
+    moveToUserPage(userName, userId);
   };
 
   return (
@@ -157,7 +158,7 @@ export default function Board({
       <BoardName>{boardName}</BoardName>
       <SideButtons>
         <button type="button" onClick={handleClickWrite}>글쓰기</button>
-        {boardId !== '1' && boardId !== undefined ? (
+        {boardId === '2' || boardId === '3' || boardId === '4' || boardId === '5' && boardId !== undefined ? (
           <button type="button" onClick={handleClickSchedule}>경기일정</button>
         ) : null}
       </SideButtons>
@@ -193,7 +194,13 @@ export default function Board({
                     {posts.boards.find((board) => board.id === post.boardId).boardName.value}
                   </Category>
                   <UserName>
-                    <Name type="button" onClick={() => handleClickName(post.userId.userId)}>
+                    <Name
+                      type="button"
+                      onClick={() => handleClickName(
+                        posts.users.find((user) => user.id === post.userId.userId).name,
+                        post.userId.userId,
+                      )}
+                    >
                       {posts.users.find((user) => user.id === post.userId.userId).name}
                     </Name>
                     {' '}
