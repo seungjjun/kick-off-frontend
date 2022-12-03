@@ -14,6 +14,12 @@ const CalendarBox = styled.div`
   justify-content: center;
 `;
 
+const LeagueName = styled.h2`
+  font-size: 1.6em;
+  font-weight: bold;
+  margin-bottom: .5em;
+`;
+
 const Inquiry = styled.p`
   align-self: center;
   margin-right: 1em;
@@ -123,7 +129,7 @@ const Comparison = styled.button`
 `;
 
 export default function Schedule({
-  compare, games, checkScheduleByPeriod, setPeriod,
+  compare, games, checkScheduleByPeriod, setPeriod, leagueName,
 }) {
   const handleClickComparison = (Id) => {
     compare(Id);
@@ -135,6 +141,7 @@ export default function Schedule({
 
   return (
     <div>
+      <LeagueName>{leagueName}</LeagueName>
       <TodayMatch>
         <List>
           {games.todayGames.length === 0 ? (

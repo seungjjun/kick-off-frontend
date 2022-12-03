@@ -4,6 +4,7 @@ import SearchForm from './SearchForm';
 
 const BoardName = styled.h2`
   font-size: 1.6em;
+  font-weight: bold;
 `;
 
 const SideButtons = styled.div`
@@ -122,8 +123,8 @@ export default function Board({
     navigate('/write');
   };
 
-  const handleClickSchedule = () => {
-    navigate('/schedule');
+  const handleClickSchedule = (boardName) => {
+    navigate(`/schedule/${boardName}`);
   };
 
   const handleClickPage = (event) => {
@@ -159,7 +160,7 @@ export default function Board({
       <SideButtons>
         <button type="button" onClick={handleClickWrite}>글쓰기</button>
         {boardId === '2' || boardId === '3' || boardId === '4' || boardId === '5' && boardId !== undefined ? (
-          <button type="button" onClick={handleClickSchedule}>경기일정</button>
+          <button type="button" onClick={() => handleClickSchedule(boardName)}>경기일정</button>
         ) : null}
       </SideButtons>
       <Article>

@@ -113,7 +113,7 @@ export default function App() {
           <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/write" element={<PostFormPage myInformation={myInformation} />} />
           <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
-          <Route path="/schedule" element={<SchedulePage accessToken={accessToken} />} />
+          <Route path="/schedule/:boardId" element={<SchedulePage accessToken={accessToken} />} />
           <Route path="/room/:roomId" element={<ChattingRoomPage myInformation={myInformation} gameId={gameId} />} />
         </Routes>
       </Content>
