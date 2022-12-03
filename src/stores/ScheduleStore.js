@@ -9,13 +9,17 @@ export default class ScheduleStore extends Store {
 
     this.schedule = [];
 
+    this.leageId = 0;
+
     this.todayGames = [];
     this.periodGames = [];
     this.predictionsMatch = [];
   }
 
-  async fetchTodaySchedule(today) {
-    const data = await scheduleApiService.fetchTodaySchedule(today);
+  async fetchTodaySchedule(today, leagueName) {
+    this.changeLeagueId(leagueName);
+
+    const data = await scheduleApiService.fetchTodaySchedule(today, this.leageId);
 
     this.schedule = data.response;
 
@@ -53,6 +57,24 @@ export default class ScheduleStore extends Store {
 
     this.publish();
   };
+
+  changeLeagueId(leagueName) {
+    if (leagueName === 'EPL') {
+      this.leageId = 39;
+    }
+
+    if (leagueName === 'LaLiga') {
+      this.leageId = 140;
+    }
+
+    if (leagueName === 'SerieA') {
+      this.leageId = 135;
+    }
+
+    if (leagueName === 'Bundesliga') {
+      this.leageId = 78;
+    }
+  }
 }
 
 export const scheduleStore = new ScheduleStore();

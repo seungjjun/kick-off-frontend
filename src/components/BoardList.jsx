@@ -107,7 +107,6 @@ export default function BoardList({ boardList, changeBoard }) {
             board.parentId === null ? (
               <Item>
                 <Link
-                  key={board.id}
                   to={`/board?id=${board.id}`}
                   onClick={() => handleClickBoard(board.boardName.value)}
                 >
@@ -123,7 +122,9 @@ export default function BoardList({ boardList, changeBoard }) {
                         <BundesligaIcon />
                       ) : null
                     )}
-                    <LeagueBoardName>
+                    <LeagueBoardName
+                      key={board.id}
+                    >
                       {board.boardName.value}
                     </LeagueBoardName>
                   </LeagueBoard>

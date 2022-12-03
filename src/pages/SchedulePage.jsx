@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import useScheduleStore from '../hooks/useScheduleStore';
 
@@ -16,16 +16,24 @@ export default function SchedulePage({ accessToken }) {
 
   const navigate = useNavigate();
 
-  const today = `${todayDate.getMonth() + 1}` + '-' + `${todayDate.getDate() - 16}`;
+  const location = useLocation();
 
-  useEffect(() => {
-    scheduleStore.fetchTodaySchedule(today);
-    scheduleStore.setPeriodGames();
-  }, []);
+  const path = location.pathname;
+
+  const leagueName = path.split('/')[2];
 
   const fillZero = (date) => (date.toString().length === 1
     ? date.toString().padStart(2, '0')
     : date.toString());
+
+  const todayDay = fillZero(todayDate.getDate() + 3);
+  const todayMonth = fillZero(todayDate.getMonth());
+  const today = `${todayMonth}` + '-' + `${todayDay}`;
+
+  useEffect(() => {
+    scheduleStore.fetchTodaySchedule(today, leagueName);
+    scheduleStore.setPeriodGames();
+  }, []);
 
   const checkScheduleByPeriod = () => {
     const startYear = startDate.getFullYear();
@@ -73,6 +81,7 @@ export default function SchedulePage({ accessToken }) {
       games={games}
       checkScheduleByPeriod={checkScheduleByPeriod}
       setPeriod={setPeriod}
+      leagueName={leagueName}
     />
   );
 }

@@ -11,6 +11,7 @@ const setPeriodGames = jest.fn();
 
 let todayGames = [];
 let periodGames = [];
+let location = {};
 
 const ko = {};
 jest.mock('react-datepicker/dist/react-datepicker.css', () => null);
@@ -22,6 +23,10 @@ jest.mock('date-fns/esm/locale', () => () => ({
 jest.mock('react-router-dom', () => ({
   useNavigate() {
     return navigate;
+  },
+
+  useLocation() {
+    return location;
   },
 }));
 
@@ -91,6 +96,10 @@ describe('SchedulePage', () => {
         },
       },
     ];
+
+    location = {
+      pathname: '/schedule/EPL',
+    };
 
     render(<SchedulePage />);
   });
