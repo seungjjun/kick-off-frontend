@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import usePostStore from '../hooks/usePostStore';
 
@@ -8,7 +8,7 @@ import useBoardStore from '../hooks/useBoardStore';
 
 import PostForm from '../components/PostForm';
 
-export default function PostFormPage({ user }) {
+export default function PostFormPage({ myInformation }) {
   const [image, setImage] = useState('');
 
   const postStore = usePostStore();
@@ -18,6 +18,10 @@ export default function PostFormPage({ user }) {
   const navigate = useNavigate();
 
   const formData = new FormData();
+
+  useEffect(() => {
+    boardStore.fetchBoards();
+  }, []);
 
   const changeBoard = (value) => {
     boardStore.changeBoard(value);
@@ -38,7 +42,7 @@ export default function PostFormPage({ user }) {
       data.content,
       boardStore.boardId,
       image,
-      user.id,
+      myInformation.user.id,
     );
 
     navigate(`/post/${postStore.postId}`);
@@ -46,6 +50,7 @@ export default function PostFormPage({ user }) {
 
   return (
     <PostForm
+      boardList={boardStore.boards}
       navigate={navigate}
       submit={submit}
       changeBoard={changeBoard}

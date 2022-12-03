@@ -11,9 +11,16 @@ const changePageNumber = jest.fn();
 const nextPage = jest.fn();
 const previousPage = jest.fn();
 
+const searchPosts = jest.fn();
+const changeKeywordType = jest.fn();
+const changeKeyword = jest.fn();
+
 const comments = [];
 const recomments = [];
 
+const pageNumber = 0;
+const keyword = '';
+const boardName = '';
 let posts = [];
 let location = {};
 let page = {};
@@ -31,6 +38,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../hooks/useBoardStore', () => () => ({
   fetchPosts,
+  pageNumber,
   posts,
   changePageNumber,
   makePage,
@@ -40,6 +48,11 @@ jest.mock('../hooks/useBoardStore', () => () => ({
   pageButton,
   comments,
   recomments,
+  searchPosts,
+  keyword,
+  changeKeywordType,
+  changeKeyword,
+  boardName,
 }));
 
 describe('BoardPage', () => {

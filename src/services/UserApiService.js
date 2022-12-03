@@ -22,12 +22,16 @@ export default class UserApiService {
     return data;
   }
 
-  async fetchUser() {
-    const url = `${baseUrl}/users/me`;
+  async fetchUser(userName) {
+    const url = `${baseUrl}/user`;
 
     const { data } = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
+      },
+
+      params: {
+        userName,
       },
     });
 
@@ -45,8 +49,8 @@ export default class UserApiService {
     return data;
   }
 
-  async fetchMyInformation(userId) {
-    const url = `${baseUrl}/users/${userId}`;
+  async fetchMyInformation() {
+    const url = `${baseUrl}/users/me`;
 
     const { data } = await axios.get(url, {
       headers: {

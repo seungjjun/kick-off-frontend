@@ -77,7 +77,7 @@ const SubmitButton = styled.button`
 `;
 
 export default function PostForm({
-  navigate, submit, changeBoard, upload, image,
+  boardList, navigate, submit, changeBoard, upload, image,
 }) {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -112,13 +112,14 @@ export default function PostForm({
           <option value="">
             게시판을 선택해 주세요
           </option>
-          <option value="1">
-            전체 게시판
-          </option>
-          <option value="2">EPL</option>
-          <option value="3">LaLiga</option>
-          <option value="4">SerieA</option>
-          <option value="5">Bundesliga</option>
+          {boardList.map((board) => (
+            <option
+              key={board.id}
+              value={board.id}
+            >
+              {board.boardName.value}
+            </option>
+          ))}
         </Select>
         <InputTitle
           id="input-title"

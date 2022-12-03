@@ -39,7 +39,6 @@ export default class BoardApiService {
       },
     });
 
-    console.log(data);
     return data;
   }
 }

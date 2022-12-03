@@ -1,5 +1,4 @@
 import {
-  fireEvent,
   render, screen,
 } from '@testing-library/react';
 
@@ -9,8 +8,13 @@ const navigate = jest.fn();
 const changeBoard = jest.fn();
 const write = jest.fn();
 const upload = jest.fn();
+const fetchBoards = jest.fn();
 
-const context = describe;
+let boards = [];
+
+let postId = '';
+
+let boardId = '';
 
 jest.mock('react-router-dom', () => ({
   useNavigate() {
@@ -21,49 +25,52 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../hooks/usePostStore', () => () => ({
   write,
   upload,
+  postId,
 }));
 
 jest.mock('../hooks/useBoardStore', () => () => ({
+  fetchBoards,
   changeBoard,
+  boardId,
+  boards,
 }));
 
 describe('PostFormPage', () => {
-  it('render board select', () => {
-    render(<PostFormPage />);
+  beforeEach(() => {
+    postId = 1;
 
+    boardId = 1;
+
+    boards = [
+      {
+        id: 1,
+        boardName: {
+          value: '전체 게시판',
+        },
+      },
+    ];
+
+    render(<PostFormPage />);
+  });
+
+  it('render board select', () => {
     expect(screen.getByRole('option', { name: '게시판을 선택해 주세요' }).selected).toBeTruthy();
   });
 
-  context('when click board', () => {
-    it('change board function called', () => {
-      // fireEvent.change(screen.getByTestId('select-board', {
-      //   target: { value: '2' },
-      // }));
-
-      // screen.getByRole('option');
-
-      // fireEvent.change(select, {
-      //   target: { value: 2 },
-      // });
-      // expect()
-    });
-  });
-
   it('render input title', () => {
-    render(<PostFormPage />);
-
     expect(screen.getByPlaceholderText('제목을 입력해 주세요'));
   });
 
   it('render input content', () => {
-    render(<PostFormPage />);
-
     expect(screen.getByPlaceholderText('내용을 입력하세요'));
   });
 
   it('render upload file button', () => {
-    render(<PostFormPage />);
-
     expect(screen.getByPlaceholderText('파일 선택'));
+  });
+
+  it('render post buttons', () => {
+    expect(screen.getByText('취소'));
+    expect(screen.getByText('등록'));
   });
 });

@@ -60,6 +60,14 @@ const ProfileEditForm = styled.div`
   flex-direction: column;
 `;
 
+const ManagementButton = styled.div`
+  width: 24px;
+  height: 24px;
+  background: url('https://user-images.githubusercontent.com/104769120/204442213-a385d246-7e38-4f71-8a4c-98ead588c53a.png');
+  background-size: cover;
+  cursor: pointer;
+`;
+
 const ProfileEditButton = styled.button`
   border: 1px solid #FFF;
   background-color: #FFF;
@@ -82,6 +90,14 @@ export default function User({
     edits.changeEditState();
   };
 
+  const handleClickManage = () => {
+    navigate('/');
+  };
+
+  const handleClickApplication = () => {
+    navigate('/levelup');
+  };
+
   if (Object.keys(myInformation).length === 0) {
     return (
       <p>정보를 불러오는 중 입니다..</p>
@@ -97,6 +113,11 @@ export default function User({
             <ProfileImage src={myInformation.user.profileImage} alt="userProfileImage" />
           )}
         </div>
+        {myInformation.user.grade === '매니저' ? (
+          <ManagementButton onClick={handleClickManage} />
+        ) : (
+          null
+        )}
         <BasicInformation>
           <p>{myInformation.user.name}</p>
           <PostNumber>
@@ -109,7 +130,6 @@ export default function User({
             {' '}
             {myInformation.comments.filter((comment) => comment.deleted === false).length
             + myInformation.recomments.length}
-
           </span>
         </BasicInformation>
         <ProfileEditForm>
@@ -121,7 +141,10 @@ export default function User({
             null
           )}
           {myInformation.user.isMyToken ? (
-            <ProfileEditButton type="button" onClick={handleClickProfileUpdate}>프로필 수정</ProfileEditButton>
+            <>
+              <ProfileEditButton type="button" onClick={handleClickProfileUpdate}>프로필 수정</ProfileEditButton>
+              <button type="button" onClick={handleClickApplication}>등업 신청하기</button>
+            </>
           ) : (
             null
           )}

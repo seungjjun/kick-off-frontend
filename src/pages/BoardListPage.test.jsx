@@ -1,16 +1,18 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { MemoryRouter } from 'react-router-dom';
 
 import BoardListPage from './BoardListPage';
 
 const fetchBoards = jest.fn();
+const setKeyword = jest.fn();
 
 let boards = [];
 
 jest.mock('../hooks/useBoardStore', () => () => ({
   fetchBoards,
   boards,
+  setKeyword,
 }));
 
 describe('BoardListPage', () => {
@@ -21,30 +23,35 @@ describe('BoardListPage', () => {
         boardName: {
           value: '전체게시판',
         },
+        parentId: null,
       },
       {
         id: 2,
         boardName: {
           value: 'EPL',
         },
+        parentId: null,
       },
       {
         id: 3,
         boardName: {
           value: 'LaLiga',
         },
+        parentId: null,
       },
       {
         id: 4,
         boardName: {
           value: 'SerieA',
         },
+        parentId: null,
       },
       {
         id: 5,
         boardName: {
           value: 'Bundesliga',
         },
+        parentId: null,
       },
     ];
 
@@ -61,5 +68,13 @@ describe('BoardListPage', () => {
     screen.getByText('LaLiga');
     screen.getByText('SerieA');
     screen.getByText('Bundesliga');
+
+    expect(fetchBoards).toBeCalled();
+  });
+
+  it('render board list', () => {
+    fireEvent.click(screen.getByText('전체게시판'));
+
+    expect(setKeyword).toBeCalled();
   });
 });

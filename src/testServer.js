@@ -280,10 +280,45 @@ const server = setupServer(
   }),
 
   rest.get(`${baseUrl}/users/me`, async (req, res, ctx) => res(ctx.json({
-    id: 1,
-    identification: 'jel1y',
-    name: 'Pikachu',
-    profileImage: 'imageUrl',
+    myInformation: {
+      posts: [
+        {
+          postInformation: {
+            title: '아르헨티나 월드컵 우승',
+          },
+          id: 1,
+          createdAt: '2022-12-19',
+          hit: 41,
+        },
+      ],
+
+      comments: [
+        {
+          id: 2,
+          content: '대한민국은..?',
+          commentDate: '2022-12-20',
+        },
+      ],
+
+      likedPosts: [
+        {
+          id: 1,
+          postInformation: {
+            title: '2022년 마지막 날',
+          },
+          createdAt: '2022-12-31',
+          hit: 42,
+        },
+      ],
+
+      user: {
+        id: 1,
+        identification: 'jel1y',
+        name: 'Pikachu',
+        profileImage: 'imageUrl',
+        myToken: true,
+      },
+    },
   }))),
 
   rest.get(`${baseUrl}/comments`, async (req, res, ctx) => res(ctx.json({
@@ -445,14 +480,14 @@ const server = setupServer(
     ],
   }))),
 
-  rest.get(`${baseUrl}/users/1`, async (req, res, ctx) => res(ctx.json({
+  rest.get(`${baseUrl}/user`, async (req, res, ctx) => res(ctx.json({
     myInformation: {
       posts: [
         {
-          id: 1,
           postInformation: {
             title: '아르헨티나 월드컵 우승',
           },
+          id: 1,
           createdAt: '2022-12-19',
           hit: 41,
         },
@@ -484,6 +519,10 @@ const server = setupServer(
         myToken: true,
       },
     },
+  }))),
+
+  rest.post(`${baseUrl}/application`, async (req, res, ctx) => res(ctx.json({
+    message: '신청이 완료되었습니다.',
   }))),
 );
 

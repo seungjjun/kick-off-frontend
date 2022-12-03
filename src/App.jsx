@@ -19,6 +19,7 @@ import useScheduleStore from './hooks/useScheduleStore';
 import Header from './components/Header';
 
 import BoardPage from './pages/BoardPage';
+import LevelUpBoardPage from './pages/LevelUpBoardPage';
 import UserPage from './pages/UserPage';
 import LoginFormPage from './pages/LoginFormPage';
 import PostPage from './pages/PostPage';
@@ -69,7 +70,7 @@ export default function App() {
       if (accessToken) {
         userApiService.setAccessToken(accessToken);
 
-        userStore.fetchUser();
+        userStore.fetchMyInformation();
       }
 
       setGameId(scheduleStore.roomId);
@@ -80,7 +81,7 @@ export default function App() {
     fetchSchedule();
   }, [accessToken]);
 
-  const { user } = userStore;
+  const { myInformation } = userStore;
 
   if (loading) {
     return (
@@ -95,7 +96,7 @@ export default function App() {
       <Header
         accessToken={accessToken}
         setAccessToken={setAccessToken}
-        user={userStore.user}
+        user={userStore.myInformation}
       />
       <Menu>
         <BoardListPage />
@@ -104,15 +105,16 @@ export default function App() {
         <Routes>
           <Route path="/" element={<BoardPage />} />
           <Route path="/board" element={<BoardPage />} />
+          <Route path="/levelup" element={<LevelUpBoardPage />} />
           <Route path="/users" element={<UserPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginFormPage />} />
           <Route path="/auth/kakao" element={<KaKaoLoginPage />} />
           <Route path="/post/:postId" element={<PostPage />} />
-          <Route path="/write" element={<PostFormPage user={user} />} />
+          <Route path="/write" element={<PostFormPage myInformation={myInformation} />} />
           <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
           <Route path="/schedule" element={<SchedulePage accessToken={accessToken} />} />
-          <Route path="/room/:roomId" element={<ChattingRoomPage user={user} gameId={gameId} />} />
+          <Route path="/room/:roomId" element={<ChattingRoomPage myInformation={myInformation} gameId={gameId} />} />
         </Routes>
       </Content>
     </Container>
