@@ -8,8 +8,12 @@ import useGradeStore from '../hooks/useGradeStore';
 
 import useUserStore from '../hooks/useUserStore';
 
+import usePostStore from '../hooks/usePostStore';
+
 export default function LevelUpBoardPage({ accessToken }) {
   const userStore = useUserStore();
+
+  const postStore = usePostStore();
 
   const gradeStore = useGradeStore();
 
@@ -21,6 +25,8 @@ export default function LevelUpBoardPage({ accessToken }) {
     }
 
     userStore.fetchMyInformation();
+
+    postStore.fetchApplicationPosts(accessToken);
   }, []);
 
   const changeGrade = (value) => {
@@ -31,12 +37,15 @@ export default function LevelUpBoardPage({ accessToken }) {
     await gradeStore.apply(data.reason, userStore.myInformation.user.id);
   };
 
+  const { applicationPosts } = postStore;
+
   return (
     <LevelUpBoard
       submit={submit}
       changeGrade={changeGrade}
       isExistingUser={gradeStore.isExistingUser}
       applicationErrorMessge={gradeStore.applicationErrorMessge}
+      applicationPosts={applicationPosts}
     />
   );
 }

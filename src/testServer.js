@@ -521,6 +521,20 @@ const server = setupServer(
     },
   }))),
 
+  rest.get(`${baseUrl}/application`, async (req, res, ctx) => res(ctx.json({
+    applicationPosts: [
+      {
+        id: 1,
+        reason: '테스트',
+        applicant: {
+          applicationGrade: '프로',
+          currentGrade: '세미프로',
+          name: '훈이',
+        },
+      },
+    ],
+  }))),
+
   rest.post(`${baseUrl}/application`, async (req, res, ctx) => res(ctx.json({
     message: '신청이 완료되었습니다.',
   }))),

@@ -39,4 +39,16 @@ describe('PostStore', () => {
       });
     });
   });
+
+  context('등업 신청 목록을 불러올 경우', () => {
+    it('자신이 등업 신청한 목록을 확인할 수 있다.', async () => {
+      await postStore.fetchApplicationPosts();
+
+      const { applicationPosts } = postStore;
+
+      expect(applicationPosts[0].applicant.applicationGrade).toBe('프로');
+      expect(applicationPosts[0].applicant.currentGrade).toBe('세미프로');
+      expect(applicationPosts[0].applicant.name).toBe('훈이');
+    });
+  });
 });

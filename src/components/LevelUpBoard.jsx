@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 
 export default function LevelUpBoard({
-  submit, changeGrade, isExistingUser, applicationErrorMessge,
+  submit, changeGrade, isExistingUser, applicationErrorMessge, applicationPosts,
 }) {
   const { register, handleSubmit, formState: { errors } } = useForm({ reValidateMode: 'onSubmit' });
 
@@ -20,7 +20,32 @@ export default function LevelUpBoard({
       <h2>등업 게시판</h2>
       <div>
         <p>등업 신청현황</p>
-
+        <table>
+          <thead>
+            <tr>
+              <th>닉네임</th>
+              <th>현재 등급</th>
+              <th>신청 등급</th>
+              <th>처리 상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            {applicationPosts.map((post) => (
+              <tr key={post.id}>
+                <td>{post.applicant.name}</td>
+                <td>{post.applicant.currentGrade}</td>
+                <td>{post.applicant.applicationGrade}</td>
+                {post.state === 'processing' ? (
+                  <td>진행중</td>
+                ) : post.state === 'success' ? (
+                  <td>승인완료</td>
+                ) : post.state === 'refuse' ? (
+                  <td>거절됨</td>
+                ) : null}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <select

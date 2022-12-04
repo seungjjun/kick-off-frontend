@@ -1,5 +1,5 @@
 import {
-  fireEvent, render, screen,
+  fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 
 import BoardList from './BoardList';
@@ -51,9 +51,9 @@ describe('BoardList', () => {
 
   context('when click board', () => {
     it('changeBoard function called', () => {
-      fireEvent.click(screen.getByText('K-League'));
+      fireEvent.click(screen.getByText('EPL'));
 
-      // expect(changeBoard).toBeCalled();
+      expect(changeBoard).toBeCalled();
     });
   });
 });
