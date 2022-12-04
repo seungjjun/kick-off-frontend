@@ -133,7 +133,7 @@ describe('comment', () => {
   });
 
   it('create comment', async () => {
-    fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요', {
+    fireEvent.change(screen.getByLabelText('댓글', {
       target: { value: '댓글' },
     }));
 

@@ -57,37 +57,22 @@ export default function App() {
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
   const [gameId, setGameId] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   const scheduleStore = useScheduleStore();
 
   const userStore = useUserStore();
 
   useEffect(() => {
-    const fetchSchedule = async () => {
-      setLoading(true);
+    if (accessToken) {
+      userApiService.setAccessToken(accessToken);
 
-      if (accessToken) {
-        userApiService.setAccessToken(accessToken);
+      userStore.fetchMyInformation();
+    }
 
-        userStore.fetchMyInformation();
-      }
-
-      setGameId(scheduleStore.roomId);
-
-      setLoading(false);
-    };
-
-    fetchSchedule();
+    setGameId(scheduleStore.roomId);
   }, [accessToken]);
 
   const { myInformation } = userStore;
-
-  if (loading) {
-    return (
-      <p>loading...</p>
-    );
-  }
 
   return (
     <Container>
@@ -105,7 +90,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<BoardPage />} />
           <Route path="/board" element={<BoardPage />} />
-          <Route path="/levelup" element={<LevelUpBoardPage />} />
+          <Route path="/levelup" element={<LevelUpBoardPage accessToken={accessToken} />} />
           <Route path="/users" element={<UserPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginFormPage />} />

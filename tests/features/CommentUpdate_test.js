@@ -32,17 +32,17 @@ Scenario('자신의 댓글이 아닌 다른 사용자의 댓글을 수정하려�
   I.dontSee('#update-comment');
 });
 
-// Scenario('기존 내용은 지우고 수정할 내용을 입력하지 않고 수정할 경우 ', ({ I }) => {
-//   // Given
-//   I.amOnPage('/post/1');
+Scenario('기존 내용은 지우고 수정할 내용을 입력하지 않고 수정할 경우 ', ({ I }) => {
+  // Given
+  I.amOnPage('/post/1');
 
-//   // When
-//   I.click({ css: '#update-comment' });
+  // When
+  I.click({ css: '#update-comment' });
 
-//   I.fillField('#input-content', '');
+  I.fillField('#input-content', '');
 
-//   I.click('수정완료');
+  I.click('수정완료');
 
-//   // Then
-//   I.see('내용을 입력해주세요');
-// });
+  // Then
+  I.see('내용을 입력해주세요');
+});

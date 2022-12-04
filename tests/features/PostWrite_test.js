@@ -30,32 +30,32 @@ Scenario('게시판을 선택하지 않은 경우', ({ I }) => {
   I.click('[type=submit]');
 
   // Then
-  I.see('게시판을 선택해 주세요');
+  I.see('게시판을 선택해 주세요.');
 });
 
-// Scenario('제목을 입력하지 않은 경우', ({ I }) => {
-//   // When
-//   I.selectOption('#select-board', '1');
+Scenario('제목을 입력하지 않은 경우', ({ I }) => {
+  // When
+  I.selectOption('#select-board', '1');
 
-//   I.fillField('#input-content', 'EPL 코리안 리거 또 탄생');
+  I.fillField('#input-content', 'EPL 코리안 리거 또 탄생');
 
-//   I.click('[type=submit]');
+  I.click('[type=submit]');
 
-//   // Then
-//   I.seeInPopup('제목을 입력해주세요!!');
-// });
+  // Then
+  I.see('제목을 입력해주세요');
+});
 
-// Scenario('내용을 입력하지 않은 경우', ({ I }) => {
-//   // When
-//   I.selectOption('#select-board', '1');
+Scenario('내용을 입력하지 않은 경우', ({ I }) => {
+  // When
+  I.selectOption('#select-board', '1');
 
-//   I.fillField('#input-title', '이강인 토트넘 이적 확정');
+  I.fillField('#input-title', '이강인 토트넘 이적 확정');
 
-//   I.click('[type=submit]');
+  I.click('[type=submit]');
 
-//   // Then
-//   I.see('내용을 입력해주세요');
-// });
+  // Then
+  I.see('내용을 입력해주세요');
+});
 
 Scenario('로그인 하지 않고 게시글을 작성할 경우', ({ I }) => {
   // Given

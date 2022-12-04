@@ -8,7 +8,6 @@ import useScheduleStore from '../hooks/useScheduleStore';
 import ChattingRoom from '../components/ChattingRoom';
 
 export default function ChattingRoomPage({ myInformation, gameId }) {
-  // console.log();
   const scheduleStore = useScheduleStore();
 
   const [message, setMessage] = useState('');

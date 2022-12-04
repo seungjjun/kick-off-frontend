@@ -111,6 +111,12 @@ export default class BoardStore extends Store {
 
     this.publish();
   }
+
+  reset() {
+    this.boardId = 0;
+
+    this.publish();
+  }
 }
 
 export const boardStore = new BoardStore();

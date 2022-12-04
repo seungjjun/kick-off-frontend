@@ -152,7 +152,6 @@ export default function Post({
             <LikeButton type="button" onClick={handleClickLike}>
               좋아요
             </LikeButton>
-            {/* <p>{posts.post.likeNumber}</p> */}
             <p>{posts.likes.filter((like) => like.postId === posts.post.id).length}</p>
           </PostFooter>
           <Comment

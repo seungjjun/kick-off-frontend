@@ -10,6 +10,8 @@ const write = jest.fn();
 const upload = jest.fn();
 const fetchBoards = jest.fn();
 
+const reset = jest.fn();
+
 let boards = [];
 
 let postId = '';
@@ -33,6 +35,7 @@ jest.mock('../hooks/useBoardStore', () => () => ({
   changeBoard,
   boardId,
   boards,
+  reset,
 }));
 
 describe('PostFormPage', () => {

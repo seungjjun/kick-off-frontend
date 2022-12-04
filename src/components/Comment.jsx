@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
 import CommentEditForm from './CommentEditForm';
+import CommentModal from './CommentModal';
 
 import RecommentEditForm from './RecommentEditForm';
 
@@ -106,11 +108,18 @@ const CommentSubmitButton = styled.button`
 export default function Comment({
   posts, pages, comments, recomments, accessToken, navigate,
 }) {
-  const { register, handleSubmit } = useForm();
+  const [close, setClose] = useState(false);
+
+  const { handleSubmit } = useForm();
 
   const createComment = (data) => {
     if (!accessToken) {
       navigate('/login');
+      return;
+    }
+
+    if (data.length === undefined) {
+      setClose(true);
       return;
     }
 
@@ -291,13 +300,17 @@ export default function Comment({
         <button type="button" onClick={handleClickNextPage}>다음</button>
       ) : null}
       <CommentInputForm onSubmit={handleSubmit(createComment)}>
+        <label htmlFor="input-content">댓글</label>
         <CommentInput
           id="input-content"
           type="text"
           placeholder="댓글을 입력하세요"
-          {...register('content')}
         />
         <CommentSubmitButton type="submit">등록</CommentSubmitButton>
+        <CommentModal
+          close={close}
+          setClose={setClose}
+        />
       </CommentInputForm>
     </div>
   );

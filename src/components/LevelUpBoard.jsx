@@ -18,6 +18,10 @@ export default function LevelUpBoard({
   return (
     <div>
       <h2>등업 게시판</h2>
+      <div>
+        <p>등업 신청현황</p>
+
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <select
           id="select-grade"

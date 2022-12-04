@@ -1,7 +1,10 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+
 import styled from 'styled-components';
+
+import { useState } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -76,10 +79,16 @@ const SubmitButton = styled.button`
   width: 47%;
 `;
 
+const Error = styled.p`
+  display: flex;
+  margin: .7em 0;
+  color: #f46e6e;
+`;
+
 export default function PostForm({
-  boardList, navigate, submit, changeBoard, upload, image,
+  boardList, navigate, submit, changeBoard, upload, image, boardId, setClose,
 }) {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({ reValidateMode: 'onSubmit' });
 
   const handleClickCancel = () => {
     navigate('/');
@@ -90,10 +99,9 @@ export default function PostForm({
   };
 
   const onSubmit = (data) => {
-    // if (postStore.category === '') {
-    //   alert('게시판을 선택해주세요');
-    //   return;
-    // }
+    if (boardId === 0) {
+      setClose(true);
+    }
 
     submit(data);
   };
@@ -131,15 +139,19 @@ export default function PostForm({
           })}
         />
         {errors.title ? (
-          <p>제목을 입력해주세요</p>
-          // alert('제목을 입력해주세요!!')
+          <Error>제목을 입력해주세요</Error>
         ) : null}
         <ContentBox
           id="input-content"
           type="text"
           placeholder="내용을 입력하세요"
-          {...register('content')}
+          {...register('content', {
+            required: { value: true },
+          })}
         />
+        {errors.content ? (
+          <Error>내용을 입력해주세요</Error>
+        ) : null}
         <InputFile
           type="file"
           accept="image/*"

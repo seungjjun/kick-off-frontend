@@ -8,7 +8,11 @@ import useBoardStore from '../hooks/useBoardStore';
 
 import PostEditForm from '../components/PostEditForm';
 
+import Modal from '../components/Modal';
+
 export default function PostEditFormPage() {
+  const [close, setClose] = useState(false);
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
@@ -26,10 +30,14 @@ export default function PostEditFormPage() {
   const formData = new FormData();
 
   useEffect(() => {
+    boardStore.fetchBoards();
+
     postStore.fetchPost(postId);
     setTitle(postStore.post.postInformation.title);
     setContent(postStore.post.postInformation.content);
     setImage(postStore.post.imageUrl);
+
+    boardStore.reset();
   }, []);
 
   const changeBoard = (value) => {
@@ -67,16 +75,25 @@ export default function PostEditFormPage() {
   };
 
   return (
-    <PostEditForm
-      navigate={navigate}
-      submit={submit}
-      changeBoard={changeBoard}
-      upload={upload}
-      image={image}
-      title={title}
-      content={content}
-      titleChange={titleChange}
-      contentChange={contentChange}
-    />
+    <>
+      <PostEditForm
+        boardList={boardStore.boards}
+        boardId={boardStore.boardId}
+        navigate={navigate}
+        submit={submit}
+        changeBoard={changeBoard}
+        upload={upload}
+        image={image}
+        title={title}
+        content={content}
+        titleChange={titleChange}
+        contentChange={contentChange}
+        setClose={setClose}
+      />
+      <Modal
+        close={close}
+        setClose={setClose}
+      />
+    </>
   );
 }
