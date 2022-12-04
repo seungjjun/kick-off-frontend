@@ -15,6 +15,29 @@ const context = describe;
 
 describe('PostEditForm', () => {
   beforeEach(() => {
+    const boardList = [
+      {
+        id: 1,
+        boardName: {
+          value: '전체 게시판',
+        },
+      },
+
+      {
+        id: 2,
+        boardName: {
+          value: 'EPL',
+        },
+      },
+
+      {
+        id: 3,
+        boardName: {
+          value: 'LaLiga',
+        },
+      },
+    ];
+
     const category = 'LaLiga';
 
     const image = 'imageUrl';
@@ -24,6 +47,7 @@ describe('PostEditForm', () => {
     const content = '토트넘 손흥민 부상';
 
     render(<PostEditForm
+      boardList={boardList}
       category={category}
       navigate={navigate}
       submit={submit}

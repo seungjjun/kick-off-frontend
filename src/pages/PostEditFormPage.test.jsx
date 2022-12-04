@@ -5,14 +5,21 @@ import {
 import PostEditFormPage from './PostEditFormPage';
 
 const fetchPost = jest.fn();
+const fetchBoards = jest.fn();
+
 const changeCategory = jest.fn();
+const changeBoard = jest.fn();
+
 const upload = jest.fn();
 const patch = jest.fn();
 const navigate = jest.fn();
 
-let location = jest.fn();
+const reset = jest.fn();
+
+let location = {};
 let category = '';
 let post = {};
+let boards = [];
 
 jest.mock('../hooks/usePostStore', () => () => ({
   fetchPost,
@@ -21,6 +28,13 @@ jest.mock('../hooks/usePostStore', () => () => ({
   patch,
   post,
   category,
+}));
+
+jest.mock('../hooks/useBoardStore', () => () => ({
+  fetchBoards,
+  changeBoard,
+  reset,
+  boards,
 }));
 
 const context = describe;
@@ -36,12 +50,36 @@ jest.mock('react-router-dom', () => ({
 
 describe('PostEditFormPage', () => {
   beforeEach(() => {
+    boards = [
+      {
+        id: 1,
+        boardName: {
+          value: '전체 게시판',
+        },
+      },
+
+      {
+        id: 2,
+        boardName: {
+          value: 'EPL',
+        },
+      },
+
+      {
+        id: 3,
+        boardName: {
+          value: 'LaLiga',
+        },
+      },
+    ];
+
     post = {
       postInformation: {
         title: '미스터션샤인',
         content: '슬픈 행진',
       },
     };
+
     location = {
       pathname: '/posts/edit/1',
       search: '',

@@ -1,17 +1,25 @@
 import { useEffect } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import LevelUpBoard from '../components/LevelUpBoard';
 
 import useGradeStore from '../hooks/useGradeStore';
 
 import useUserStore from '../hooks/useUserStore';
 
-export default function LevelUpBoardPage() {
+export default function LevelUpBoardPage({ accessToken }) {
   const userStore = useUserStore();
 
   const gradeStore = useGradeStore();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (!accessToken) {
+      navigate('/login');
+    }
+
     userStore.fetchMyInformation();
   }, []);
 

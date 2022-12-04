@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -76,8 +77,8 @@ const SubmitButton = styled.button`
 `;
 
 export default function PostEditForm({
-  navigate, submit, changeBoard, upload, image,
-  title, content, titleChange, contentChange,
+  boardList, boardId, navigate, submit, changeBoard, upload, image,
+  title, content, titleChange, contentChange, setClose,
 }) {
   const { register, handleSubmit } = useForm();
 
@@ -90,10 +91,10 @@ export default function PostEditForm({
   };
 
   const onSubmit = (data) => {
-    // if (category === '') {
-    //   alert('게시판을 선택해주세요');
-    //   return;
-    // }
+    if (boardId === 0) {
+      setClose(true);
+      return;
+    }
 
     submit(data);
   };
@@ -112,13 +113,14 @@ export default function PostEditForm({
           <option value="">
             게시판을 선택해 주세요
           </option>
-          <option value="1">
-            전체 게시판
-          </option>
-          <option value="2">EPL</option>
-          <option value="3">LaLiga</option>
-          <option value="4">SerieA</option>
-          <option value="5">Bundesliga</option>
+          {boardList.map((board) => (
+            <option
+              key={board.id}
+              value={board.id}
+            >
+              {board.boardName.value}
+            </option>
+          ))}
         </Select>
         <InputTitle
           id="input-title"

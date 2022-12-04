@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import CommentModal from './CommentModal';
+
 export default function CommentEditForm({
   commentId, initialContent, modifyComment, changeCommentEditState,
 }) {
   const [content, setContent] = useState('');
+  const [close, setClose] = useState(false);
 
   useEffect(() => {
     setContent(initialContent);
@@ -14,6 +17,11 @@ export default function CommentEditForm({
   };
 
   const handleClickModify = () => {
+    if (content === '') {
+      setClose(true);
+      return;
+    }
+
     modifyComment(content, commentId);
   };
 
@@ -23,6 +31,10 @@ export default function CommentEditForm({
 
   return (
     <form>
+      <CommentModal
+        close={close}
+        setClose={setClose}
+      />
       <input
         id="input-content"
         value={content}

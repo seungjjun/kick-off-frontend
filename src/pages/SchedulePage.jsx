@@ -47,7 +47,7 @@ export default function SchedulePage({ accessToken }) {
     const from = `${startYear}-${startMonth}-${startDay}`;
     const to = `${endYear}-${endMonth}-${endDay}`;
 
-    scheduleStore.fetchPeriodSchedule(startYear, from, to);
+    scheduleStore.fetchPeriodSchedule(startYear, from, to, leagueName);
   };
 
   const compare = async (gameId) => {

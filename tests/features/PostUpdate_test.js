@@ -57,30 +57,30 @@ Scenario('자신의 글이 아닌 글을 수정하려는 경우', ({ I }) => {
   I.dontSee('#post-update"');
 });
 
-// Scenario('제목을 지우고 게시글을 수정할 경우', ({ I }) => {
-//   // Given
-//   I.amOnPage('/post/1');
+Scenario('제목을 지우고 게시글을 수정할 경우', ({ I }) => {
+  // Given
+  I.amOnPage('/post/1');
 
-//   I.click('수정');
-//   // When
-//   I.fillField('#input-title', '');
+  I.click('수정');
+  // When
+  I.fillField('#input-title', '');
 
-//   I.click('[type=submit]');
+  I.click('[type=submit]');
 
-//   // Then
-//   I.see('제목을 입력해주세요');
-// });
+  // Then
+  I.see('제목을 입력해주세요');
+});
 
-// Scenario('내용을 지우고 게시글을 수정할 경우', ({ I }) => {
-//   // Given
-//   I.click('카타르 월드컵 개최 일주일 전');
+Scenario('내용을 지우고 게시글을 수정할 경우', ({ I }) => {
+  // Given
+  I.click('카타르 월드컵 개최 일주일 전');
 
-//   I.click('수정');
-//   // When
-//   I.fillField('내용', '');
+  I.click('수정');
+  // When
+  I.fillField('내용', '');
 
-//   I.click('[type=submit]');
+  I.click('[type=submit]');
 
-//   // Then
-//   I.see('내용을 입력해주세요');
-// });
+  // Then
+  I.see('내용을 입력해주세요');
+});

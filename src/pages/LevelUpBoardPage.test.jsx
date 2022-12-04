@@ -10,9 +10,13 @@ const apply = jest.fn();
 
 const fetchMyInformation = jest.fn();
 
+const navigate = jest.fn();
+
 const isExistingUser = false;
 
 const applicationErrorMessge = '';
+
+let accessToken = '';
 
 let myInformation = {};
 
@@ -28,6 +32,12 @@ jest.mock('../hooks/useUserStore', () => () => ({
   myInformation,
 }));
 
+jest.mock('react-router-dom', () => ({
+  useNavigate() {
+    return navigate;
+  },
+}));
+
 const context = describe;
 
 describe('LevelUpBoardPage', () => {
@@ -38,10 +48,14 @@ describe('LevelUpBoardPage', () => {
       },
     };
 
-    render(<LevelUpBoardPage />);
+    render(<LevelUpBoardPage
+      accessToken={accessToken}
+    />);
   });
 
   context('when click submit button ', () => {
+    accessToken = 'ACCESS.TOKEN';
+
     it('apply function called', async () => {
       fireEvent.change(screen.getByPlaceholderText('신청 사유를 입력해주세요'), {
         target: { value: '테스트' },
@@ -52,6 +66,14 @@ describe('LevelUpBoardPage', () => {
       await waitFor(() => {
         expect(apply).toBeCalled();
       });
+    });
+  });
+
+  context('when not have accessToken', () => {
+    accessToken = '';
+
+    it('navigate called', () => {
+      expect(navigate).toBeCalled();
     });
   });
 });

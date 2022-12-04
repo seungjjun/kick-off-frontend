@@ -20,16 +20,16 @@ Scenario('올바르게 댓글을 등록한 경우', ({ I }) => {
   I.see('이강인 토트넘 이적 확정 실화냐?');
 });
 
-// Scenario('내용을 입력하지 않고 댓글을 등록할 경우', ({ I }) => {
-//   // Given
-//   I.amOnPage('/post/1');
+Scenario('내용을 입력하지 않고 댓글을 등록할 경우', ({ I }) => {
+  // Given
+  I.amOnPage('/post/1');
 
-//   // When
-//   I.click('[type=submit]');
+  // When
+  I.click('[type=submit]');
 
-//   // Then
-//   I.see('내용을 입력해주세요');
-// });
+  // Then
+  I.see('내용을 입력해주세요');
+});
 
 Scenario('로그인 하지 않고 댓글을 작성할 경우', ({ I }) => {
   // Given

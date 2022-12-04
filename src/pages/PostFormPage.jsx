@@ -7,9 +7,11 @@ import usePostStore from '../hooks/usePostStore';
 import useBoardStore from '../hooks/useBoardStore';
 
 import PostForm from '../components/PostForm';
+import Modal from '../components/Modal';
 
 export default function PostFormPage({ myInformation }) {
   const [image, setImage] = useState('');
+  const [close, setClose] = useState(false);
 
   const postStore = usePostStore();
 
@@ -21,6 +23,8 @@ export default function PostFormPage({ myInformation }) {
 
   useEffect(() => {
     boardStore.fetchBoards();
+
+    boardStore.reset();
   }, []);
 
   const changeBoard = (value) => {
@@ -48,14 +52,24 @@ export default function PostFormPage({ myInformation }) {
     navigate(`/post/${postStore.postId}`);
   };
 
+  const { boardId } = boardStore;
+
   return (
-    <PostForm
-      boardList={boardStore.boards}
-      navigate={navigate}
-      submit={submit}
-      changeBoard={changeBoard}
-      upload={upload}
-      image={image}
-    />
+    <>
+      <PostForm
+        boardList={boardStore.boards}
+        navigate={navigate}
+        submit={submit}
+        changeBoard={changeBoard}
+        upload={upload}
+        image={image}
+        boardId={boardId}
+        setClose={setClose}
+      />
+      <Modal
+        close={close}
+        setClose={setClose}
+      />
+    </>
   );
 }
