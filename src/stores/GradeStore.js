@@ -22,7 +22,7 @@ export default class GradeStore extends Store {
 
       return data;
     } catch (e) {
-      const { message } = e.response.data;
+      const message = e.response.data;
 
       this.changeApplicationState('existing', { errorMessage: message });
       return '';

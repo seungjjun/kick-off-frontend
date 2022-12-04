@@ -72,7 +72,6 @@ const PlayerBoard = styled.div`
   align-items: center;
   padding: 0.6em 0;
   padding-left: 1.6em;
-  /* border-top: 1px solid #CCC; */
 `;
 
 const PlayerBoardName = styled.p`
@@ -105,10 +104,10 @@ export default function BoardList({ boardList, changeBoard }) {
         <List>
           {boardList.map((board) => (
             board.parentId === null ? (
-              <Item>
+              <Item key={board.id}>
                 <Link
                   to={`/board?id=${board.id}`}
-                  onClick={() => handleClickBoard(board.boardName.value)}
+
                 >
                   <LeagueBoard>
                     {board.id === 2 ? (
@@ -123,7 +122,7 @@ export default function BoardList({ boardList, changeBoard }) {
                       ) : null
                     )}
                     <LeagueBoardName
-                      key={board.id}
+                      onClick={() => handleClickBoard(board.boardName.value)}
                     >
                       {board.boardName.value}
                     </LeagueBoardName>
@@ -151,13 +150,14 @@ export default function BoardList({ boardList, changeBoard }) {
                             .map((playerBoard) => (
                               playerBoard.parentId === teamBoard.id ? (
                                 <Link
+                                  key={playerBoard.id}
                                   to={`/board?id=${playerBoard.id}`}
                                   onClick={() => handleClickBoard(playerBoard.boardName.value)}
                                 >
                                   <PlayerBoard>
                                     ┖
                                     <BoardIcon />
-                                    <PlayerBoardName key={playerBoard.id}>
+                                    <PlayerBoardName>
                                       {playerBoard.boardName.value}
                                     </PlayerBoardName>
                                   </PlayerBoard>

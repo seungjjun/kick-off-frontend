@@ -14,21 +14,45 @@ const context = describe;
 
 describe('LevelUpBoard', () => {
   beforeEach(() => {
+    const applicationPosts = [
+      {
+        id: 1,
+        applicant: {
+          name: '치코리타',
+          currentGrade: '세미프로',
+          applicationGrade: '프로',
+        },
+        state: 'processing',
+      },
+    ];
+
     render(<LevelUpBoard
       submit={submit}
       changeGrade={changeGrade}
       isExistingUser={isExistingUser}
       applicationErrorMessge={applicationErrorMessge}
+      applicationPosts={applicationPosts}
     />);
   });
 
-  it('render levelup form', () => {
-    screen.getByText('등업 게시판');
+  context('when click levelup board', () => {
+    it('render levelup form', () => {
+      screen.getByText('등업 게시판');
 
-    screen.getByText('세미프로');
-    screen.getByText('프로');
-    screen.getByText('월드클래스');
+      screen.getAllByText('세미프로');
+      screen.getAllByText('프로');
+      screen.getByText('월드클래스');
 
-    screen.getByText('등업신청');
+      screen.getByText('등업신청');
+    });
+  });
+
+  context('when check my application state', () => {
+    it('render my application post', () => {
+      screen.getByText('치코리타');
+      screen.getAllByText('세미프로');
+      screen.getAllByText('프로');
+      screen.getByText('진행중');
+    });
   });
 });

@@ -14,6 +14,19 @@ export default class PostApiService {
     return data;
   }
 
+  async fetchApplicationPosts(accessToken) {
+    const url = `${baseUrl}/application`;
+
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    console.log(data);
+    return data;
+  }
+
   async write(title, content, boardId, imageUrl, userId) {
     const url = `${baseUrl}/post`;
 

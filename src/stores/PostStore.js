@@ -14,6 +14,8 @@ export default class PostStore extends Store {
 
     this.board = {};
 
+    this.applicationPosts = [];
+
     this.imageUrl = '';
   }
 
@@ -23,6 +25,14 @@ export default class PostStore extends Store {
     this.post = post;
     this.board = post.board;
     this.user = post.user;
+
+    this.publish();
+  }
+
+  async fetchApplicationPosts(accessToken) {
+    const data = await postApiService.fetchApplicationPosts(accessToken);
+
+    this.applicationPosts = data.applicationPosts;
 
     this.publish();
   }
