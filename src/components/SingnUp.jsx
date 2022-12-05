@@ -135,7 +135,10 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
         {errors.confirmPassword ? (
           <Error>비밀번호가 일치하지 않습니다</Error>
         ) : null}
-        <RegisterButton type="submit">
+        <RegisterButton
+          id="signup"
+          type="submit"
+        >
           회원가입
         </RegisterButton>
       </Form>

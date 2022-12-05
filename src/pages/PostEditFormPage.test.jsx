@@ -56,6 +56,7 @@ describe('PostEditFormPage', () => {
         boardName: {
           value: '전체 게시판',
         },
+        deleted: false,
       },
 
       {
@@ -63,6 +64,7 @@ describe('PostEditFormPage', () => {
         boardName: {
           value: 'EPL',
         },
+        deleted: false,
       },
 
       {
@@ -70,6 +72,7 @@ describe('PostEditFormPage', () => {
         boardName: {
           value: 'LaLiga',
         },
+        deleted: false,
       },
     ];
 

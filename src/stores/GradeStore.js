@@ -16,16 +16,20 @@ export default class GradeStore extends Store {
 
   async apply(reason, userId) {
     try {
+      if (this.grade === '') {
+        this.changeApplicationState('notSelect', { errorMessage: '신청 등급을 선택해주세요.' });
+        return;
+      }
+
       const data = await gradeApiService.apply(reason, this.grade, userId);
 
-      this.successMessage = data;
+      this.changeApplicationState('success', { errorMessage: data });
 
-      return data;
+      this.successMessage = data;
     } catch (e) {
       const message = e.response.data;
 
       this.changeApplicationState('existing', { errorMessage: message });
-      return '';
     }
   }
 
@@ -43,6 +47,18 @@ export default class GradeStore extends Store {
 
   get isExistingUser() {
     return this.applicationState === 'existing';
+  }
+
+  get isSelectGrade() {
+    return this.applicationState === 'notSelect';
+  }
+
+  get isApplicationSuccess() {
+    return this.applicationState === 'success';
+  }
+
+  reset() {
+    this.applicationState = '';
   }
 }
 

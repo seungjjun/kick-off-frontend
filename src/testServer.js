@@ -333,6 +333,39 @@ const server = setupServer(
     ],
   }))),
 
+  rest.post(`${baseUrl}/comment`, async (req, res, ctx) => {
+    const { content, postId, userId } = await req.json();
+
+    if (content === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '내용을 입력해주세요.',
+        }),
+      );
+    }
+
+    if (postId === 0) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '게시글을 찾을 수 없습니다.',
+        }),
+      );
+    }
+
+    if (userId === 0) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '사용자를 찾을 수 없습니다.',
+        }),
+      );
+    }
+
+    return res(ctx.status(201));
+  }),
+
   rest.get(`${baseUrl}/recomments`, async (req, res, ctx) => res(ctx.json({
     recomments: [
       {
@@ -344,6 +377,50 @@ const server = setupServer(
       },
     ],
   }))),
+
+  rest.post(`${baseUrl}/recomment`, async (req, res, ctx) => {
+    const {
+      content, commentId, postId, userId,
+    } = await req.json();
+
+    if (content === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '내용을 입력해주세요.',
+        }),
+      );
+    }
+
+    if (commentId === 0) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '댓글을 찾을 수 없습니다.',
+        }),
+      );
+    }
+
+    if (postId === 0) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '게시글을 찾을 수 없습니다.',
+        }),
+      );
+    }
+
+    if (userId === 0) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '사용자를 찾을 수 없습니다.',
+        }),
+      );
+    }
+
+    return res(ctx.status(201));
+  }),
 
   rest.get(`${baseUrl}/posts/1/comments`, async (req, res, ctx) => res(ctx.json({
     comments: [
@@ -535,9 +612,43 @@ const server = setupServer(
     ],
   }))),
 
-  rest.post(`${baseUrl}/application`, async (req, res, ctx) => res(ctx.json({
-    message: '신청이 완료되었습니다.',
-  }))),
+  rest.post(`${baseUrl}/application`, async (req, res, ctx) => {
+    const { reason, grade, userId } = await req.json();
+
+    if (reason === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '신청 사유를 입력해주세요.',
+        }),
+      );
+    }
+
+    if (grade === '') {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '신청 등급을 선택해주세요.',
+        }),
+      );
+    }
+
+    if (userId === 0) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '사용자를 찾을 수 없습니다.',
+        }),
+      );
+    }
+
+    return res(
+      ctx.status(201),
+      ctx.json({
+        message: '신청이 완료되었습니다.',
+      }),
+    );
+  }),
 );
 
 export default server;

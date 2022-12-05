@@ -10,7 +10,12 @@ describe('chattingRoom', () => {
   beforeEach(() => {
     const message = 'input';
 
-    const chatMessages = ['메시지1', '메시지2'];
+    const chatMessages = [
+      {
+        message: '대전 파이팅',
+        name: '훈이',
+      },
+    ];
 
     const predictions = [
       {
@@ -166,12 +171,15 @@ describe('chattingRoom', () => {
       },
     ];
 
+    const nickname = '훈이';
+
     render(<ChattingRoom
       message={message}
       messageChange={messageChange}
       chatMessages={chatMessages}
       publishMessage={publishMessage}
       predictions={predictions}
+      nickname={nickname}
     />);
   });
 
@@ -189,7 +197,7 @@ describe('chattingRoom', () => {
     expect(publishMessage).toBeCalled();
   });
 
-  it('render message', () => {
-    screen.getByText('메시지1');
+  it('render my message', () => {
+    screen.getByText('대전 파이팅');
   });
 });

@@ -1,9 +1,9 @@
 Feature('게시글 수정 - 축구 관련 정보를 공유하려는 사람이 잘못된 정보를 올바르게 수정하기 위해서 자신이 작성한 게시글을 수정할 수 있다.');
 
 Before(({ I }) => {
-  I.amOnPage('/');
-
   I.setupDatabase();
+
+  I.amOnPage('/');
 });
 
 Scenario('올바르게 게시글을 수정한 경우', ({ I }) => {
@@ -59,6 +59,8 @@ Scenario('자신의 글이 아닌 글을 수정하려는 경우', ({ I }) => {
 
 Scenario('제목을 지우고 게시글을 수정할 경우', ({ I }) => {
   // Given
+  I.login();
+
   I.amOnPage('/post/1');
 
   I.click('수정');
@@ -73,11 +75,13 @@ Scenario('제목을 지우고 게시글을 수정할 경우', ({ I }) => {
 
 Scenario('내용을 지우고 게시글을 수정할 경우', ({ I }) => {
   // Given
-  I.click('카타르 월드컵 개최 일주일 전');
+  I.login();
+
+  I.amOnPage('/post/1');
 
   I.click('수정');
   // When
-  I.fillField('내용', '');
+  I.fillField('#input-content', '');
 
   I.click('[type=submit]');
 

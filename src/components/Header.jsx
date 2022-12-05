@@ -51,6 +51,10 @@ export default function Header({ accessToken, setAccessToken, user }) {
     navigate(`/users?nickname=${name}`);
   };
 
+  const handleClickChat = () => {
+    navigate('/room/0');
+  };
+
   if (accessToken && Object.keys(user).length === 0) {
     return (
       <p>로딩중입니다...</p>
@@ -83,6 +87,12 @@ export default function Header({ accessToken, setAccessToken, user }) {
                 (
                 {user.user.grade}
                 )
+                <button
+                  type="button"
+                  onClick={handleClickChat}
+                >
+                  채팅창
+                </button>
               </span>
             </AfterLogin>
           ) : (

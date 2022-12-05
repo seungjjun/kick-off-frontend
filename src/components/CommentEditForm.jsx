@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import CommentModal from './CommentModal';
 
 export default function CommentEditForm({
-  commentId, initialContent, modifyComment, changeCommentEditState,
+  commentId, initialContent, modifyComment, changeCommentEditState, close, setClose,
 }) {
   const [content, setContent] = useState('');
-  const [close, setClose] = useState(false);
 
   useEffect(() => {
     setContent(initialContent);
@@ -18,6 +17,7 @@ export default function CommentEditForm({
 
   const handleClickModify = () => {
     if (content === '') {
+      console.log('hi');
       setClose(true);
       return;
     }

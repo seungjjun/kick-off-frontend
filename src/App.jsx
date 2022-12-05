@@ -56,10 +56,6 @@ const Content = styled.div`
 export default function App() {
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
-  const [gameId, setGameId] = useState(0);
-
-  const scheduleStore = useScheduleStore();
-
   const userStore = useUserStore();
 
   useEffect(() => {
@@ -68,8 +64,6 @@ export default function App() {
 
       userStore.fetchMyInformation();
     }
-
-    setGameId(scheduleStore.roomId);
   }, [accessToken]);
 
   const { myInformation } = userStore;
@@ -99,7 +93,7 @@ export default function App() {
           <Route path="/write" element={<PostFormPage myInformation={myInformation} />} />
           <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
           <Route path="/schedule/:boardId" element={<SchedulePage accessToken={accessToken} />} />
-          <Route path="/room/:roomId" element={<ChattingRoomPage myInformation={myInformation} gameId={gameId} />} />
+          <Route path="/room/:roomId" element={<ChattingRoomPage myInformation={myInformation} />} />
         </Routes>
       </Content>
     </Container>

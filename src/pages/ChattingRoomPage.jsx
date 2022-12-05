@@ -1,13 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 
 import SockJs from 'sockjs-client';
+
 import Stomp from 'stompjs';
+
+import { useLocation } from 'react-router-dom';
+
+import { useLocalStorage } from 'usehooks-ts';
 
 import useScheduleStore from '../hooks/useScheduleStore';
 
 import ChattingRoom from '../components/ChattingRoom';
 
-export default function ChattingRoomPage({ myInformation, gameId }) {
+export default function ChattingRoomPage({ myInformation }) {
+  const [accessToken] = useLocalStorage('accessToken', '');
+
+  const nickname = myInformation.user.name;
+
+  const location = useLocation();
+
+  const path = location.pathname;
+
+  const gameId = path.split('/')[2];
+
   const scheduleStore = useScheduleStore();
 
   const [message, setMessage] = useState('');
@@ -20,16 +35,20 @@ export default function ChattingRoomPage({ myInformation, gameId }) {
 
     stompClient.current = Stomp.over(sockJs);
 
-    stompClient.current.connect({}, () => {
+    stompClient.current.connect({ }, () => {
       stompClient.current.subscribe(`/sub/chat/room/${gameId}`, (chat) => {
         const content = JSON.parse(chat.body);
 
-        setChatMessages((chatMessages) => [...chatMessages, content.message]);
+        const { message } = content;
+        const { name } = content;
+        const { writer } = content;
+
+        setChatMessages((chatMessages) => [...chatMessages, { message, name, writer }]);
       });
 
       stompClient.current.send(
         '/pub/chat/enter',
-        {}
+        { Authorization: `Bearer ${accessToken}` }
         , JSON.stringify({ roomId: gameId, writer: myInformation.user.name }),
       );
     });
@@ -49,8 +68,13 @@ export default function ChattingRoomPage({ myInformation, gameId }) {
     }
     stompClient.current.send(
       '/pub/chat/message',
-      {}
-      , JSON.stringify({ roomId: gameId, writer: myInformation.user.name, message }),
+      { Authorization: `Bearer ${accessToken}` }
+      , JSON.stringify({
+        roomId: gameId,
+        writer:
+        myInformation.user.name,
+        message,
+      }),
     );
     setMessage('');
   };
@@ -70,6 +94,7 @@ export default function ChattingRoomPage({ myInformation, gameId }) {
       chatMessages={chatMessages}
       publishMessage={publishMessage}
       predictions={scheduleStore.predictionsMatch}
+      nickname={nickname}
     />
   );
 }

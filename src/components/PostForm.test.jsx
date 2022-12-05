@@ -21,6 +21,7 @@ describe('PostForm', () => {
         boardName: {
           value: '전체 게시판',
         },
+        deleted: false,
       },
 
       {
@@ -28,6 +29,7 @@ describe('PostForm', () => {
         boardName: {
           value: 'EPL',
         },
+        deleted: false,
       },
 
       {
@@ -35,6 +37,7 @@ describe('PostForm', () => {
         boardName: {
           value: 'LaLiga',
         },
+        deleted: false,
       },
     ];
 

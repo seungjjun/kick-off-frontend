@@ -23,7 +23,6 @@ export default class PostApiService {
       },
     });
 
-    console.log(data);
     return data;
   }
 

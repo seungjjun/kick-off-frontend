@@ -38,10 +38,6 @@ describe('comment', () => {
         createdAt: '2022-10-31',
       },
 
-      category: {
-        name: 'SerieA',
-      },
-
       users: [
         {
           id: 1,
@@ -130,18 +126,6 @@ describe('comment', () => {
 
   it('render submit button', () => {
     screen.getByText('등록');
-  });
-
-  it('create comment', async () => {
-    fireEvent.change(screen.getByLabelText('댓글', {
-      target: { value: '댓글' },
-    }));
-
-    fireEvent.click(screen.getByText('등록'));
-
-    await waitFor(() => {
-      expect(submitComment).toBeCalled();
-    });
   });
 
   it('render recomment button', () => {
