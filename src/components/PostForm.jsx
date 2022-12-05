@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
-import { useState } from 'react';
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -120,7 +118,7 @@ export default function PostForm({
           <option value="">
             게시판을 선택해 주세요
           </option>
-          {boardList.map((board) => (
+          {boardList.filter((board) => board.deleted === false).map((board) => (
             <option
               key={board.id}
               value={board.id}

@@ -6,10 +6,6 @@ const submit = jest.fn();
 
 const changeGrade = jest.fn();
 
-const isExistingUser = false;
-
-const applicationErrorMessge = '이미 신청 상태입니다.';
-
 const context = describe;
 
 describe('LevelUpBoard', () => {
@@ -26,11 +22,18 @@ describe('LevelUpBoard', () => {
       },
     ];
 
+    const errorMessages = {
+      isExistingUser: false,
+      isSelectGrade: false,
+      isApplicationSuccess: false,
+      applicationErrorMessge: '이미 신청 상태입니다.',
+
+    };
+
     render(<LevelUpBoard
       submit={submit}
       changeGrade={changeGrade}
-      isExistingUser={isExistingUser}
-      applicationErrorMessge={applicationErrorMessge}
+      errorMessages={errorMessages}
       applicationPosts={applicationPosts}
     />);
   });

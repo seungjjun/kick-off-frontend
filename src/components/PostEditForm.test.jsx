@@ -21,6 +21,7 @@ describe('PostEditForm', () => {
         boardName: {
           value: '전체 게시판',
         },
+        deleted: false,
       },
 
       {
@@ -28,6 +29,7 @@ describe('PostEditForm', () => {
         boardName: {
           value: 'EPL',
         },
+        deleted: false,
       },
 
       {
@@ -35,10 +37,9 @@ describe('PostEditForm', () => {
         boardName: {
           value: 'LaLiga',
         },
+        deleted: false,
       },
     ];
-
-    const category = 'LaLiga';
 
     const image = 'imageUrl';
 
@@ -48,7 +49,6 @@ describe('PostEditForm', () => {
 
     render(<PostEditForm
       boardList={boardList}
-      category={category}
       navigate={navigate}
       submit={submit}
       changeCategory={changeCategory}

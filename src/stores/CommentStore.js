@@ -17,6 +17,10 @@ export default class CommentStore extends Store {
     this.page = {};
     this.commentPageNumber = 0;
 
+    this.errorMessage = '';
+    this.createCommentState = '';
+    this.createRecommentState = '';
+
     this.pageButton = [];
   }
 
@@ -57,17 +61,27 @@ export default class CommentStore extends Store {
   }
 
   async createComment(content, postId, userId) {
-    await commentApiService.createComment(content, postId, userId);
+    try {
+      await commentApiService.createComment(content, postId, userId);
 
-    await this.fetchComment(postId);
+      await this.fetchComment(postId);
+    } catch (e) {
+      const { message } = e.response.data;
 
-    this.publish();
+      this.changeCommentState('fail', { errorMessage: message });
+    }
   }
 
   async createRecomment(content, commentId, postId, userId) {
-    await commentApiService.createRecomment(content, commentId, postId, userId);
+    try {
+      await commentApiService.createRecomment(content, commentId, postId, userId);
 
-    await this.fetchRecomment(postId);
+      await this.fetchRecomment(postId);
+    } catch (e) {
+      const { message } = e.response.data;
+
+      this.changeRecommentState('fail', { errorMessage: message });
+    }
 
     this.publish();
   }
@@ -140,6 +154,18 @@ export default class CommentStore extends Store {
   changeCommentNumber(commentPageNumber) {
     this.commentPageNumber = commentPageNumber;
 
+    this.publish();
+  }
+
+  changeCommentState(state, { errorMessage = '' } = {}) {
+    this.errorMessage = errorMessage;
+    this.createCommentState = state;
+    this.publish();
+  }
+
+  changeRecommentState(state, { errorMessage = '' } = {}) {
+    this.errorMessage = errorMessage;
+    this.createRecommentState = state;
     this.publish();
   }
 

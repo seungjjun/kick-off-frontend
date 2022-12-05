@@ -1,9 +1,11 @@
 import { useState } from 'react';
+
 import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
 import CommentEditForm from './CommentEditForm';
+
 import CommentModal from './CommentModal';
 
 import RecommentEditForm from './RecommentEditForm';
@@ -92,7 +94,7 @@ const CommentInputForm = styled.form`
 `;
 
 const CommentInput = styled.input`
-  width: 96%;
+  width: 90%;
   border: none;
 
   :focus {
@@ -110,7 +112,7 @@ export default function Comment({
 }) {
   const [close, setClose] = useState(false);
 
-  const { handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const createComment = (data) => {
     if (!accessToken) {
@@ -118,7 +120,7 @@ export default function Comment({
       return;
     }
 
-    if (data.length === undefined) {
+    if (data.content.length === 0) {
       setClose(true);
       return;
     }
@@ -220,6 +222,8 @@ export default function Comment({
                     initialContent={comment.content}
                     modifyComment={comments.modifyComment}
                     changeCommentEditState={comments.changeCommentEditState}
+                    close={close}
+                    setClose={setClose}
                   />
                 ) : (
                   null
@@ -305,6 +309,7 @@ export default function Comment({
           id="input-content"
           type="text"
           placeholder="댓글을 입력하세요"
+          {...register('content')}
         />
         <CommentSubmitButton type="submit">등록</CommentSubmitButton>
         <CommentModal

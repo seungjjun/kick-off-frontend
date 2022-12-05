@@ -27,6 +27,8 @@ export default function LevelUpBoardPage({ accessToken }) {
     userStore.fetchMyInformation();
 
     postStore.fetchApplicationPosts(accessToken);
+
+    gradeStore.reset();
   }, []);
 
   const changeGrade = (value) => {
@@ -39,12 +41,18 @@ export default function LevelUpBoardPage({ accessToken }) {
 
   const { applicationPosts } = postStore;
 
+  const errorMessages = {
+    isExistingUser: gradeStore.isExistingUser,
+    isSelectGrade: gradeStore.isSelectGrade,
+    isApplicationSuccess: gradeStore.isApplicationSuccess,
+    applicationErrorMessge: gradeStore.applicationErrorMessge,
+  };
+
   return (
     <LevelUpBoard
       submit={submit}
       changeGrade={changeGrade}
-      isExistingUser={gradeStore.isExistingUser}
-      applicationErrorMessge={gradeStore.applicationErrorMessge}
+      errorMessages={errorMessages}
       applicationPosts={applicationPosts}
     />
   );

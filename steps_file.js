@@ -17,6 +17,10 @@ module.exports = () => actor({
     this.amOnPage(`${backdoorBaseUrl}/setting-recomments`);
   },
 
+  settingSearchedPosts() {
+    this.amOnPage(`${backdoorBaseUrl}/setting-searchedPosts`);
+  },
+
   login() {
     this.amOnPage('/login');
 

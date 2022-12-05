@@ -12,6 +12,8 @@ const fetchMyInformation = jest.fn();
 
 const navigate = jest.fn();
 
+const reset = jest.fn();
+
 const isExistingUser = false;
 
 const applicationErrorMessge = '';
@@ -25,6 +27,7 @@ jest.mock('../hooks/useGradeStore', () => () => ({
   apply,
   isExistingUser,
   applicationErrorMessge,
+  reset,
 }));
 
 jest.mock('../hooks/useUserStore', () => () => ({

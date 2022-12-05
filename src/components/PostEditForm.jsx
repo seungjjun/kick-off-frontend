@@ -76,11 +76,17 @@ const SubmitButton = styled.button`
   width: 47%;
 `;
 
+const Error = styled.p`
+  display: flex;
+  margin: .7em 0;
+  color: #f46e6e;
+`;
+
 export default function PostEditForm({
   boardList, boardId, navigate, submit, changeBoard, upload, image,
   title, content, titleChange, contentChange, setClose,
 }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({ reValidateMode: 'onSubmit' });
 
   const handleClickCancel = () => {
     navigate('/');
@@ -113,7 +119,7 @@ export default function PostEditForm({
           <option value="">
             게시판을 선택해 주세요
           </option>
-          {boardList.map((board) => (
+          {boardList.filter((board) => board.deleted === false).map((board) => (
             <option
               key={board.id}
               value={board.id}
@@ -131,6 +137,9 @@ export default function PostEditForm({
             onChange: (e) => titleChange(e.target.value),
           })}
         />
+        {errors.title ? (
+          <Error>제목을 입력해주세요</Error>
+        ) : null}
         <ContentBox
           id="input-content"
           type="text"
@@ -140,6 +149,9 @@ export default function PostEditForm({
             onChange: (e) => contentChange(e.target.value),
           })}
         />
+        {errors.content ? (
+          <Error>내용을 입력해주세요</Error>
+        ) : null}
         <InputFile
           type="file"
           accept="image/*"
