@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -8,13 +9,16 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 500px;
+  margin-left: 6em;
+  height: 700px;
 `;
 
-const Title = styled.h2`
-  font-size: 1.6em;
-  margin-bottom: 1.3em;
-  font-weight: bold;
+const Title = styled.div`
+  margin-bottom: 2em;
+  width: 9em;
+  height: 5.7em;
+  background: url("https://user-images.githubusercontent.com/104769120/206422757-c138bb7f-6f62-45e3-8f14-042ec9da5efd.png");
+  background-size: cover;
 `;
 
 const Form = styled.form`
@@ -29,16 +33,27 @@ const Form = styled.form`
   }
 `;
 
+const Error = styled.p`
+  margin: 0.8em 0 0.4em 0;
+  color: #FF424D;
+`;
+
 const LoginButton = styled.button`
-  margin: 1.2em 0;
+  margin: .6em 0;
   padding: 0.7em 1em;
   color: #FFF;
 `;
 
 const SignUpButton = styled.button`
   border: none;
+  padding: 0.7em 1em;
   background-color: #FFF;
   color: #000;
+
+  :hover {
+    background-color: #CD2C2C;
+    color: #FFF;
+}
 `;
 
 const SNS = styled.div`
@@ -79,7 +94,7 @@ export default function LoginForm({
 
   return (
     <Container>
-      <Title>USER LOGIN</Title>
+      <Title />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <input
           id="input-userId"
@@ -91,7 +106,7 @@ export default function LoginForm({
           })}
         />
         {errors.userId ? (
-          <p>{errors.userId.message}</p>
+          <Error>{errors.userId.message}</Error>
         ) : null}
         <input
           id="input-password"
@@ -103,9 +118,9 @@ export default function LoginForm({
           })}
         />
         {errors.password ? (
-          <p>{errors.password.message}</p>
+          <Error>{errors.password.message}</Error>
         ) : isLoginFail ? (
-          <p>{loginErrorMessge}</p>
+          <Error>{loginErrorMessge}</Error>
         ) : null}
         <LoginButton type="submit">
           로그인

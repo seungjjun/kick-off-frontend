@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  cleanup, fireEvent, render, screen,
+} from '@testing-library/react';
 
 import { MemoryRouter } from 'react-router-dom';
 
@@ -70,11 +72,15 @@ describe('BoardListPage', () => {
     screen.getByText('Bundesliga');
 
     expect(fetchBoards).toBeCalled();
+
+    cleanup();
   });
 
   it('render board list', () => {
     fireEvent.click(screen.getByText('전체게시판'));
 
     expect(setKeyword).toBeCalled();
+
+    cleanup();
   });
 });

@@ -111,7 +111,7 @@ export default function UserPage() {
 
   return (
     <User
-      myInformation={userStore.myInformation}
+      myInformation={userStore.foundUser}
       changeComponentState={changeComponentState}
       componentState={userStore.componentState}
       navigate={navigate}

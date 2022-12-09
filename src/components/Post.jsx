@@ -74,12 +74,21 @@ const PostFooter = styled.div`
   padding-bottom: 1em;
   padding-top: 1em;
   border-bottom: 1px solid #CCC;
+
+  p {
+    align-self: center;
+  }
 `;
 
 const LikeButton = styled.button`
   border: none;
   margin-right: 1em;
   background-color: #FFF;
+  color: #000;
+
+  :hover {
+    background-color: #FFF;
+  }
 `;
 
 export default function Post({

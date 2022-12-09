@@ -59,6 +59,8 @@ export default class GradeStore extends Store {
 
   reset() {
     this.applicationState = '';
+
+    this.publish();
   }
 }
 

@@ -16,15 +16,16 @@ const GlobalStyle = createGlobalStyle`
   }
   
   button {
-    border-radius: 5px;  
-    border: 1px solid #64C2EB;
-    background-color: #64C2EB;
+    border: none;
+    border-radius: 7px;
+    background-color: #000;
+    color: #fff;
     cursor: pointer;
   }
-  /* button:hover {
-    color: #000;
+  button:hover {
+    background-color: #CD2C2C;
   }
-  button:active {
+  /* button:active {
     color: #fff;
   } */
 `;

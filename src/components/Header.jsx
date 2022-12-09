@@ -1,32 +1,66 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { boardStore } from '../stores/BoardStore';
 
 const HeaderBox = styled.div`
-  width: 1080px;
-  height: 150px;
-  margin-top: 1.2em;
+  display: flex;
+  height: 80px;
+  min-width: 1280px;
+  background-color: #CD2C2C;
+`;
+
+const Content = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin: auto;
+  width: 100%;
 `;
 
 const List = styled.ul`
   display: flex;
+  margin: auto;
+  min-width: 1240px;
   justify-content: space-between;
 `;
 
-const Title = styled.li`
-  a {
-      font-size: 1.5em;
-      color: #64C2EB;
-  }
+const Title = styled.div`
+  background: url('https://user-images.githubusercontent.com/104769120/205762227-56c5f513-6003-4ca2-9741-6aa4fe9bf540.png');
+  background-size: cover;
+  width: 4em;
+  height: 2.6em;
+  cursor: pointer;
 `;
 
 const AfterLogin = styled.li`
   button {
     margin-right: 1em;
-    border: none;
-    background-color: #FFF;
+    border: none; 
+    border-radius: 1.6em;
+    padding: .8em 2.2em;
+    background-color: #fff;
+    color: #000;
   }
+
+  button:hover {
+    background-color: #000;
+    color: #FFF;
+  }
+`;
+
+const Nickname = styled.span`
+  color: #FFF;
+`;
+
+const Grade = styled.span`
+  margin-right: 1.5em;
+  color: #FFF;
+`;
+
+const MyPage = styled.span`
+  margin-right: 2em;
+  color: #FFF;
+  cursor: pointer;
 `;
 
 const BeforeLogin = styled.div`
@@ -35,6 +69,16 @@ const BeforeLogin = styled.div`
 
   li {
     margin-left: 2em;
+    border-radius: 1.2em;
+    width: 6em;
+    height: 2.5em;
+    background-color: #FFF;
+    
+    a {
+      display: inline-block;
+      padding: 0.8em;
+      font-weight: bold;
+    }
   }
   
 `;
@@ -55,6 +99,10 @@ export default function Header({ accessToken, setAccessToken, user }) {
     navigate('/room/0');
   };
 
+  const handleClickLogo = () => {
+    navigate('/');
+  };
+
   if (accessToken && Object.keys(user).length === 0) {
     return (
       <p>로딩중입니다...</p>
@@ -63,37 +111,35 @@ export default function Header({ accessToken, setAccessToken, user }) {
 
   return (
     <HeaderBox>
-      <nav>
+      <Content>
         <List>
-          <Title>
-            <Link to="/">KiCK OFF</Link>
-          </Title>
+          <Title onClick={handleClickLogo} />
           {accessToken ? (
             <AfterLogin>
+              <Nickname>{user.user.name}</Nickname>
+              <Grade>
+                (
+                {user.user.grade}
+                )
+              </Grade>
+              <MyPage
+                onClick={() => handleClickMyPage(user.user.name)}
+              >
+                내 정보
+              </MyPage>
               <button
                 type="button"
                 onClick={handleClickLogout}
               >
                 로그아웃
               </button>
+
               <button
                 type="button"
-                onClick={() => handleClickMyPage(user.user.name)}
+                onClick={handleClickChat}
               >
-                내 정보
+                채팅창
               </button>
-              <span>{user.user.name}</span>
-              <span>
-                (
-                {user.user.grade}
-                )
-                <button
-                  type="button"
-                  onClick={handleClickChat}
-                >
-                  채팅창
-                </button>
-              </span>
             </AfterLogin>
           ) : (
             <BeforeLogin>
@@ -106,7 +152,7 @@ export default function Header({ accessToken, setAccessToken, user }) {
             </BeforeLogin>
           )}
         </List>
-      </nav>
+      </Content>
     </HeaderBox>
   );
 }

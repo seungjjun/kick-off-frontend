@@ -19,10 +19,6 @@ const SideButtons = styled.div`
   }
 `;
 
-const Article = styled.article`
-  /* height: 800px; */
-`;
-
 const List = styled.ul`
   display: flex;
   flex-direction: column;
@@ -49,11 +45,13 @@ const BlankImageBox = styled.div`
   height: 3.8em;
   background: url('https://user-images.githubusercontent.com/104769120/200729388-cf5186bd-0a9e-4d3a-a1b8-00f24dddb193.png');
   background-size: cover;
+  margin-right: .7em;
 `;
 
 const PostImage = styled.img`
   width: 4.5em;
   height: 3.8em;
+  margin-right: .7em;
 `;
 const ContentBox = styled.div`
   display: inline;
@@ -64,11 +62,13 @@ const Title = styled.p`
   cursor: pointer;
 `;
 
-const Category = styled.button`
+const Category = styled.p`
   margin-top: 1em;
   font-size: 0.7em;
   border: none;
+  color: #000;
   background-color: #FFF;
+  cursor: pointer;
 `;
 
 const UserName = styled.p`
@@ -76,32 +76,43 @@ const UserName = styled.p`
   font-size: 0.7em;
 `;
 
-const Name = styled.button`
+const Name = styled.span`
   font-size: 1em;
   border: none;
+  color: #000;
   background-color: #FFF;
+  cursor: pointer;
 `;
 
 const Pagination = styled.div`
     display: flex;
     justify-content: center;
+
+    button{
+      :hover{
+        background-color: #FFF;
+      }
+    }
 `;
 
 const PageButton = styled.button`
     margin-left: 1em;
     border: none;
     background-color: #fff;
+    color: #000;
 `;
 
 const PreviousButton = styled.button`
     border: none;
     background-color: #FFF;
+    color: #000;
 `;
 
 const NextButton = styled.button`
     margin-left: 1em;
     border: none;
     background-color: #FFF;
+    color: #000;
 `;
 
 export default function Board({
@@ -163,7 +174,7 @@ export default function Board({
           <button type="button" onClick={() => handleClickSchedule(boardName)}>경기일정</button>
         ) : null}
       </SideButtons>
-      <Article>
+      <article>
         {Object.keys(posts).length === 0 || postList.length === 0 ? (
           <Nothing>게시글이 없습니다</Nothing>
         ) : (
@@ -191,12 +202,11 @@ export default function Board({
                 + recommentNumber.filter((recomment) => recomment === post.id).length}
                     ]
                   </Title>
-                  <Category type="button" onClick={() => handleClickBoard(post.boardId)}>
+                  <Category onClick={() => handleClickBoard(post.boardId)}>
                     {posts.boards.find((board) => board.id === post.boardId).boardName.value}
                   </Category>
                   <UserName>
                     <Name
-                      type="button"
                       onClick={() => handleClickName(
                         posts.users.find((user) => user.id === post.userId.userId).name,
                         post.userId.userId,
@@ -214,7 +224,7 @@ export default function Board({
             ))}
           </List>
         )}
-      </Article>
+      </article>
       <SearchForm
         submit={submit}
         changeKeywordType={changeKeywordType}

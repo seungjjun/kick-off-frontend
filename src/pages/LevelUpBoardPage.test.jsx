@@ -1,4 +1,5 @@
 import {
+  cleanup,
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 
@@ -69,6 +70,8 @@ describe('LevelUpBoardPage', () => {
       await waitFor(() => {
         expect(apply).toBeCalled();
       });
+
+      cleanup();
     });
   });
 
@@ -77,6 +80,8 @@ describe('LevelUpBoardPage', () => {
 
     it('navigate called', () => {
       expect(navigate).toBeCalled();
+
+      cleanup();
     });
   });
 });

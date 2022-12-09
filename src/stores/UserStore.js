@@ -11,6 +11,7 @@ export default class UserStore extends Store {
     this.users = [];
 
     this.myInformation = {};
+    this.foundUser = {};
 
     this.name = '';
     this.profileImage = '';
@@ -39,7 +40,7 @@ export default class UserStore extends Store {
   async fetchUser(userName) {
     const user = await userApiService.fetchUser(userName);
 
-    this.myInformation = user.myInformation;
+    this.foundUser = user.foundUser;
 
     this.publish();
   }

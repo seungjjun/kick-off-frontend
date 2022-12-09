@@ -1,6 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Reset } from 'styled-reset';
 
@@ -13,8 +13,6 @@ import { userApiService } from './services/UserApiService';
 import GlobalStyle from './styles/GlobalStyle';
 
 import useUserStore from './hooks/useUserStore';
-
-import useScheduleStore from './hooks/useScheduleStore';
 
 import Header from './components/Header';
 
@@ -32,9 +30,13 @@ import SignupPage from './pages/SignUpPage';
 import KaKaoLoginPage from './pages/KaKaoLoginPage';
 
 const Container = styled.div`
-  min-width: 1072px;
-  max-width: 1080px;
+  margin: 0 auto;
   min-height: 100vh;
+`;
+
+const Body = styled.div`
+  max-width: 1080px;
+  min-width: 1072px;
   margin: 0 auto;
 `;
 
@@ -42,14 +44,14 @@ const Menu = styled.div`
   display: inline-block;
   width: 180px;
   vertical-align: text-top;
-  border-top: 1px solid #CCC;
+  margin-top: 3em;
   margin-right: 2em;
 `;
 
 const Content = styled.div`
   display: inline-block;
   vertical-align: text-top;
-  margin: 0 auto;
+  margin: 4em auto;
   width: 860px;
 `;
 
@@ -57,6 +59,10 @@ export default function App() {
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
   const userStore = useUserStore();
+
+  const location = useLocation();
+
+  const path = location.pathname;
 
   useEffect(() => {
     if (accessToken) {
@@ -77,25 +83,31 @@ export default function App() {
         setAccessToken={setAccessToken}
         user={userStore.myInformation}
       />
-      <Menu>
-        <BoardListPage />
-      </Menu>
-      <Content>
-        <Routes>
-          <Route path="/" element={<BoardPage />} />
-          <Route path="/board" element={<BoardPage />} />
-          <Route path="/levelup" element={<LevelUpBoardPage accessToken={accessToken} />} />
-          <Route path="/users" element={<UserPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginFormPage />} />
-          <Route path="/auth/kakao" element={<KaKaoLoginPage />} />
-          <Route path="/post/:postId" element={<PostPage />} />
-          <Route path="/write" element={<PostFormPage myInformation={myInformation} />} />
-          <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
-          <Route path="/schedule/:boardId" element={<SchedulePage accessToken={accessToken} />} />
-          <Route path="/room/:roomId" element={<ChattingRoomPage myInformation={myInformation} />} />
-        </Routes>
-      </Content>
+      <Body>
+        {path === '/signup' || path === '/login' ? (
+          null
+        ) : (
+          <Menu>
+            <BoardListPage />
+          </Menu>
+        )}
+        <Content>
+          <Routes>
+            <Route path="/" element={<BoardPage />} />
+            <Route path="/board" element={<BoardPage />} />
+            <Route path="/levelup" element={<LevelUpBoardPage accessToken={accessToken} />} />
+            <Route path="/users" element={<UserPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginFormPage />} />
+            <Route path="/auth/kakao" element={<KaKaoLoginPage />} />
+            <Route path="/post/:postId" element={<PostPage />} />
+            <Route path="/write" element={<PostFormPage myInformation={myInformation} />} />
+            <Route path="/posts/edit/:postId" element={<PostEditFormPage />} />
+            <Route path="/schedule/:boardId" element={<SchedulePage accessToken={accessToken} />} />
+            <Route path="/room/:roomId" element={<ChattingRoomPage myInformation={myInformation} />} />
+          </Routes>
+        </Content>
+      </Body>
     </Container>
   );
 }

@@ -17,7 +17,6 @@ export default function CommentEditForm({
 
   const handleClickModify = () => {
     if (content === '') {
-      console.log('hi');
       setClose(true);
       return;
     }
