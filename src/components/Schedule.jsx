@@ -41,6 +41,7 @@ const InquiryButton = styled.button`
   border: 1px solid #CCC;
   border-radius: 1em;
   background-color: #fff;
+  color: #000;
 `;
 
 const TodayMatch = styled.div`
@@ -55,37 +56,39 @@ const Nothing = styled.p`
 const List = styled.ul`
   display: flex;
   flex-direction: row;
+  gap: 1em;
+  overflow-x: auto;
 `;
 
 const Item = styled.li`
   display: list-item;
   margin-top: 1em;
-  width: 21em;
+  width: 16em;
   height: 10em;
 `;
 
 const GameBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 0.8fr 1fr;
-  grid-template-rows: 1fr 0.5fr 0.6fr 1fr;
+  grid-template-rows: 1fr 0.5fr 0.9fr 1fr;
   grid-template-areas:
   "homeLogo versus awayLogo"
   "homeLogo time awayLogo"
   "homeName . awayName"
-  ". comparison .";
+  "comparison comparison comparison";
 `;
 
 const HomeLogo = styled.img`
   justify-self: center;
-  width: 5em;
-  height: 5em;
+  width: 4.2em;
+  height: 4.2em;
   grid-area: homeLogo;
 `;
 
 const AwayLogo = styled.img`
   justify-self: center;
-  width: 5em;
-  height: 5em;
+  width: 4.2em;
+  height: 4.2em;
   grid-area: awayLogo;
 `;
 
@@ -118,12 +121,12 @@ const Time = styled.div`
 `;
 
 const Comparison = styled.button`
-  width: 5em;
+  width: 16em;
   height: 2.2em;
   align-self: center;
   justify-self: center;
   border: 1px solid #ccc;
-  background-color: #FFF;
+  background-color: #000;
   font-weight: bold;
   grid-area: comparison;
 `;

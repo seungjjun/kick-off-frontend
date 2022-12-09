@@ -1,12 +1,57 @@
+/* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
+import useScheduleStore from '../hooks/useScheduleStore';
 
 const PredictionBox = styled.div`
   width: 70%;
 `;
 
 const MatchInformation = styled.div`
-  border: 1px solid #CCC;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.5fr 0.6fr 1fr;
+  grid-template-areas:
+  "homeLogo status awayLogo"
+  "homeLogo time awayLogo"
+  "homeLogo stadium awayLogo"
+  "homeName . awayName";
   margin-bottom: 2em;
+  padding-top: 1em;
+  border: 1px solid #CCC;
+  text-align: center;
+  align-items: center;
+  
+  img {
+    margin: auto;
+  }
+`;
+
+const HomeLogoImage = styled.img`
+  grid-area: homeLogo;
+`;
+
+const AwayLogoImage = styled.img`
+  grid-area: awayLogo;
+`;
+
+const HomeName = styled.p`
+  grid-area: homeName;
+`;
+
+const AwayName = styled.p`
+  grid-area: awayName;
+`;
+
+const Stadium = styled.p`
+  grid-area: stadium;
+`;
+
+const Time = styled.p`
+  grid-area: time;
+`;
+
+const Status = styled.p`
+  grid-area: status;
 `;
 
 const ComparisonBox = styled.div`
@@ -15,14 +60,166 @@ const ComparisonBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 500px;
+`;
+
+const TeamName = styled.div`
+  display: grid;
+  align-items: center;
+  width: 100%;
+  grid-template-columns: 1fr 0.3fr 1fr;
+  grid-template-rows: 2.5fr 1fr;
+  grid-template-areas:
+  "homeName versus awayName"
+  "homeResult versus awayResult";
+
+  span {
+    font-size: 1.4em;
+    text-align: center;
+    color: #CCC;
+  }
+`;
+
+const HomeTeamName = styled.p`
+  grid-area: homeName;
+  text-align: end;
+`;
+
+const HomeResult = styled.p`
+  grid-area: homeResult;
+  text-align: end;
+`;
+
+const AwayTeamName = styled.p`
+  grid-area: awayName;
+  text-align: start;
+`;
+
+const AwayResult = styled.p`
+  grid-area: awayResult;
+  text-align: start;
+`;
+
+const RecentMatchResult = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 0.3fr 1fr;
+  grid-template-rows: 1.7fr 1.7fr 1fr;
+  grid-template-areas:
+  "homeResult recentMatch awayResult"
+  "homeGoals GF awayGoals"
+  "homeConceded GA awayConceded";
+  width: 100%;
+  margin-top: 1em;
+
+  span {
+    text-align: center;
+    grid-area: recentMatch;
+  }
+`;
+
+const HomeIcon = styled.div`
+  display: flex;
+  justify-content: end;
+  grid-area: homeResult;
+`;
+
+const AwayIcon = styled.div`
+  display: flex;
+  grid-area: awayResult;
+`;
+
+const WinIcon = styled.div`
+  width: 1em;
+  height: 1em;
+  background-image: url('https://user-images.githubusercontent.com/104769120/206151307-08e38ca3-5529-4c2b-99de-c494a52f4cc4.png');
+  background-size: cover;
+`;
+
+const DrawIcon = styled.div`
+  width: 1em;
+  height: 1em;
+  background-image: url('https://user-images.githubusercontent.com/104769120/206155737-52b2646c-1b06-459f-a371-ae44c164250d.png');
+  background-size: cover;
+`;
+
+const LoseIcon = styled.div`
+  width: 1em;
+  height: 1em;
+  background-image: url('https://user-images.githubusercontent.com/104769120/206158089-4ec4d5a9-8b70-4788-ba1b-3e0a1f7ec5c0.png');
+  background-size: cover;
+`;
+
+const AverageGoals = styled.p`
+  text-align: center;
+  grid-area: GF;
+`;
+
+const HomeGoals = styled.p`
+  grid-area: homeGoals;
+  text-align: end;
+`;
+
+const AwayGoals = styled.p`
+  grid-area: awayGoals;
+`;
+
+const AverageConceded = styled.p`
+  text-align: center;
+  grid-area: GA;
+`;
+
+const HomeConceded = styled.p`
+  grid-area: homeConceded;
+  text-align: end;
+`;
+
+const AwayConceded = styled.p`
+  grid-area: awayConceded;
+`;
+
+const RecentMatch = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1em;
+`;
+
+const RecentMatchTitle = styled.p`
+  display: block;
+  text-align: center;
+`;
+
+const RecentMatchList = styled.ul`
+  display: flex;
+  flex-direction: column;
+`;
+
+const RecentMatchItem = styled.li`
+  display: block;
+  text-align: center;
+  width: 100%;
+  p {
+    display: inline;
+  }
 `;
 
 const HomeLogo = styled.img`
-  width: 3em;
-  height: 3em;
+  width: 1.7em;
+  height: 1.7em;
+`;
+
+const RecentMatchAwayName = styled.p`
+  display: flex;
+`;
+
+const RecentMatchDate = styled.p`
 `;
 
 export default function Comparison({ predictions }) {
+  const scheduleStore = useScheduleStore();
+
+  const todayGames = [...scheduleStore.todayGames];
+
   if (Object.keys(predictions).length === 0) {
     return (
       <p>로딩중입니다..</p>
@@ -31,86 +228,130 @@ export default function Comparison({ predictions }) {
 
   const recentMatchs = predictions[0].h2h;
 
-  const homeRecentMatchResult = (predictions[0].teams.home.league.form).slice(-5);
-  const awayRecentMatchResult = (predictions[0].teams.away.league.form).slice(-5)
-    .split('').reverse().join('');
+  const homeRecentMatchResult = [...(predictions[0].teams.home.league.form).slice(-5)];
+  const awayRecentMatchResult = [...(predictions[0].teams.away.league.form).slice(-5)
+    .split('').reverse().join('')];
 
   return (
     <PredictionBox>
       <MatchInformation>
-        <img src={predictions[0].teams.home.logo} alt="homeLogo" />
-        <img src={predictions[0].teams.away.logo} alt="awayLogo" />
+        <HomeLogoImage src={predictions[0].teams.home.logo} alt="homeLogo" />
+        <HomeName>{predictions[0].teams.home.name}</HomeName>
+        <Status>{todayGames[0].fixture.status.long}</Status>
+        <Time>{todayGames[0].fixture.date.substring(0, 10)}</Time>
+        <Stadium>{todayGames[0].fixture.venue.name}</Stadium>
+        <AwayLogoImage src={predictions[0].teams.away.logo} alt="awayLogo" />
+        <AwayName>{predictions[0].teams.away.name}</AwayName>
       </MatchInformation>
       <ComparisonBox>
-        <div>
-          <p>
+        <TeamName>
+          <HomeTeamName>
             {predictions[0].teams.home.name}
-            {' '}
+          </HomeTeamName>
+          <span>
             VS
-            {' '}
+          </span>
+          <AwayTeamName>
             {predictions[0].teams.away.name}
-          </p>
-          <p>
+          </AwayTeamName>
+          <HomeResult>
             {predictions[0].teams.home.league.fixtures.wins.total}
             승
+            {' '}
             {predictions[0].teams.home.league.fixtures.draws.total}
             무
+            {' '}
             {predictions[0].teams.home.league.fixtures.loses.total}
             패
-            {' '}
+          </HomeResult>
+          <AwayResult>
             {predictions[0].teams.away.league.fixtures.wins.total}
             승
+            {' '}
             {predictions[0].teams.away.league.fixtures.draws.total}
             무
+            {' '}
             {predictions[0].teams.away.league.fixtures.loses.total}
             패
-          </p>
-          <p>
-            {homeRecentMatchResult}
-            {' '}
+          </AwayResult>
+        </TeamName>
+        <RecentMatchResult>
+          <HomeIcon>
+            {homeRecentMatchResult.map((result) => (
+              result === 'W' ? (
+                <WinIcon />
+              )
+                : result === 'D' ? (
+                  <DrawIcon />
+                ) : (
+                  <LoseIcon />
+                )
+            ))}
+          </HomeIcon>
+          <span>
             최근경기
-            {' '}
-            {awayRecentMatchResult}
-          </p>
-          <p>
+          </span>
+          <AwayIcon>
+            {awayRecentMatchResult.map((result) => (
+              result === 'W' ? (
+                <WinIcon />
+              )
+                : result === 'D' ? (
+                  <DrawIcon />
+                ) : (
+                  <LoseIcon />
+                )
+            ))}
+          </AwayIcon>
+          <HomeGoals>
             {predictions[0].teams.home.league.goals.for.average.total}
+          </HomeGoals>
+          <AverageGoals>
             평균득점
+          </AverageGoals>
+          <AwayGoals>
             {predictions[0].teams.away.league.goals.for.average.total}
-          </p>
-          <p>
+          </AwayGoals>
+          <HomeConceded>
             {predictions[0].teams.home.league.goals.against.average.total}
+          </HomeConceded>
+          <AverageConceded>
             평균실점
+          </AverageConceded>
+          <AwayConceded>
             {predictions[0].teams.away.league.goals.against.average.total}
-          </p>
-        </div>
-        <div>
-          <p>최근 양팀 맞대결</p>
-          <ul>
+          </AwayConceded>
+        </RecentMatchResult>
+        <RecentMatch>
+          <RecentMatchTitle>
+            최근 양팀 맞대결
+          </RecentMatchTitle>
+          <RecentMatchList>
             {recentMatchs.map((match, index) => (
               index < 3 ? (
-                <li key={match.fixture.id}>
-                  <span>
+                <RecentMatchItem key={match.fixture.id}>
+                  <p>
                     {predictions[0].teams.home.name}
                     <HomeLogo src={predictions[0].teams.home.logo} alt="homeLogo" />
-                  </span>
-                  <span>
+                  </p>
+                  <RecentMatchDate>
                     {match.goals.home}
                     {' '}
                     {(match.fixture.date).substring(0, 10)}
                     {' '}
                     {match.goals.away}
-                  </span>
-                  <span>
+                  </RecentMatchDate>
+                  <RecentMatchAwayName>
                     <HomeLogo src={predictions[0].teams.away.logo} alt="awayLogo" />
                     {predictions[0].teams.away.name}
-                  </span>
-                </li>
+                  </RecentMatchAwayName>
+                </RecentMatchItem>
               ) : (
                 null
               )
             ))}
-          </ul>
-        </div>
+          </RecentMatchList>
+        </RecentMatch>
         <div>
           <p>득점 시간대</p>
           <ul>

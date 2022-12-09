@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const Table = styled.table`
-    height: 400px;
+    
     width: 100%;
     border: 1px solid #CCC;
 `;
@@ -41,6 +41,8 @@ const CommentDateBox = styled.th`
 
 const Tbody = styled.tbody`
   display: block;
+  height: 540px;
+  overflow-y: auto;
 `;
 
 const Nothing = styled.tr`

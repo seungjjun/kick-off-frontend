@@ -13,11 +13,6 @@ const CheeringBox = styled.section`
   width: 30%;
 `;
 
-const VoteBox = styled.section`
-  height: 20%;
-  border: 1px solid #CCC;
-`;
-
 const ChattingBox = styled.section`
   display: flex;
   flex-direction: column-reverse;
@@ -31,14 +26,21 @@ const InputMessageBox = styled.div`
   justify-content: center;
   padding: 1em;
   border-top: 1px solid #CCC;
+  gap: 0.5em;
 
   input {
-    padding: .5em;
+    width: 70%;
+    padding: .4em;
+  }
+
+  button {
+    width: 30%;
   }
 `;
 
 const Chatting = styled.div`
-  
+  height: 650px;
+  overflow-y: auto;
 `;
 
 const List = styled.ul`
@@ -61,22 +63,24 @@ const MyChat = styled.li`
   align-self: flex-end;
   text-align: end;
   padding-right: 1em;
-  background-color: #DCEBFD;
-  border: 1px solid #DCEBFD;
+  background-color: #AF5050;
   border-radius: 12px;
   border-top-right-radius: 1px;
-  
 `;
 
 const OtherChat = styled.li`
   flex-direction: column;
   padding-left: 1em;
-  border: 1px solid #F1F1F4;
   border-radius: 12px;
   border-top-left-radius: 1px;
-  color: #CCC;
-  background-color: #F1F1F4;
+  /* color: #ff; */
+  background-color: #EBEBEB;
+`;
 
+const Title = styled.h2`
+  height: 40px;
+  border-bottom: 1px solid #CCC;
+  padding: 0.3em 0 0 1em;
 `;
 
 export default function ChattingRoom({
@@ -96,9 +100,6 @@ export default function ChattingRoom({
         predictions={predictions}
       />
       <CheeringBox>
-        {/* <VoteBox>
-          <button type="button">응원</button>
-        </VoteBox> */}
         <ChattingBox>
           <InputMessageBox>
             <input
@@ -128,6 +129,9 @@ export default function ChattingRoom({
               ))}
             </List>
           </Chatting>
+          <Title>
+            실시간 응원
+          </Title>
         </ChattingBox>
       </CheeringBox>
     </Container>

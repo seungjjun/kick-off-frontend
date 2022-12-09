@@ -22,6 +22,8 @@ const Thead = styled.thead`
 
 const Tbody = styled.tbody`
   display: block;
+  height: 540px;
+  overflow-y: auto;
 `;
 
 const Tr = styled.tr`

@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 
 import LikedPosts from './LikedPosts';
+
 import UserProfileEditForm from './UserProfileEditForm';
 
 import WrittenComments from './WrittenComments';
@@ -18,30 +19,35 @@ const Information = styled.div`
   display: flex;
   padding: 1em;
   border: 1px solid #CCC;
-  /* justify-content: space-between; */
 `;
 
 const MyButtons = styled.div`
-  
   button {
     margin-right: 0.8em;
     border: 1px solid #FFF;
     background-color: #FFF;
     color: #979797;
   }
+
+  button:hover {
+    color: #000;
+  }
+
+  button:focus {
+    color: #000;
+  }
 `;
 
 const BasicProfileImage = styled.div`
-  width: 5em;
-  height: 5em;
+  width: 6em;
+  height: 6em;
   background: url('https://user-images.githubusercontent.com/104769120/203972344-e8de6516-2d57-4afd-b1ef-63a7471f3e5a.png');
   background-size: cover;
   border-radius: 50%;
 `;
 
-const ActivityInformation = styled.div`
-  /* border: 1px solid #CCC; */
-  /* height: 400px; */
+const ImageBox = styled.div`
+  align-self: center;
 `;
 
 const ProfileImage = styled.img`
@@ -53,25 +59,29 @@ const ProfileImage = styled.img`
 const BasicInformation = styled.section`
   margin-left: 1em;
   align-self: center;
+  width: 100%;
+
+  p {
+    margin-bottom: 0.5em;
+  }
 `;
 
 const ProfileEditForm = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 100%;
 `;
 
-const ManagementButton = styled.div`
-  width: 24px;
-  height: 24px;
-  background: url('https://user-images.githubusercontent.com/104769120/204442213-a385d246-7e38-4f71-8a4c-98ead588c53a.png');
-  background-size: cover;
-  cursor: pointer;
+const UpdateButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+
+  button {
+    padding: .5em 1.3em;
+  }
 `;
 
 const ProfileEditButton = styled.button`
-  border: 1px solid #FFF;
-  background-color: #FFF;
-  margin-left: 27em;
 `;
 
 const PostNumber = styled.span`
@@ -90,10 +100,6 @@ export default function User({
     edits.changeEditState();
   };
 
-  const handleClickManage = () => {
-    navigate('/');
-  };
-
   const handleClickApplication = () => {
     navigate('/levelup');
   };
@@ -106,47 +112,44 @@ export default function User({
   return (
     <Container>
       <Information>
-        <div>
-          {myInformation.user.profileImage === null ? (
-            <BasicProfileImage />
-          ) : (
-            <ProfileImage src={myInformation.user.profileImage} alt="userProfileImage" />
-          )}
-        </div>
-        {myInformation.user.grade === '매니저' ? (
-          <ManagementButton onClick={handleClickManage} />
-        ) : (
-          null
-        )}
-        <BasicInformation>
-          <p>{myInformation.user.name}</p>
-          <PostNumber>
-            작성글 수
-            {' '}
-            {myInformation.posts.length}
-          </PostNumber>
-          <span>
-            작성 댓글 수
-            {' '}
-            {myInformation.comments.filter((comment) => comment.deleted === false).length
-            + myInformation.recomments.length}
-          </span>
-        </BasicInformation>
         <ProfileEditForm>
           {edits.isUpdate ? (
             <UserProfileEditForm
               edits={edits}
+              myInformation={myInformation}
             />
           ) : (
-            null
-          )}
-          {myInformation.user.isMyToken ? (
             <>
-              <ProfileEditButton type="button" onClick={handleClickProfileUpdate}>프로필 수정</ProfileEditButton>
-              <button type="button" onClick={handleClickApplication}>등업 신청하기</button>
+              <ImageBox>
+                {myInformation.user.profileImage === null ? (
+                  <BasicProfileImage />
+                ) : (
+                  <ProfileImage src={myInformation.user.profileImage} alt="userProfileImage" />
+                )}
+              </ImageBox>
+              <BasicInformation>
+                <p>{myInformation.user.name}</p>
+                <PostNumber>
+                  작성글 수
+                  {' '}
+                  {myInformation.posts.length}
+                </PostNumber>
+                <span>
+                  작성 댓글 수
+                  {' '}
+                  {myInformation.comments.filter((comment) => comment.deleted === false).length
+            + myInformation.recomments.length}
+                </span>
+              </BasicInformation>
+              {myInformation.user.isMyToken ? (
+                <UpdateButtons>
+                  <ProfileEditButton type="button" onClick={handleClickProfileUpdate}>프로필 수정</ProfileEditButton>
+                  <button type="button" onClick={handleClickApplication}>등업 신청하기</button>
+                </UpdateButtons>
+              ) : (
+                null
+              )}
             </>
-          ) : (
-            null
           )}
         </ProfileEditForm>
       </Information>
@@ -155,7 +158,7 @@ export default function User({
         <button type="button" onClick={handleClickComponentState}>작성 댓글</button>
         <button type="button" onClick={handleClickComponentState}>좋아요한 글</button>
       </MyButtons>
-      <ActivityInformation>
+      <div>
         {componentState === '작성글' ? (
           <WrittenPosts
             myInformation={myInformation}
@@ -176,7 +179,7 @@ export default function User({
             cancelCheckedPost={cancelCheckedPost}
           />
         ) : null}
-      </ActivityInformation>
+      </div>
     </Container>
   );
 }

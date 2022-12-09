@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
@@ -91,6 +92,10 @@ const PageButton = styled.p`
 const CommentInputForm = styled.form`
   padding: 2em 1em;
   border: 1px solid #CCC;
+
+  label {
+    color: #fff;
+  }
 `;
 
 const CommentInput = styled.input`
@@ -105,6 +110,7 @@ const CommentInput = styled.input`
 const CommentSubmitButton = styled.button`
   border: none;
   background-color: #FFF;
+  color: #000;
 `;
 
 export default function Comment({

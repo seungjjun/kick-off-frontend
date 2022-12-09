@@ -28,8 +28,6 @@ const Input = styled.input`
 const SearchButton = styled.button`
     margin-left: 1em;
     padding: 0.3em 1em;
-    border: 1px solid #CCC;
-    background-color: #FFF;
 `;
 
 export default function SearchForm({ submit, changeKeywordType }) {

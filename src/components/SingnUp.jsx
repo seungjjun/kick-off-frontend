@@ -11,6 +11,7 @@ const Container = styled.div`
   margin: auto;
   width: 60%;
   flex-direction: column;
+  margin-right: 6em;
   text-align: center;
 `;
 

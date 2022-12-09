@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import BoardPage from './BoardPage';
 
@@ -119,10 +119,14 @@ describe('BoardPage', () => {
 
   it('render board name', () => {
     screen.getByText('전체게시판');
+
+    cleanup();
   });
 
   it('render post title', () => {
     screen.getByText('2022년 카타르 월드컵 개막 [0]');
+
+    cleanup();
   });
 
   it('render page buttons', () => {
@@ -131,9 +135,13 @@ describe('BoardPage', () => {
     screen.getByText('3');
     screen.getByText('4');
     screen.getByText('5');
+
+    cleanup();
   });
 
   it('render next page button', () => {
     screen.getByText('다음');
+
+    cleanup();
   });
 });

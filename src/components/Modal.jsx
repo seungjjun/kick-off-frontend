@@ -23,6 +23,7 @@ const modalStyle = {
 };
 
 const ModalButton = styled.button`
+  padding: 1em;
   width: 50%;
   color: #FFF;
 `;

@@ -1,5 +1,91 @@
 import { useState } from 'react';
+
 import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Table = styled.table`
+    height: 400px;
+    width: 100%;
+    border: 1px solid #CCC;
+`;
+
+const Thead = styled.thead`
+    display: flex;
+    margin-top: 1em;
+    width: 100%;
+`;
+
+const Tr = styled.tr`
+  display: flex;
+  width: 100%;
+`;
+
+const CheckBox = styled.th`
+    width: 5%;
+    text-align: center;
+`;
+
+const TitleBox = styled.th`
+    width: 40%;
+    text-align: center;
+`;
+
+const AuthorBox = styled.th`
+    width: 30%;
+    text-align: center;
+`;
+
+const PostDateBox = styled.th`
+    width: 15%;
+    text-align: center;
+`;
+
+const HitBox = styled.th`
+    width: 10%;
+    text-align: center;
+`;
+
+const Tbody = styled.tbody`
+  display: block;
+  height: 540px;
+  overflow-y: auto;
+`;
+
+const List = styled.tr`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+`;
+
+const Select = styled.td`
+    width: 5%;
+    text-align: center;
+`;
+
+const Title = styled.td`
+    width: 40%;
+    text-align: center;
+    cursor: pointer;
+`;
+
+const Author = styled.td`
+    width: 30%;
+    text-align: center;
+`;
+
+const PostDate = styled.td`
+    width: 15%;
+    text-align: center;
+`;
+
+const Hit = styled.td`
+    width: 10%;
+    text-align: center;
+`;
 
 const ButtonBox = styled.div`
   display: flex;
@@ -73,44 +159,44 @@ export default function LikedPosts({ myInformation, navigate, cancelCheckedPost 
   };
 
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>선택</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>조회</th>
-          </tr>
-        </thead>
-        <tbody>
+    <Container>
+      <Table>
+        <Thead>
+          <Tr>
+            <CheckBox>선택</CheckBox>
+            <TitleBox>제목</TitleBox>
+            <AuthorBox>작성자</AuthorBox>
+            <PostDateBox>작성일</PostDateBox>
+            <HitBox>조회</HitBox>
+          </Tr>
+        </Thead>
+        <Tbody>
           {myInformation.likedPosts.map((post) => (
-            <tr key={post.id}>
-              <td>
+            <List key={post.id}>
+              <Select>
                 <input
                   data-testid="checkbox"
                   type="checkbox"
                   onChange={(e) => handleChangeCheck(e.target.checked, post.id)}
                   checked={checkedPosts.indexOf(post.id) >= 0}
                 />
-              </td>
-              <td onClick={() => handleClickContent(post.id)}>
+              </Select>
+              <Title onClick={() => handleClickContent(post.id)}>
                 {post.postInformation.title}
-              </td>
-              <td>
+              </Title>
+              <Author>
                 {myInformation.user.name}
-              </td>
-              <td>
+              </Author>
+              <PostDate>
                 {post.createdAt}
-              </td>
-              <td>
+              </PostDate>
+              <Hit>
                 {post.hit}
-              </td>
-            </tr>
+              </Hit>
+            </List>
           ))}
-        </tbody>
-      </table>
+        </Tbody>
+      </Table>
       <ButtonBox>
         <CheckBoxButtons>
           <label htmlFor="checkPost">전체선택</label>
@@ -129,6 +215,6 @@ export default function LikedPosts({ myInformation, navigate, cancelCheckedPost 
           <button type="button" onClick={handleClickWrite}>글쓰기</button>
         </PostButtons>
       </ButtonBox>
-    </div>
+    </Container>
   );
 }
