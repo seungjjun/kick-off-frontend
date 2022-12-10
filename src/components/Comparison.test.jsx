@@ -4,6 +4,11 @@ import Comparison from './Comparison';
 
 const context = describe;
 
+let todayGames = {};
+jest.mock('../hooks/useScheduleStore', () => () => ({
+  todayGames,
+}));
+
 describe('Comparison', () => {
   beforeEach(() => {
     const predictions = [
@@ -159,6 +164,22 @@ describe('Comparison', () => {
         ],
       },
     ];
+
+    todayGames = [
+      {
+        fixture: {
+          status: {
+            long: 'Match Finished',
+          },
+
+          date: '2022-11-08T05:00:00+09:00',
+
+          venue: {
+            name: 'Estadio de Vallecas',
+          },
+        },
+      },
+    ];
     render(<Comparison
       predictions={predictions}
     />);
@@ -166,37 +187,42 @@ describe('Comparison', () => {
 
   context('when compare match', () => {
     it('render team name', () => {
-      screen.getByText('대전 시티즌');
+      screen.getAllByText('대전 시티즌');
     });
 
     it('render both teams record', () => {
-      screen.getByText('5승1무3패 4승2무3패');
+      screen.getByText('5승 1무 3패');
+      screen.getByText('4승 2무 3패');
     });
 
     it('render recent match result', () => {
-      screen.getByText('DLWWL 최근경기 WDWWD');
+      screen.getByText('최근경기');
 
       screen.getByText('최근 양팀 맞대결');
 
-      screen.getByText('대전 시티즌');
-      screen.getByText('1 2022-05-17 2');
-      screen.getByText('FC서울');
+      screen.getAllByText('대전 시티즌');
+      screen.getByText('2022-05-17');
+      screen.getAllByText('FC서울');
     });
 
     it('render average goals', () => {
-      screen.getByText('1.5평균득점1.6');
+      screen.getByText('1.5');
+      screen.getByText('평균득점');
+      screen.getByText('1.6');
     });
 
     it('render average goals against', () => {
-      screen.getByText('1.4평균실점1.8');
+      screen.getByText('1.4');
+      screen.getByText('평균실점');
+      screen.getByText('1.8');
     });
 
     it('render goals minute', () => {
       screen.getByText('득점 시간대');
 
-      screen.getByText('15.12%');
-      screen.getByText('0 ~ 15');
-      screen.getByText('16.67%');
+      screen.getAllByText('15.12%');
+      screen.getAllByText('0 ~ 15');
+      screen.getAllByText('16.67%');
     });
   });
 });

@@ -13,7 +13,7 @@ const deletePost = jest.fn();
 let location = {};
 
 let componentState = '';
-let myInformation = {};
+let foundUser = {};
 
 jest.mock('react-router-dom', () => ({
   useNavigate() {
@@ -27,9 +27,9 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../hooks/useUserStore', () => () => ({
   fetchUser,
+  foundUser,
   setComponentState,
   changeComponentState,
-  myInformation,
   componentState,
   updateProfile,
 }));
@@ -41,7 +41,7 @@ const context = describe;
 
 describe('UserPage', () => {
   beforeEach(() => {
-    myInformation = {
+    foundUser = {
       user: {
         name: 'messi',
         profileImage: 'image',

@@ -6,6 +6,15 @@ const messageChange = jest.fn();
 
 const publishMessage = jest.fn();
 
+const scrollIntoViewMock = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+
+let todayGames = {};
+
+jest.mock('../hooks/useScheduleStore', () => () => ({
+  todayGames,
+}));
+
 describe('chattingRoom', () => {
   beforeEach(() => {
     const message = 'input';
@@ -168,6 +177,22 @@ describe('chattingRoom', () => {
             },
           },
         ],
+      },
+    ];
+
+    todayGames = [
+      {
+        fixture: {
+          status: {
+            long: 'Match Finished',
+          },
+
+          date: '2022-11-08T05:00:00+09:00',
+
+          venue: {
+            name: 'Estadio de Vallecas',
+          },
+        },
       },
     ];
 

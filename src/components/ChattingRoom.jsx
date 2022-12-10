@@ -1,6 +1,10 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-use-before-define */
 
+import { useRef, useEffect } from 'react';
+
 import styled from 'styled-components';
+
 import Comparison from './Comparison';
 
 const Container = styled.div`
@@ -57,6 +61,12 @@ const List = styled.ul`
   }
 `;
 
+const EnterChat = styled.li`
+  font-size: .8em;
+  font-weight: bold;
+  color: #000;
+`;
+
 const MyChat = styled.li`
   flex-direction: column;
   justify-content: end;
@@ -66,6 +76,11 @@ const MyChat = styled.li`
   background-color: #AF5050;
   border-radius: 12px;
   border-top-right-radius: 1px;
+
+  p:nth-child(1) {
+    font-weight: bold;
+    margin-bottom: .6em;
+  }
 `;
 
 const OtherChat = styled.li`
@@ -73,8 +88,12 @@ const OtherChat = styled.li`
   padding-left: 1em;
   border-radius: 12px;
   border-top-left-radius: 1px;
-  /* color: #ff; */
   background-color: #EBEBEB;
+  
+  p:nth-child(1) {
+    font-weight: bold;
+    margin-bottom: .6em;
+  }
 `;
 
 const Title = styled.h2`
@@ -86,6 +105,16 @@ const Title = styled.h2`
 export default function ChattingRoom({
   message, messageChange, chatMessages, publishMessage, predictions, nickname,
 }) {
+  const messages = useRef(null);
+
+  const scrollToBottom = () => {
+    messages.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
+
   const handleChangeChat = (event) => {
     messageChange(event.target.value);
   };
@@ -114,16 +143,27 @@ export default function ChattingRoom({
           <Chatting>
             <List>
               {chatMessages.map((chatMessage) => (
-                chatMessage.name === nickname ? (
-                  <MyChat>
-                    {chatMessage.message}
-                  </MyChat>
-                ) : (
-                  <OtherChat>
+                chatMessage.name === nickname && chatMessage.message !== `${chatMessage.writer}님이 채팅방에 입장하였습니다.` ? (
+                  <MyChat ref={messages}>
                     <p>
                       {chatMessage.name}
                     </p>
+                    <p>
+                      {chatMessage.message}
+                    </p>
+                  </MyChat>
+                ) : chatMessage.message === `${chatMessage.writer}님이 채팅방에 입장하였습니다.` ? (
+                  <EnterChat ref={messages}>
                     {chatMessage.message}
+                  </EnterChat>
+                ) : (
+                  <OtherChat ref={messages}>
+                    <p>
+                      {chatMessage.name}
+                    </p>
+                    <p>
+                      {chatMessage.message}
+                    </p>
                   </OtherChat>
                 )
               ))}

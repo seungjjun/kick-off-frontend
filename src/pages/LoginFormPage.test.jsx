@@ -30,10 +30,6 @@ describe('LoginFormPage', () => {
     render(<LoginFormPage />);
   });
 
-  it('render login title', () => {
-    screen.getByText('USER LOGIN');
-  });
-
   it('render login form', () => {
     screen.getByPlaceholderText('아이디');
 
