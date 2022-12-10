@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import SignUp from '../components/SingnUp';
+import SignUp from '../components/SignUp';
 
 import useUserStore from '../hooks/useUserStore';
 

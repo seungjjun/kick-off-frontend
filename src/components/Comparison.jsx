@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
+
 import useScheduleStore from '../hooks/useScheduleStore';
 
 const PredictionBox = styled.div`
@@ -60,7 +61,7 @@ const ComparisonBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 550px;
 `;
 
 const TeamName = styled.div`
@@ -152,11 +153,13 @@ const LoseIcon = styled.div`
 const AverageGoals = styled.p`
   text-align: center;
   grid-area: GF;
+  color: #CCC;
 `;
 
 const HomeGoals = styled.p`
   grid-area: homeGoals;
   text-align: end;
+  
 `;
 
 const AwayGoals = styled.p`
@@ -166,11 +169,12 @@ const AwayGoals = styled.p`
 const AverageConceded = styled.p`
   text-align: center;
   grid-area: GA;
+  color: #CCC;
 `;
 
 const HomeConceded = styled.p`
-  grid-area: homeConceded;
   text-align: end;
+  grid-area: homeConceded;
 `;
 
 const AwayConceded = styled.p`
@@ -178,41 +182,112 @@ const AwayConceded = styled.p`
 `;
 
 const RecentMatch = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   margin-top: 1em;
 `;
 
 const RecentMatchTitle = styled.p`
-  display: block;
   text-align: center;
+  margin-block: .5em;
+  font-weight: 600;
 `;
 
 const RecentMatchList = styled.ul`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+  "homeName";
 `;
 
 const RecentMatchItem = styled.li`
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr 0.3fr 0.3fr 0.7fr 0.3fr 0.3fr 1fr;
+  grid-template-areas:
+  "homeName homeLogo homeGoals matchDate awayGoals awayLogo awayName";
+  margin-top: .7em;
   text-align: center;
+  align-items: center;
   width: 100%;
-  p {
-    display: inline;
+
+  p:nth-child(1) { 
+    text-align: end;
+  }
+
+  p:last-child {
+    text-align: start;
   }
 `;
 
+const RecentMatchHomeName = styled.p`
+  grid-area: homeName;
+`;
+
+const RecentHomeGoals = styled.p`
+  grid-area: homeGoals;
+`;
+
+const RecentAwayGoals = styled.p`
+  grid-area: awayGoals;
+`;
+
 const HomeLogo = styled.img`
-  width: 1.7em;
-  height: 1.7em;
+  width: 1.5em;
+  height: 1.5em;
+  grid-area: homeLogo;
+`;
+
+const AwayLogo = styled.img`
+  width: 1.5em;
+  height: 1.5em;
+  grid-area: awayLogo;
 `;
 
 const RecentMatchAwayName = styled.p`
-  display: flex;
+  grid-area: awayName;
 `;
 
 const RecentMatchDate = styled.p`
+  color: #CCC;
+  grid-area: matchDate;
+`;
+
+const AverageGoalsTime = styled.div`
+  margin-top: 1.4em;
+  width: 100%;
+  
+  p:first-child {
+    margin-bottom: .4em;
+    text-align: center;
+    font-weight: 600;
+  }
+`;
+
+const GoalTimeList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  
+`;
+
+const Item = styled.li`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+  "homePercentage time awayPercentage";
+`;
+
+const HomePercentage = styled.p`
+  grid-area: homePercentage;
+`;
+
+const AwayPercentage = styled.p`
+  text-align: center;
+  grid-area: awayPercentage;
+`;
+
+const GoalTime = styled.p`
+  text-align: center;
+  grid-area: time;
 `;
 
 export default function Comparison({ predictions }) {
@@ -330,19 +405,23 @@ export default function Comparison({ predictions }) {
             {recentMatchs.map((match, index) => (
               index < 3 ? (
                 <RecentMatchItem key={match.fixture.id}>
-                  <p>
+                  <RecentMatchHomeName>
                     {predictions[0].teams.home.name}
-                    <HomeLogo src={predictions[0].teams.home.logo} alt="homeLogo" />
-                  </p>
-                  <RecentMatchDate>
+                  </RecentMatchHomeName>
+                  <HomeLogo src={predictions[0].teams.home.logo} alt="homeLogo" />
+                  <RecentHomeGoals>
                     {match.goals.home}
-                    {' '}
+                  </RecentHomeGoals>
+                  <RecentMatchDate>
                     {(match.fixture.date).substring(0, 10)}
-                    {' '}
-                    {match.goals.away}
                   </RecentMatchDate>
+                  <RecentAwayGoals>
+                    {match.goals.away}
+                  </RecentAwayGoals>
+                  <div>
+                    <AwayLogo src={predictions[0].teams.away.logo} alt="awayLogo" />
+                  </div>
                   <RecentMatchAwayName>
-                    <HomeLogo src={predictions[0].teams.away.logo} alt="awayLogo" />
                     {predictions[0].teams.away.name}
                   </RecentMatchAwayName>
                 </RecentMatchItem>
@@ -352,87 +431,97 @@ export default function Comparison({ predictions }) {
             ))}
           </RecentMatchList>
         </RecentMatch>
-        <div>
+        <AverageGoalsTime>
           <p>득점 시간대</p>
-          <ul>
-            <li>
+          <GoalTimeList>
+            <Item>
               {predictions[0].teams.home.league.goals.for.minute['0-15'].percentage === null ? (
-                <span>0%</span>
+                <HomePercentage>0%</HomePercentage>
               ) : (
-                <span>{predictions[0].teams.home.league.goals.for.minute['0-15'].percentage}</span>
+                <HomePercentage>
+                  {predictions[0].teams.home.league.goals.for.minute['0-15'].percentage}
+                </HomePercentage>
               )}
-              {' '}
-              <span>0 ~ 15</span>
-              {' '}
-              {predictions[0].teams.away.league.goals.for.minute['0-15'].percentage}
-            </li>
-            <li>
-              {predictions[0].teams.home.league.goals.for.minute['0-15'].percentage}
-              {' '}
-              <span>16 ~ 30</span>
-              {' '}
-              {predictions[0].teams.away.league.goals.for.minute['16-30'].percentage}
-            </li>
-            <li>
-              {predictions[0].teams.home.league.goals.for.minute['16-30'].percentage}
-              {' '}
-              <span>31 ~ 45</span>
-              {' '}
-              {predictions[0].teams.away.league.goals.for.minute['31-45'].percentage}
-            </li>
-            <li>
-              {predictions[0].teams.home.league.goals.for.minute['31-45'].percentage}
-              {' '}
-              <span>46 ~ 60</span>
-              {' '}
-              {predictions[0].teams.away.league.goals.for.minute['46-60'].percentage}
-            </li>
-            <li>
-              {predictions[0].teams.home.league.goals.for.minute['46-60'].percentage}
-              {' '}
-              <span>61 ~ 75</span>
-              {' '}
-              {predictions[0].teams.away.league.goals.for.minute['61-75'].percentage}
-            </li>
-            <li>
-              {predictions[0].teams.home.league.goals.for.minute['61-75'].percentage}
-              {' '}
-              <span>76 ~ 90</span>
-              {' '}
-              {predictions[0].teams.away.league.goals.for.minute['76-90'].percentage}
-            </li>
-            <li>
+              <GoalTime>0 ~ 15</GoalTime>
+              <AwayPercentage>
+                {predictions[0].teams.away.league.goals.for.minute['0-15'].percentage}
+              </AwayPercentage>
+            </Item>
+            <Item>
+              <HomePercentage>
+                {predictions[0].teams.home.league.goals.for.minute['0-15'].percentage}
+              </HomePercentage>
+              <GoalTime>16 ~ 30</GoalTime>
+              <AwayPercentage>
+                {predictions[0].teams.away.league.goals.for.minute['16-30'].percentage}
+              </AwayPercentage>
+            </Item>
+            <Item>
+              <HomePercentage>
+                {predictions[0].teams.home.league.goals.for.minute['16-30'].percentage}
+              </HomePercentage>
+              <GoalTime>31 ~ 45</GoalTime>
+              <AwayPercentage>
+                {predictions[0].teams.away.league.goals.for.minute['31-45'].percentage}
+              </AwayPercentage>
+            </Item>
+            <Item>
+              <HomePercentage>
+                {predictions[0].teams.home.league.goals.for.minute['31-45'].percentage}
+              </HomePercentage>
+              <GoalTime>46 ~ 60</GoalTime>
+              <AwayPercentage>
+                {predictions[0].teams.away.league.goals.for.minute['46-60'].percentage}
+              </AwayPercentage>
+            </Item>
+            <Item>
+              <HomePercentage>
+                {predictions[0].teams.home.league.goals.for.minute['46-60'].percentage}
+              </HomePercentage>
+              <GoalTime>61 ~ 75</GoalTime>
+              <AwayPercentage>
+                {predictions[0].teams.away.league.goals.for.minute['61-75'].percentage}
+              </AwayPercentage>
+            </Item>
+            <Item>
+              <HomePercentage>
+                {predictions[0].teams.home.league.goals.for.minute['61-75'].percentage}
+              </HomePercentage>
+              <GoalTime>76 ~ 90</GoalTime>
+              <AwayPercentage>
+                {predictions[0].teams.away.league.goals.for.minute['76-90'].percentage}
+              </AwayPercentage>
+            </Item>
+            <Item>
               {predictions[0].teams.home.league.goals.for.minute['91-105'].percentage === null ? (
-                <span>0%</span>
+                <HomePercentage>0%</HomePercentage>
               ) : (
-                <span>{predictions[0].teams.home.league.goals.for.minute['91-105'].percentage}</span>
+                <HomePercentage>{predictions[0].teams.home.league.goals.for.minute['91-105'].percentage}</HomePercentage>
               )}
-              {' '}
-              <span>91 ~ 105</span>
-              {' '}
+              <GoalTime>91 ~ 105</GoalTime>
               {predictions[0].teams.away.league.goals.for.minute['91-105'].percentage === null ? (
-                <span>0%</span>
+                <AwayPercentage>0%</AwayPercentage>
               ) : (
-                <span>{predictions[0].teams.away.league.goals.for.minute['91-105'].percentage}</span>
+                <AwayPercentage>{predictions[0].teams.away.league.goals.for.minute['91-105'].percentage}</AwayPercentage>
               )}
-            </li>
-            <li>
+            </Item>
+            <Item>
               {predictions[0].teams.home.league.goals.for.minute['106-120'].percentage === null ? (
-                <span>0%</span>
+                <HomePercentage>0%</HomePercentage>
               ) : (
-                <span>{predictions[0].teams.home.league.goals.for.minute['106-120'].percentage}</span>
+                <HomePercentage>{predictions[0].teams.home.league.goals.for.minute['106-120'].percentage}</HomePercentage>
               )}
               {' '}
-              <span>106 ~ 120</span>
+              <GoalTime>106 ~ 120</GoalTime>
               {' '}
               {predictions[0].teams.away.league.goals.for.minute['106-120'].percentage === null ? (
-                <span>0%</span>
+                <AwayPercentage>0%</AwayPercentage>
               ) : (
-                <span>{predictions[0].teams.away.league.goals.for.minute['106-120'].percentage}</span>
+                <AwayPercentage>{predictions[0].teams.away.league.goals.for.minute['106-120'].percentage}</AwayPercentage>
               )}
-            </li>
-          </ul>
-        </div>
+            </Item>
+          </GoalTimeList>
+        </AverageGoalsTime>
       </ComparisonBox>
     </PredictionBox>
   );

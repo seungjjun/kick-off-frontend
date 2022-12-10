@@ -117,6 +117,15 @@ const StateValue = styled.td`
   width: 20%;
 `;
 
+const Success = styled.p`
+  margin-block: 1em;
+`;
+
+const Error = styled.p`
+  margin-block: 1em;
+  color: #E51919;
+`;
+
 export default function LevelUpBoard({
   submit, changeGrade, errorMessages, applicationPosts,
 }) {
@@ -152,13 +161,13 @@ export default function LevelUpBoard({
           })}
         />
         {errors.reason ? (
-          <p>{errors.reason.message}</p>
+          <Error>{errors.reason.message}</Error>
         ) : errorMessages.isExistingUser ? (
-          <p>{errorMessages.applicationErrorMessge}</p>
+          <Error>{errorMessages.applicationErrorMessge}</Error>
         ) : errorMessages.isSelectGrade ? (
-          <p>{errorMessages.applicationErrorMessge}</p>
+          <Error>{errorMessages.applicationErrorMessge}</Error>
         ) : errorMessages.isApplicationSuccess ? (
-          <p>{errorMessages.applicationErrorMessge}</p>
+          <Success>{errorMessages.applicationErrorMessge}</Success>
         ) : null}
         <button type="submit">등업신청</button>
       </Form>

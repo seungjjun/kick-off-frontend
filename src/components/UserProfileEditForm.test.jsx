@@ -5,6 +5,7 @@ import {
 import UserProfileEditForm from './UserProfileEditForm';
 
 let edits = {};
+let myInformation = {};
 
 const context = describe;
 
@@ -20,8 +21,16 @@ describe('UserProfileEditForm', () => {
       image: '',
     };
 
+    myInformation = {
+      user: {
+        name: '라이츄',
+        profileImage: 'url',
+      },
+    };
+
     render(<UserProfileEditForm
       edits={edits}
+      myInformation={myInformation}
     />);
   });
 

@@ -2,7 +2,7 @@ import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 
-import SignUp from './SingnUp';
+import SignUp from './SignUp';
 
 const submit = jest.fn();
 

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { rest } from 'msw';
+import { context, rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import config from './config';
@@ -557,46 +557,58 @@ const server = setupServer(
     ],
   }))),
 
-  rest.get(`${baseUrl}/user`, async (req, res, ctx) => res(ctx.json({
-    myInformation: {
-      posts: [
-        {
-          postInformation: {
-            title: '아르헨티나 월드컵 우승',
+  rest.get(`${baseUrl}/user`, (req, res, ctx) => {
+    const accessToken = req.headers.get('Authorization')
+      .substring('bearer '.length);
+
+    if (accessToken === 'jel1y') {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          foundUser: {
+            posts: [
+              {
+                postInformation: {
+                  title: '아르헨티나 월드컵 우승',
+                },
+                id: 1,
+                createdAt: '2022-12-19',
+                hit: 41,
+              },
+            ],
+
+            comments: [
+              {
+                id: 2,
+                content: '대한민국은..?',
+                commentDate: '2022-12-20',
+              },
+            ],
+
+            likedPosts: [
+              {
+                id: 1,
+                postInformation: {
+                  title: '2022년 마지막 날',
+                },
+                createdAt: '2022-12-31',
+                hit: 42,
+              },
+            ],
+
+            user: {
+              id: 1,
+              identification: 'jel1y',
+              name: 'son',
+              myToken: true,
+            },
           },
-          id: 1,
-          createdAt: '2022-12-19',
-          hit: 41,
-        },
-      ],
+        }),
+      );
+    }
 
-      comments: [
-        {
-          id: 2,
-          content: '대한민국은..?',
-          commentDate: '2022-12-20',
-        },
-      ],
-
-      likedPosts: [
-        {
-          id: 1,
-          postInformation: {
-            title: '2022년 마지막 날',
-          },
-          createdAt: '2022-12-31',
-          hit: 42,
-        },
-      ],
-
-      user: {
-        id: 1,
-        identification: 'jel1y',
-        name: 'son',
-        myToken: true,
-      },
-    },
-  }))),
+    return res(ctx.status(400));
+  }),
 
   rest.get(`${baseUrl}/application`, async (req, res, ctx) => res(ctx.json({
     applicationPosts: [
