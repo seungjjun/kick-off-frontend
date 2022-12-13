@@ -65,5 +65,5 @@ Scenario('로그인 하지 않고 게시글을 작성할 경우', ({ I }) => {
   I.click('글쓰기');
 
   // Then
-  I.see('LOGIN');
+  I.see('로그인');
 });

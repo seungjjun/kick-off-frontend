@@ -6,7 +6,7 @@ const baseUrl = config.apiBaseUrl;
 
 export default class GradeApiService {
   async apply(reason, grade, userId) {
-    const url = `${baseUrl}/application`;
+    const url = `${baseUrl}/applications`;
 
     const { data } = await axios.post(url, {
       reason,

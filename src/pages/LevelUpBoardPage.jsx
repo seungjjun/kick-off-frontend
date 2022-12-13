@@ -37,6 +37,8 @@ export default function LevelUpBoardPage({ accessToken }) {
 
   const submit = async (data) => {
     await gradeStore.apply(data.reason, userStore.myInformation.user.id);
+
+    postStore.fetchApplicationPosts(accessToken);
   };
 
   const { applicationPosts } = postStore;

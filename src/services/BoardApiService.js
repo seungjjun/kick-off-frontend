@@ -15,7 +15,7 @@ export default class BoardApiService {
   }
 
   async fetchPosts(pageNumber = 0, boardId = 1) {
-    const url = `${baseUrl}/board/${boardId}/posts`;
+    const url = `${baseUrl}/boards/${boardId}/posts`;
 
     const { data } = await axios.get(url, {
       params: {
@@ -29,7 +29,7 @@ export default class BoardApiService {
   async searchPosts({
     keyword, keywordType, boardId = 1, pageNumber = 0,
   }) {
-    const url = `${baseUrl}/posts/${boardId}/search`;
+    const url = `${baseUrl}/boards/${boardId}/posts/search`;
 
     const { data } = await axios.get(url, {
       params: {

@@ -15,7 +15,7 @@ export default class PostApiService {
   }
 
   async fetchApplicationPosts(accessToken) {
-    const url = `${baseUrl}/application`;
+    const url = `${baseUrl}/applications`;
 
     const { data } = await axios.get(url, {
       headers: {

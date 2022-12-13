@@ -12,8 +12,8 @@ Scenario('대댓글이 없는 댓글을 삭제할 경우', ({ I }) => {
 
   // When
   I.click('삭제');
-  // Then
 
+  // Then
   I.dontSee('대한민국 16강 응원합니다.');
 });
 

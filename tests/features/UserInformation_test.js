@@ -67,5 +67,5 @@ Scenario('로그인 하지 않고 사용자 정보를 확인하려는 경우', (
   I.click('피카츄');
 
   // Then
-  I.see('LOGIN');
+  I.see('로그인');
 });

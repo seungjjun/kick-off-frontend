@@ -20,6 +20,7 @@ const List = styled.ul`
 
 const RemoveComment = styled.p`
   margin-top: 0.6em;
+  padding-bottom: .6em;
   border-bottom: 1px solid #CCC;
   color: #979797;
 `;
@@ -38,6 +39,10 @@ const RecommentWriteButton = styled.button`
   border: none;
   color: #979797;
   background-color: #FFF;
+
+  :hover {
+    background-color: #FFF;
+  }
 `;
 
 const CommentButtons = styled.div`
@@ -111,6 +116,10 @@ const CommentSubmitButton = styled.button`
   border: none;
   background-color: #FFF;
   color: #000;
+
+  :hover {
+    background-color: #FFF;
+  }
 `;
 
 export default function Comment({

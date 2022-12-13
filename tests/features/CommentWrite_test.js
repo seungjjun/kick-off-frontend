@@ -41,5 +41,5 @@ Scenario('로그인 하지 않고 댓글을 작성할 경우', ({ I }) => {
   I.click('[type=submit]');
 
   // Then
-  I.see('LOGIN');
+  I.see('로그인');
 });

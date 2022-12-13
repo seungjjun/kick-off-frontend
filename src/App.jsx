@@ -64,6 +64,7 @@ export default function App() {
 
   const path = location.pathname;
 
+  const { myInformation } = userStore;
   useEffect(() => {
     if (accessToken) {
       userApiService.setAccessToken(accessToken);
@@ -71,8 +72,6 @@ export default function App() {
       userStore.fetchMyInformation();
     }
   }, [accessToken]);
-
-  const { myInformation } = userStore;
 
   return (
     <Container>

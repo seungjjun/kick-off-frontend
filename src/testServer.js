@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { context, rest } from 'msw';
+import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import config from './config';
@@ -106,7 +106,7 @@ const server = setupServer(
     ],
   }))),
 
-  rest.get(`${baseUrl}/board/1/posts`, (req, res, ctx) => res(ctx.json({
+  rest.get(`${baseUrl}/boards/1/posts`, (req, res, ctx) => res(ctx.json({
     posts: {
       posts: [
         {
@@ -223,7 +223,7 @@ const server = setupServer(
     },
   }))),
 
-  rest.get(`${baseUrl}/posts/1/search`, async (req, res, ctx) => res(ctx.json({
+  rest.get(`${baseUrl}/boards/1/posts/search`, async (req, res, ctx) => res(ctx.json({
     posts: {
       posts: [
         {
@@ -333,7 +333,7 @@ const server = setupServer(
     ],
   }))),
 
-  rest.post(`${baseUrl}/comment`, async (req, res, ctx) => {
+  rest.post(`${baseUrl}/comments`, async (req, res, ctx) => {
     const { content, postId, userId } = await req.json();
 
     if (content === '') {
@@ -378,7 +378,7 @@ const server = setupServer(
     ],
   }))),
 
-  rest.post(`${baseUrl}/recomment`, async (req, res, ctx) => {
+  rest.post(`${baseUrl}/recomments`, async (req, res, ctx) => {
     const {
       content, commentId, postId, userId,
     } = await req.json();
@@ -477,69 +477,6 @@ const server = setupServer(
     ],
   }))),
 
-  rest.get(`${baseUrl}/category`, async (req, res, ctx) => res(ctx.json({
-    categories: [
-      {
-        id: 1,
-        name: 'EPL',
-        parentId: 1,
-      },
-    ],
-  }))),
-
-  rest.get(`${baseUrl}/category/3`, async (req, res, ctx) => res(ctx.json({
-    categoryPosts: {
-      categories: {
-        id: 3,
-        name: 'LaLiga',
-      },
-      comments: [
-        {
-          id: 1,
-          content: '1번째 게시글의 댓글',
-          userId: 1,
-          postId: 10,
-          commentDate: '2022-11-01',
-        },
-      ],
-      likes: [
-        {
-          id: 2,
-          postId: 10,
-          userId: 1,
-        },
-      ],
-      posts: [
-        {
-          id: 10,
-          title: '이강인 라리가 베스트 일레븐',
-          categoryId: 3,
-          hit: 10,
-          imageUrl: 'imageUrl',
-          userId: 1,
-        },
-      ],
-      users: [
-        {
-          id: 1,
-          identification: 'Pikachu',
-          name: 'Lee',
-          profileImage: 'profileImage',
-        },
-      ],
-    },
-
-    page: [
-      {
-        currentLastPage: 6,
-        currentPageNumber: 1,
-        lastPage: 6,
-        startPage: 1,
-        totalPageNumber: 11,
-      },
-    ],
-  }))),
-
   rest.get(`${baseUrl}/users`, async (req, res, ctx) => res(ctx.json({
     users: [
       {
@@ -610,7 +547,7 @@ const server = setupServer(
     return res(ctx.status(400));
   }),
 
-  rest.get(`${baseUrl}/application`, async (req, res, ctx) => res(ctx.json({
+  rest.get(`${baseUrl}/applications`, async (req, res, ctx) => res(ctx.json({
     applicationPosts: [
       {
         id: 1,
@@ -624,7 +561,7 @@ const server = setupServer(
     ],
   }))),
 
-  rest.post(`${baseUrl}/application`, async (req, res, ctx) => {
+  rest.post(`${baseUrl}/applications`, async (req, res, ctx) => {
     const { reason, grade, userId } = await req.json();
 
     if (reason === '') {

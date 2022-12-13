@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import CommentModal from './CommentModal';
+
+const Form = styled.form`
+  button {
+    margin-left: .7em;
+    background-color: #FFF;
+    color: #979797;
+  }
+`;
 
 export default function CommentEditForm({
   commentId, initialContent, modifyComment, changeCommentEditState, close, setClose,
@@ -29,7 +38,7 @@ export default function CommentEditForm({
   };
 
   return (
-    <form>
+    <Form>
       <CommentModal
         close={close}
         setClose={setClose}
@@ -41,6 +50,6 @@ export default function CommentEditForm({
       />
       <button type="button" onClick={handleClickModify}>수정완료</button>
       <button type="button" onClick={handleClickCancel}>취소</button>
-    </form>
+    </Form>
   );
 }

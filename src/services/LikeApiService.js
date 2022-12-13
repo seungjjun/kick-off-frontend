@@ -15,7 +15,7 @@ export default class LikeApiService {
   }
 
   async like(postId, userId) {
-    const url = `${baseUrl}/like`;
+    const url = `${baseUrl}/likes`;
     const { data } = await axios.post(url, {
       postId,
       userId,

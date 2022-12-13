@@ -29,5 +29,5 @@ Scenario('로그인 하지 않고 대댓글을 작성할 경우', ({ I }) => {
   I.click('답글쓰기');
 
   // Then
-  I.see('LOGIN');
+  I.see('로그인');
 });

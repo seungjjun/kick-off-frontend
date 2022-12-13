@@ -76,12 +76,16 @@ const UserName = styled.p`
   font-size: 0.7em;
 `;
 
-const Name = styled.span`
+const Name = styled.button`
   font-size: 1em;
   border: none;
   color: #000;
   background-color: #FFF;
   cursor: pointer;
+
+  :hover {
+    background-color: #FFF;
+  }
 `;
 
 const Pagination = styled.div`
