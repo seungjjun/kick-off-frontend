@@ -17,7 +17,7 @@ Scenario('정상적으로 회원가입에 성공할 경우', ({ I }) => {
   I.click('#signup');
 
   // Then
-  I.see('USER LOGIN');
+  I.see('로그인');
 });
 
 Scenario('잘못된 닉네임을 입력한 경우', ({ I }) => {

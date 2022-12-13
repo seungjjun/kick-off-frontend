@@ -43,7 +43,7 @@ export default class CommentApiService {
   }
 
   async createComment(content, postId, userId) {
-    const url = `${baseUrl}/comment`;
+    const url = `${baseUrl}/comments`;
 
     await axios.post(url, {
       content,
@@ -53,7 +53,7 @@ export default class CommentApiService {
   }
 
   async createRecomment(content, commentId, postId, userId) {
-    const url = `${baseUrl}/recomment`;
+    const url = `${baseUrl}/recomments`;
 
     await axios.post(url, {
       content,

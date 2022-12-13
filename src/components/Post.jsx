@@ -7,17 +7,8 @@ const Container = styled.div`
   border: 1px solid #CCC;
 `;
 
-const PostContainer = styled.article`
-  /* display: flex; */
-  /* flex-direction: column; */
+const PostContainer = styled.article`;
   margin: 0 auto;
-`;
-
-const Option = styled.img`
-  /* width: 10em;
-  height: 10em;
-  background-size: contain;
-  background: url('https://user-images.githubusercontent.com/104769120/201584619-e6526904-1907-4690-be3c-6302aa1eea86.png') no-repeat; */
 `;
 
 const MyPostButtons = styled.div`
@@ -62,6 +53,10 @@ const PostDate = styled.p`
 
 const PostContent = styled.div`
   margin: auto;
+
+  div {
+    margin-top: 3em;
+  }
 `;
 
 const PostImage = styled.img`
@@ -117,7 +112,6 @@ export default function Post({
         <p>loading</p>
       ) : (
         <PostContainer>
-          <Option />
           <MyPostButtons>
             {posts.loginUser.identification === posts.user.identification && accessToken ? (
               <>

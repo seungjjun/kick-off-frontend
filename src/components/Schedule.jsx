@@ -50,6 +50,7 @@ const TodayMatch = styled.div`
 `;
 
 const Nothing = styled.p`
+  margin-top: 0.3em;
   font-weight: bold;
 `;
 
@@ -148,7 +149,7 @@ export default function Schedule({
       <TodayMatch>
         <List>
           {games.todayGames.length === 0 ? (
-            <Nothing>오늘 진행되는 경기가 없습니다.</Nothing>
+            <Nothing>금일 진행되는 경기가 없습니다.</Nothing>
           ) : (
             <>
               {games.todayGames.map((game) => (

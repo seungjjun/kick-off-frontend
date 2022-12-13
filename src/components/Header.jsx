@@ -33,18 +33,18 @@ const Title = styled.div`
 `;
 
 const AfterLogin = styled.li`
-  button {
+  button:nth-child(4), button:nth-child(5) {
     margin-right: 1em;
     border: none; 
     border-radius: 1.6em;
-    padding: .8em 2.2em;
+    padding: .8em 2em;
     background-color: #fff;
-    color: #000;
-  }
+    color: #000; 
 
-  button:hover {
+    :hover {
     background-color: #000;
     color: #FFF;
+    }
   }
 `;
 
@@ -57,10 +57,15 @@ const Grade = styled.span`
   color: #FFF;
 `;
 
-const MyPage = styled.span`
+const MyPage = styled.button`
   margin-right: 2em;
   color: #FFF;
+  background-color: #CD2C2C;
   cursor: pointer;
+
+  :hover {
+    background-color: #CD2C2C;
+  }
 `;
 
 const BeforeLogin = styled.div`
@@ -93,10 +98,6 @@ export default function Header({ accessToken, setAccessToken, user }) {
 
   const handleClickMyPage = (name) => {
     navigate(`/users?nickname=${name}`);
-  };
-
-  const handleClickChat = () => {
-    navigate('/room/0');
   };
 
   const handleClickLogo = () => {
@@ -132,13 +133,6 @@ export default function Header({ accessToken, setAccessToken, user }) {
                 onClick={handleClickLogout}
               >
                 로그아웃
-              </button>
-
-              <button
-                type="button"
-                onClick={handleClickChat}
-              >
-                채팅창
               </button>
             </AfterLogin>
           ) : (
