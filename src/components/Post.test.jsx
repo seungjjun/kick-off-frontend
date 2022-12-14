@@ -23,9 +23,7 @@ describe('Post', () => {
       },
 
       board: {
-        boardName: {
-          value: 'SerieA',
-        },
+        boardName: 'SerieA',
       },
 
       user: {

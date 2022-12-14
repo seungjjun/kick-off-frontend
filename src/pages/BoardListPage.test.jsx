@@ -22,38 +22,28 @@ describe('BoardListPage', () => {
     boards = [
       {
         id: 1,
-        boardName: {
-          value: '전체게시판',
-        },
-        parentId: null,
+        boardName: '전체게시판',
+        parentId: 0,
       },
       {
         id: 2,
-        boardName: {
-          value: 'EPL',
-        },
-        parentId: null,
+        boardName: 'EPL',
+        parentId: 0,
       },
       {
         id: 3,
-        boardName: {
-          value: 'LaLiga',
-        },
-        parentId: null,
+        boardName: 'LaLiga',
+        parentId: 0,
       },
       {
         id: 4,
-        boardName: {
-          value: 'SerieA',
-        },
-        parentId: null,
+        boardName: 'SerieA',
+        parentId: 0,
       },
       {
         id: 5,
-        boardName: {
-          value: 'Bundesliga',
-        },
-        parentId: null,
+        boardName: 'Bundesliga',
+        parentId: 0,
       },
     ];
 

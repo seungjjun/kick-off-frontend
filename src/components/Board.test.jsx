@@ -24,9 +24,7 @@ describe('Board', () => {
           boardId: 1,
           hit: 12,
           imageUrl: 'imageUrl',
-          userId: {
-            userId: 1,
-          },
+          userId: 1,
           createdAt: '2022-11-10',
         },
       ],
@@ -34,9 +32,7 @@ describe('Board', () => {
       boards: [
         {
           id: 1,
-          boardName: {
-            value: 'EPL',
-          },
+          boardName: 'EPL',
           parentId: null,
         },
       ],

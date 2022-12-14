@@ -86,9 +86,7 @@ describe('PostPage', () => {
     };
 
     board = {
-      boardName: {
-        value: 'SerieA',
-      },
+      boardName: 'SerieA',
     };
 
     user = {

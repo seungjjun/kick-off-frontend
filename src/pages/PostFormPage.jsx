@@ -33,6 +33,7 @@ export default function PostFormPage({ myInformation }) {
 
   const upload = async (e) => {
     const img = e.target.files[0];
+
     formData.append('multipartFile', img);
 
     await postStore.upload(formData);

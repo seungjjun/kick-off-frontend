@@ -123,7 +123,7 @@ export default function PostForm({
               key={board.id}
               value={board.id}
             >
-              {board.boardName.value}
+              {board.boardName}
             </option>
           ))}
         </Select>

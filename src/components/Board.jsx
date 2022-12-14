@@ -207,16 +207,16 @@ export default function Board({
                     ]
                   </Title>
                   <Category onClick={() => handleClickBoard(post.boardId)}>
-                    {posts.boards.find((board) => board.id === post.boardId).boardName.value}
+                    {posts.boards.find((board) => board.id === post.boardId).boardName}
                   </Category>
                   <UserName>
                     <Name
                       onClick={() => handleClickName(
-                        posts.users.find((user) => user.id === post.userId.userId).name,
+                        posts.users.find((user) => user.id === post.userId).name,
                         post.userId.userId,
                       )}
                     >
-                      {posts.users.find((user) => user.id === post.userId.userId).name}
+                      {posts.users.find((user) => user.id === post.userId).name}
                     </Name>
                     {' '}
                     /
