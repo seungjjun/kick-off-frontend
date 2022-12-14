@@ -124,7 +124,7 @@ export default function PostEditForm({
               key={board.id}
               value={board.id}
             >
-              {board.boardName.value}
+              {board.boardName}
             </option>
           ))}
         </Select>

@@ -124,7 +124,7 @@ export default function Post({
           </MyPostButtons>
           <PostHeader>
             <Category>
-              {posts.board.boardName.value}
+              {posts.board.boardName}
               {' '}
               {'>'}
             </Category>

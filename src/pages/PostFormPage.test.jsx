@@ -47,9 +47,7 @@ describe('PostFormPage', () => {
     boards = [
       {
         id: 1,
-        boardName: {
-          value: '전체 게시판',
-        },
+        boardName: '전체 게시판',
       },
     ];
 

@@ -103,7 +103,7 @@ export default function BoardList({ boardList, changeBoard }) {
       <nav>
         <List>
           {boardList.map((board) => (
-            board.parentId === null ? (
+            board.parentId === 0 ? (
               <Item key={board.id}>
                 <Link
                   to={`/board?id=${board.id}`}
@@ -122,9 +122,9 @@ export default function BoardList({ boardList, changeBoard }) {
                       ) : null
                     )}
                     <LeagueBoardName
-                      onClick={() => handleClickBoard(board.boardName.value)}
+                      onClick={() => handleClickBoard(board.boardName)}
                     >
-                      {board.boardName.value}
+                      {board.boardName}
                     </LeagueBoardName>
                   </LeagueBoard>
                 </Link>
@@ -135,13 +135,13 @@ export default function BoardList({ boardList, changeBoard }) {
                       <div key={teamBoard.id}>
                         <Link
                           to={`/board?id=${teamBoard.id}`}
-                          onClick={() => handleClickBoard(teamBoard.boardName.value)}
+                          onClick={() => handleClickBoard(teamBoard.boardName)}
                         >
                           <TeamBoard>
                             ┖
                             <BoardIcon />
                             <TeamBoardName>
-                              {teamBoard.boardName.value}
+                              {teamBoard.boardName}
                             </TeamBoardName>
                           </TeamBoard>
                         </Link>
@@ -152,13 +152,13 @@ export default function BoardList({ boardList, changeBoard }) {
                                 <Link
                                   key={playerBoard.id}
                                   to={`/board?id=${playerBoard.id}`}
-                                  onClick={() => handleClickBoard(playerBoard.boardName.value)}
+                                  onClick={() => handleClickBoard(playerBoard.boardName)}
                                 >
                                   <PlayerBoard>
                                     ┖
                                     <BoardIcon />
                                     <PlayerBoardName>
-                                      {playerBoard.boardName.value}
+                                      {playerBoard.boardName}
                                     </PlayerBoardName>
                                   </PlayerBoard>
                                 </Link>

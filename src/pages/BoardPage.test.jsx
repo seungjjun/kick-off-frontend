@@ -67,9 +67,7 @@ describe('BoardPage', () => {
           boardId: 1,
           hit: 100,
           imageUrl: 'imageUrl',
-          userId: {
-            userId: 1,
-          },
+          userId: 1,
           createdAt: '2022-11-22',
         },
       ],
@@ -77,9 +75,7 @@ describe('BoardPage', () => {
       boards: [
         {
           id: 1,
-          boardName: {
-            value: '전체게시판',
-          },
+          boardName: '전체게시판',
         },
       ],
 

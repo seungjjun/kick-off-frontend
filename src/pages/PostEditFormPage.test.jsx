@@ -53,25 +53,19 @@ describe('PostEditFormPage', () => {
     boards = [
       {
         id: 1,
-        boardName: {
-          value: '전체 게시판',
-        },
+        boardName: '전체 게시판',
         deleted: false,
       },
 
       {
         id: 2,
-        boardName: {
-          value: 'EPL',
-        },
+        boardName: 'EPL',
         deleted: false,
       },
 
       {
         id: 3,
-        boardName: {
-          value: 'LaLiga',
-        },
+        boardName: 'LaLiga',
         deleted: false,
       },
     ];

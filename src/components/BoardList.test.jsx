@@ -23,18 +23,14 @@ describe('BoardList', () => {
     const boardList = [
       {
         id: 1,
-        boardName: {
-          value: 'K-League',
-        },
-        parentId: null,
+        boardName: 'K-League',
+        parentId: 0,
       },
 
       {
         id: 2,
-        boardName: {
-          value: 'EPL',
-        },
-        parentId: null,
+        boardName: 'EPL',
+        parentId: 0,
       },
     ];
 
