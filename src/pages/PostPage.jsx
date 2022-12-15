@@ -54,11 +54,12 @@ export default function PostPage() {
     commentStore.changeRecommentVisibleState(commentId);
   };
 
-  const submitComment = async (data) => {
+  const submitComment = async (data, receiverId) => {
     await commentStore.createComment(
       data.content,
       postId,
       myId,
+      receiverId,
     );
   };
 

@@ -8,6 +8,8 @@ import { useLocalStorage } from 'usehooks-ts';
 
 import styled from 'styled-components';
 
+import EventSource from 'eventsource';
+
 import { userApiService } from './services/UserApiService';
 
 import GlobalStyle from './styles/GlobalStyle';
@@ -28,6 +30,7 @@ import PostEditFormPage from './pages/PostEditFormPage';
 import BoardListPage from './pages/BoardListPage';
 import SignupPage from './pages/SignUpPage';
 import KaKaoLoginPage from './pages/KaKaoLoginPage';
+import useNotificationStore from './hooks/useNotificationStore';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -58,6 +61,8 @@ const Content = styled.div`
 export default function App() {
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
+  const notificationStore = useNotificationStore();
+
   const userStore = useUserStore();
 
   const location = useLocation();
@@ -70,6 +75,16 @@ export default function App() {
       userApiService.setAccessToken(accessToken);
 
       userStore.fetchMyInformation();
+
+      const sseEvents = new EventSource('http://localhost:8000/connect', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      sseEvents.addEventListener('sse', (event) => {
+        notificationStore.addNotification(event.data);
+      });
     }
   }, [accessToken]);
 
