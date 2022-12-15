@@ -154,6 +154,7 @@ export default function PostForm({
           type="file"
           accept="image/*"
           placeholder="파일 선택"
+          multiple
           id="image"
           onChange={handleChangeImage}
         />

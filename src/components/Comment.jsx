@@ -129,7 +129,7 @@ export default function Comment({
 
   const { register, handleSubmit } = useForm();
 
-  const createComment = (data) => {
+  const createComment = (data, event) => {
     if (!accessToken) {
       navigate('/login');
       return;
@@ -140,7 +140,9 @@ export default function Comment({
       return;
     }
 
-    comments.submitComment(data);
+    comments.submitComment(data, posts.user.id);
+
+    event.target.reset();
   };
 
   const handleClickRecomment = (commentId) => {

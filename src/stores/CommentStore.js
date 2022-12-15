@@ -60,9 +60,9 @@ export default class CommentStore extends Store {
     this.publish();
   }
 
-  async createComment(content, postId, userId) {
+  async createComment(content, postId, userId, receiverId) {
     try {
-      await commentApiService.createComment(content, postId, userId);
+      await commentApiService.createComment(content, postId, userId, receiverId);
 
       await this.fetchComment(postId);
     } catch (e) {

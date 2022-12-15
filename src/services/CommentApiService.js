@@ -42,13 +42,14 @@ export default class CommentApiService {
     return data;
   }
 
-  async createComment(content, postId, userId) {
+  async createComment(content, postId, userId, receiverId) {
     const url = `${baseUrl}/comments`;
 
     await axios.post(url, {
       content,
       postId,
       userId,
+      receiverId,
     });
   }
 
