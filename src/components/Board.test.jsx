@@ -10,6 +10,12 @@ const moveToUserPage = jest.fn();
 
 const context = describe;
 
+jest.mock('react-router-dom', () => ({
+  useNavigate() {
+    return navigate;
+  },
+}));
+
 describe('Board', () => {
   beforeEach(() => {
     const accessToken = 'ACCESS.TOKEN';

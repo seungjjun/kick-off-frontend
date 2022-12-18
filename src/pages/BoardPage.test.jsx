@@ -15,16 +15,20 @@ const searchPosts = jest.fn();
 const changeKeywordType = jest.fn();
 const changeKeyword = jest.fn();
 
+const fetchHotPosts = jest.fn();
+
 const comments = [];
 const recomments = [];
 
 const pageNumber = 0;
 const keyword = '';
 const boardName = '';
+
 let posts = [];
 let location = {};
 let page = {};
 let pageButton = [];
+let hotPosts = [];
 
 jest.mock('react-router-dom', () => ({
   useNavigate() {
@@ -53,6 +57,8 @@ jest.mock('../hooks/useBoardStore', () => () => ({
   changeKeywordType,
   changeKeyword,
   boardName,
+  fetchHotPosts,
+  hotPosts,
 }));
 
 describe('BoardPage', () => {
@@ -109,6 +115,10 @@ describe('BoardPage', () => {
     };
 
     pageButton = [1, 2, 3, 4, 5];
+
+    hotPosts = [
+
+    ];
 
     render(<BoardPage />);
   });

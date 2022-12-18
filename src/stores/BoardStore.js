@@ -11,6 +11,8 @@ export default class BoardStore extends Store {
     this.boardId = 0;
 
     this.posts = {};
+    this.hotPosts = [];
+
     this.page = {};
 
     this.comments = [];
@@ -43,6 +45,23 @@ export default class BoardStore extends Store {
     this.page = data.page;
 
     this.makePage();
+
+    this.publish();
+  }
+
+  async fetchHotPosts() {
+    const data = await boardApiService.fetchHotPosts();
+
+    this.hotPosts = [];
+
+    for (let i = 0; i < data.posts.length; i += 1) {
+      this.hotPosts.push({
+        posts: data.posts[i],
+        commentNumber: data.commentNumber[i],
+        users: data.users[i],
+        boards: data.boards[i],
+      });
+    }
 
     this.publish();
   }

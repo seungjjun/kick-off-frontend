@@ -1,5 +1,6 @@
 /* eslint-disable no-mixed-operators */
 import styled from 'styled-components';
+import HotPosts from './HotPosts';
 import SearchForm from './SearchForm';
 
 const BoardName = styled.h2`
@@ -25,7 +26,7 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-    margin-top: 1em;
+    margin-top: .6em;
 `;
 
 const Nothing = styled.p`
@@ -178,6 +179,7 @@ export default function Board({
           <button type="button" onClick={() => handleClickSchedule(boardName)}>경기일정</button>
         ) : null}
       </SideButtons>
+      <HotPosts accessToken={accessToken} />
       <article>
         {Object.keys(posts).length === 0 || postList.length === 0 ? (
           <Nothing>게시글이 없습니다</Nothing>
