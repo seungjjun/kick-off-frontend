@@ -60,15 +60,18 @@ export default function PostPage() {
       postId,
       myId,
       receiverId,
+      accessToken,
     );
   };
 
-  const submitRecomment = async (data, commentId) => {
+  const submitRecomment = async (data, commentId, receiverId) => {
     await commentStore.createRecomment(
       data.content,
       commentId,
       postId,
       myId,
+      receiverId,
+      accessToken,
     );
   };
 

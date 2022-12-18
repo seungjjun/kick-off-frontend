@@ -352,14 +352,14 @@ export default function Comparison({ predictions }) {
         </TeamName>
         <RecentMatchResult>
           <HomeIcon>
-            {homeRecentMatchResult.map((result) => (
+            {homeRecentMatchResult.map((result, index) => (
               result === 'W' ? (
-                <WinIcon />
+                <WinIcon key={index} />
               )
                 : result === 'D' ? (
-                  <DrawIcon />
+                  <DrawIcon key={index} />
                 ) : (
-                  <LoseIcon />
+                  <LoseIcon key={index} />
                 )
             ))}
           </HomeIcon>
@@ -367,14 +367,14 @@ export default function Comparison({ predictions }) {
             최근경기
           </span>
           <AwayIcon>
-            {awayRecentMatchResult.map((result) => (
+            {awayRecentMatchResult.map((result, index) => (
               result === 'W' ? (
-                <WinIcon />
+                <WinIcon key={index} />
               )
                 : result === 'D' ? (
-                  <DrawIcon />
+                  <DrawIcon key={index} />
                 ) : (
-                  <LoseIcon />
+                  <LoseIcon key={index} />
                 )
             ))}
           </AwayIcon>

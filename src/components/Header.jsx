@@ -1,7 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
+
+import useNotificationStore from '../hooks/useNotificationStore';
+
+import Notification from './Notification';
 
 const HeaderBox = styled.div`
   display: flex;
@@ -33,8 +38,29 @@ const Title = styled.div`
   cursor: pointer;
 `;
 
+const ReadNotificationIcon = styled.div`
+  align-self: center;
+  margin-right: 1.5em;
+  width: 2em;
+  height: 2em;
+  background: url('https://user-images.githubusercontent.com/104769120/208221236-529cc6b9-d34c-4963-8e0d-f69c1acf6b67.png');
+  background-size: cover;
+  cursor: pointer;
+`;
+
+const NotReadNotificationIcon = styled.div`
+  align-self: center;
+  margin-right: 1.5em;
+  width: 2em;
+  height: 2em;
+  background: url('https://user-images.githubusercontent.com/104769120/208224216-c6d8705d-54bf-40cb-ab80-10b2aee948c1.png');
+  background-size: cover;
+  cursor: pointer;
+`;
+
 const AfterLogin = styled.li`
-  button:nth-child(4), button:nth-child(5) {
+  display: flex;
+  button:nth-child(5) {
     margin-right: 1em;
     border: none; 
     border-radius: 1.6em;
@@ -50,10 +76,12 @@ const AfterLogin = styled.li`
 `;
 
 const Nickname = styled.span`
+  align-self: center;
   color: #FFF;
 `;
 
 const Grade = styled.span`
+  align-self: center;
   margin-right: 1.5em;
   color: #FFF;
 `;
@@ -90,6 +118,10 @@ const BeforeLogin = styled.div`
 `;
 
 export default function Header({ accessToken, setAccessToken, user }) {
+  const [close, setClose] = useState(false);
+
+  const notificationStore = useNotificationStore();
+
   const navigate = useNavigate();
 
   const handleClickLogout = () => {
@@ -103,6 +135,12 @@ export default function Header({ accessToken, setAccessToken, user }) {
 
   const handleClickLogo = () => {
     navigate('/');
+  };
+
+  const handleClickNotification = () => {
+    notificationStore.fetchNotification();
+
+    setClose(!close);
   };
 
   if (accessToken && Object.keys(user).length === 0) {
@@ -129,6 +167,17 @@ export default function Header({ accessToken, setAccessToken, user }) {
               >
                 내 정보
               </MyPage>
+              {notificationStore.isCheckNotification ? (
+                <NotReadNotificationIcon
+                  type="button"
+                  onClick={handleClickNotification}
+                />
+              ) : (
+                <ReadNotificationIcon
+                  type="button"
+                  onClick={handleClickNotification}
+                />
+              )}
               <button
                 type="button"
                 onClick={handleClickLogout}
@@ -148,6 +197,10 @@ export default function Header({ accessToken, setAccessToken, user }) {
           )}
         </List>
       </Content>
+      <Notification
+        close={close}
+        setClose={setClose}
+      />
     </HeaderBox>
   );
 }

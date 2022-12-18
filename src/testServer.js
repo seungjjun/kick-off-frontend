@@ -598,6 +598,91 @@ const server = setupServer(
       }),
     );
   }),
+
+  rest.get(`${baseUrl}/notifications`, async (req, res, ctx) => {
+    const accessToken = req.headers.get('Authorization')
+      .substring('bearer '.length);
+
+    if (accessToken === 'jel1y') {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          notifications: [
+            {
+              id: 1,
+              content: '흥민존',
+              postId: 1,
+              read: false,
+              sender: '손흥민',
+              createdAt: '2022-12-17',
+            },
+          ],
+        }),
+      );
+    }
+
+    return res(ctx.status(400));
+  }),
+
+  rest.patch(`${baseUrl}/notifications/:notificationId`, async (req, res, ctx) => {
+    const { notificationId } = req.params;
+
+    if (notificationId === '1') {
+      return res(ctx.status(204));
+    }
+
+    return res(ctx.status(400));
+  }),
+
+  rest.get(`${baseUrl}/notification`, async (req, res, ctx) => {
+    const accessToken = req.headers.get('Authorization')
+      .substring('bearer '.length);
+
+    if (accessToken === 'jel1y') {
+      return res(
+        ctx.status(200),
+        ctx.json(true),
+      );
+    }
+
+    return res(ctx.status(400));
+  }),
+
+  rest.delete(`${baseUrl}/notifications/:notificationId`, async (req, res, ctx) => {
+    const { notificationId } = req.params;
+
+    if (notificationId === '1') {
+      return res(ctx.status(204));
+    }
+
+    return res(ctx.status(400));
+  }),
+
+  rest.delete(`${baseUrl}/notifications`, async (req, res, ctx) => {
+    const accessToken = req.headers.get('Authorization')
+      .substring('bearer '.length);
+
+    if (accessToken === 'jel1y') {
+      return res(
+        ctx.status(204),
+      );
+    }
+
+    return res(ctx.status(400));
+  }),
+
+  rest.delete(`${baseUrl}/notifications/read`, async (req, res, ctx) => {
+    const accessToken = req.headers.get('Authorization')
+      .substring('bearer '.length);
+
+    if (accessToken === 'jel1y') {
+      return res(
+        ctx.status(204),
+      );
+    }
+
+    return res(ctx.status(400));
+  }),
 );
 
 export default server;

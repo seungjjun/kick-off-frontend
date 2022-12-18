@@ -252,6 +252,7 @@ export default function Comment({
                     commentId={comment.id}
                     userName={posts.userName}
                     content={comment.content}
+                    receiverId={posts.user.id}
                   />
                 ) : null}
               </li>

@@ -42,26 +42,43 @@ export default class CommentApiService {
     return data;
   }
 
-  async createComment(content, postId, userId, receiverId) {
+  async createComment(content, postId, userId, receiverId, accessToken) {
     const url = `${baseUrl}/comments`;
 
-    await axios.post(url, {
-      content,
-      postId,
-      userId,
-      receiverId,
-    });
+    await axios.post(
+      url,
+      {
+        content,
+        postId,
+        userId,
+        receiverId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
   }
 
-  async createRecomment(content, commentId, postId, userId) {
+  async createRecomment(content, commentId, postId, userId, receiverId, accessToken) {
     const url = `${baseUrl}/recomments`;
 
-    await axios.post(url, {
-      content,
-      commentId,
-      postId,
-      userId,
-    });
+    await axios.post(
+      url,
+      {
+        content,
+        commentId,
+        postId,
+        userId,
+        receiverId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
   }
 
   async modifyComment(content, commentId) {

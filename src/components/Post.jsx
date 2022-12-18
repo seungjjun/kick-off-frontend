@@ -7,7 +7,7 @@ const Container = styled.div`
   border: 1px solid #CCC;
 `;
 
-const PostContainer = styled.article`;
+const PostContainer = styled.article`
   margin: 0 auto;
 `;
 
