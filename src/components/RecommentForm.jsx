@@ -34,12 +34,12 @@ const RecoomentContent = styled.div`
 `;
 
 export default function RecommentForm({
-  changeRecommentFormState, submitRecomment, commentId, userName,
+  changeRecommentFormState, submitRecomment, commentId, userName, receiverId,
 }) {
   const { register, handleSubmit } = useForm();
 
   const createRecomment = (data) => {
-    submitRecomment(data, commentId);
+    submitRecomment(data, commentId, receiverId);
 
     changeRecommentFormState();
   };

@@ -30,7 +30,9 @@ import PostEditFormPage from './pages/PostEditFormPage';
 import BoardListPage from './pages/BoardListPage';
 import SignupPage from './pages/SignUpPage';
 import KaKaoLoginPage from './pages/KaKaoLoginPage';
+
 import useNotificationStore from './hooks/useNotificationStore';
+import { notificationApiService } from './services/NotificationApiService';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -70,11 +72,14 @@ export default function App() {
   const path = location.pathname;
 
   const { myInformation } = userStore;
+
   useEffect(() => {
     if (accessToken) {
       userApiService.setAccessToken(accessToken);
+      notificationApiService.setAccessToken(accessToken);
 
       userStore.fetchMyInformation();
+      notificationStore.checkNotification();
 
       const sseEvents = new EventSource('http://localhost:8000/connect', {
         headers: {
@@ -83,7 +88,8 @@ export default function App() {
       });
 
       sseEvents.addEventListener('sse', (event) => {
-        notificationStore.addNotification(event.data);
+        notificationStore.addNotification(JSON.parse(event.data));
+        notificationStore.checkNotification();
       });
     }
   }, [accessToken]);

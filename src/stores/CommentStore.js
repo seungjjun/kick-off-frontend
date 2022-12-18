@@ -60,9 +60,9 @@ export default class CommentStore extends Store {
     this.publish();
   }
 
-  async createComment(content, postId, userId, receiverId) {
+  async createComment(content, postId, userId, receiverId, accessToken) {
     try {
-      await commentApiService.createComment(content, postId, userId, receiverId);
+      await commentApiService.createComment(content, postId, userId, receiverId, accessToken);
 
       await this.fetchComment(postId);
     } catch (e) {
@@ -72,9 +72,9 @@ export default class CommentStore extends Store {
     }
   }
 
-  async createRecomment(content, commentId, postId, userId) {
+  async createRecomment(content, commentId, postId, userId, receiverId, accessToken) {
     try {
-      await commentApiService.createRecomment(content, commentId, postId, userId);
+      await commentApiService.createRecomment(content, commentId, postId, userId, receiverId, accessToken);
 
       await this.fetchRecomment(postId);
     } catch (e) {
