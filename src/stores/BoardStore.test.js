@@ -57,6 +57,20 @@ describe('BoardStore', () => {
     });
   });
 
+  describe('hotPosts', () => {
+    context('인기 게시글을 불러오는 경우', () => {
+      it('조회수가 가장 높은 게시글 3개를 확인할 수 있다.', async () => {
+        await boardStore.fetchHotPosts();
+
+        const { hotPosts } = boardStore;
+
+        expect(hotPosts[0].posts.postInformation.title).toBe('인기 게시글');
+        expect(hotPosts[1].posts.postInformation.title).toBe('손흥민 득점왕');
+        expect(hotPosts[2].posts.postInformation.title).toBe('벤투 떠난다..');
+      });
+    });
+  });
+
   describe('searchPosts', () => {
     context('게시글을 제목을 기준으로 검색할 경우', () => {
       it('검색한 게시글을 확인할 수 있다', async () => {

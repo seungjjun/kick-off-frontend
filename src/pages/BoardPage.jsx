@@ -38,6 +38,7 @@ export default function BoardPage() {
     if (!keyword) {
       boardStore.changePageNumber(pageNumber);
       boardStore.fetchPosts(pageNumber, boardId);
+      boardStore.fetchHotPosts();
     }
 
     if (keyword) {

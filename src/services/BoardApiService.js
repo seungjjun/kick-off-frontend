@@ -26,6 +26,14 @@ export default class BoardApiService {
     return data;
   }
 
+  async fetchHotPosts() {
+    const url = `${baseUrl}/boards/posts/hot`;
+
+    const { data } = await axios.get(url);
+
+    return data;
+  }
+
   async searchPosts({
     keyword, keywordType, boardId = 1, pageNumber = 0,
   }) {

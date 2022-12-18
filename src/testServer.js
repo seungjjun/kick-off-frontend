@@ -189,14 +189,64 @@ const server = setupServer(
     ],
   }))),
 
-  rest.post(`${baseUrl}/post`, async (req, res, ctx) => {
-    const {
-      title, content, categoryId, image, userId,
-    } = await req.json();
-    return res(ctx.json({
-      id: 5,
-    }));
-  }),
+  rest.get(`${baseUrl}/boards/posts/hot`, async (req, res, ctx) => res(ctx.json({
+    posts: [
+      {
+        id: 1,
+        postInformation: {
+          title: '인기 게시글',
+        },
+        hit: 100,
+      },
+      {
+        id: 2,
+        postInformation: {
+          title: '손흥민 득점왕',
+        },
+        hit: 70,
+      },
+      {
+        id: 3,
+        postInformation: {
+          title: '벤투 떠난다..',
+        },
+        hit: 40,
+      },
+    ],
+    commentNumber: [6, 4, 1],
+    users: [
+      {
+        id: 1,
+        name: '손흥민',
+      },
+      {
+        id: 2,
+        name: '손흥민',
+      },
+      {
+        id: 3,
+        name: '손흥민',
+      },
+    ],
+    boards: [
+      {
+        id: 1,
+        boardName: 'EPL',
+      },
+      {
+        id: 2,
+        boardName: 'EPL',
+      },
+      {
+        id: 3,
+        boardName: 'EPL',
+      },
+    ],
+  }))),
+
+  rest.post(`${baseUrl}/post`, async (req, res, ctx) => res(ctx.json({
+    id: 5,
+  }))),
 
   rest.get(`${baseUrl}/posts/1`, async (req, res, ctx) => res(ctx.json({
     post: {
