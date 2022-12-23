@@ -18,13 +18,8 @@ const Form = styled.form`
 
   input[type="file"] {
     position: absolute;
-  /* width: 1px; */
-  /* height: 1px; */
-  /* padding: 0; */
-  /* margin: -1px; */
-  /* overflow: hidden; */
-  clip:rect(0,0,0,0);
-  border: 0;
+    clip:rect(0,0,0,0);
+    border: 0;
   }
 `;
 
@@ -40,7 +35,7 @@ const NameBox = styled.div`
 
   button {
     margin-top: 0.6em;
-    padding: 0.3em 0;
+    padding: 0.3em 1.7em;
   }
 `;
 
@@ -77,8 +72,7 @@ const BasicProfileImage = styled.div`
 
 const CancelButtonBox = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
 const EditCancel = styled.button`
@@ -144,12 +138,16 @@ export default function UserProfileEditForm({ edits, myInformation }) {
           ) : (
             null
           )}
-          <button type="submit">수정완료</button>
+          <CancelButtonBox>
+            <button type="submit">수정완료</button>
+
+            <EditCancel type="button" onClick={handleChangeEditState}>수정취소</EditCancel>
+          </CancelButtonBox>
         </NameBox>
       </Form>
-      <CancelButtonBox>
+      {/* <CancelButtonBox>
         <EditCancel type="button" onClick={handleChangeEditState}>수정취소</EditCancel>
-      </CancelButtonBox>
+      </CancelButtonBox> */}
     </Container>
   );
 }

@@ -33,8 +33,8 @@ const SearchButton = styled.button`
 export default function SearchForm({ submit, changeKeywordType }) {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = async (data) => {
-    submit(data);
+  const onSubmit = async (data, event) => {
+    submit(data, event);
   };
 
   const handleChange = (target) => {

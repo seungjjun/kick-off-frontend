@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import useBoardStore from '../hooks/useBoardStore';
+
 import useNotificationStore from '../hooks/useNotificationStore';
 
 import Notification from './Notification';
@@ -121,6 +123,7 @@ export default function Header({ accessToken, setAccessToken, user }) {
   const [close, setClose] = useState(false);
 
   const notificationStore = useNotificationStore();
+  const boardStore = useBoardStore();
 
   const navigate = useNavigate();
 
@@ -134,6 +137,8 @@ export default function Header({ accessToken, setAccessToken, user }) {
   };
 
   const handleClickLogo = () => {
+    boardStore.setKeyword();
+
     navigate('/');
   };
 

@@ -42,8 +42,11 @@ export default function ChattingRoomPage({ myInformation }) {
         const { message } = content;
         const { name } = content;
         const { writer } = content;
+        const { enter } = content;
 
-        setChatMessages((chatMessages) => [...chatMessages, { message, name, writer }]);
+        setChatMessages((chatMessages) => [...chatMessages, {
+          message, name, writer, enter,
+        }]);
       });
 
       stompClient.current.send(
@@ -71,8 +74,7 @@ export default function ChattingRoomPage({ myInformation }) {
       { Authorization: `Bearer ${accessToken}` }
       , JSON.stringify({
         roomId: gameId,
-        writer:
-        myInformation.user.name,
+        writer: myInformation.user.name,
         message,
       }),
     );
