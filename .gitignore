@@ -130,6 +130,3 @@ dist
 .pnp.*
 
 output/
-
-# api
-ScheduleApiService.js

@@ -17,15 +17,16 @@ const HotPost = styled.li`
 const ImageBox = styled.div`
   display: inline;
   float: left;
+  margin-right: .7em;
   cursor: pointer;
 `;
 
-const HotImageIcon = styled.div`
-  width: 2em;
-  height: 2em;
-  background: url('https://user-images.githubusercontent.com/104769120/208288009-b8202005-c2af-4a4a-b720-5e2f604b8bca.png');
-  background-size: cover;
-  margin-right: .7em;
+const HotPostIcon = styled.p`
+  padding: .4em .6em;
+  border: 1px solid #FF8B8B;
+  border-radius: 5px;
+  background-color: #FF8B8B;
+  color: #FFDEDE;
 `;
 
 const ContentBox = styled.div`
@@ -33,6 +34,9 @@ const ContentBox = styled.div`
   flex-direction: column;
   height: 2.35em;
 
+  p:first-child {
+    cursor: pointer;
+  }
 `;
 
 const BoardName = styled.span`
@@ -81,7 +85,7 @@ export default function HotPosts({ accessToken }) {
         {hotPosts.map((hotPost) => (
           <HotPost key={hotPost.posts.id}>
             <ImageBox>
-              <HotImageIcon onClick={() => handleClickPost(hotPost.posts.id)} />
+              <HotPostIcon onClick={() => handleClickPost(hotPost.posts.id)}>인기</HotPostIcon>
             </ImageBox>
             <ContentBox>
               <p onClick={() => handleClickPost(hotPost.posts.id)}>

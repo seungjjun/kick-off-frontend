@@ -21,7 +21,7 @@ export default class ScheduleStore extends Store {
 
     const data = await scheduleApiService.fetchTodaySchedule(today, this.leagueId);
 
-    this.schedule = data.response;
+    this.schedule = data;
 
     this.todayGames = [...this.schedule];
 
@@ -33,7 +33,7 @@ export default class ScheduleStore extends Store {
 
     const data = await scheduleApiService.fetchPeriodSchedule(startYear, from, to, this.leagueId);
 
-    this.schedule = data.response;
+    this.schedule = data;
 
     this.periodGames = [...this.schedule];
 
@@ -43,7 +43,7 @@ export default class ScheduleStore extends Store {
   async fetchMatchInformation(gameId) {
     const data = await scheduleApiService.fetchMatchInformation(gameId);
 
-    this.predictionsMatch = data.response;
+    this.predictionsMatch = data;
 
     this.publish();
   }

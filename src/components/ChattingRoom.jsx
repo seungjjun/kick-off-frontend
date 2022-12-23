@@ -143,7 +143,7 @@ export default function ChattingRoom({
           <Chatting>
             <List>
               {chatMessages.map((chatMessage, index) => (
-                chatMessage.name === nickname && chatMessage.message !== `${chatMessage.writer}님이 채팅방에 입장하였습니다.` ? (
+                chatMessage.name === nickname && !chatMessage.enter ? (
                   <MyChat ref={messages} key={index}>
                     <p>
                       {chatMessage.name}
@@ -152,7 +152,7 @@ export default function ChattingRoom({
                       {chatMessage.message}
                     </p>
                   </MyChat>
-                ) : chatMessage.message === `${chatMessage.writer}님이 채팅방에 입장하였습니다.` ? (
+                ) : chatMessage.enter ? (
                   <EnterChat ref={messages} key={index}>
                     {chatMessage.message}
                   </EnterChat>

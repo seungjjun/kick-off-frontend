@@ -62,8 +62,9 @@ export default function BoardPage() {
     boardStore.changeKeywordType(type);
   };
 
-  const submit = async (data) => {
+  const submit = async (data, event) => {
     const { keyword } = data;
+
     boardStore.changeKeyword(keyword);
 
     navigate(`/board?id=${boardId}&keyword=${keyword}&page=1`);
@@ -71,6 +72,8 @@ export default function BoardPage() {
     await boardStore.searchPosts({
       keyword, boardId, pageNumber: 0,
     });
+
+    event.target.reset();
   };
 
   const nextPage = () => {
