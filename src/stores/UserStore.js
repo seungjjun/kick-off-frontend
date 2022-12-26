@@ -75,6 +75,8 @@ export default class UserStore extends Store {
     try {
       await userApiService.updateProfile(userId, name, image);
 
+      this.fetchMyInformation();
+
       this.editState = '';
     } catch (e) {
       const { message } = e.response.data;

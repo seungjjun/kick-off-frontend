@@ -31,7 +31,7 @@ export default function ChattingRoomPage({ myInformation }) {
   const stompClient = useRef({});
 
   useEffect(() => {
-    const sockJs = new SockJs('http://localhost:8000/stomp/chat');
+    const sockJs = new SockJs('http://localhost:8080/stomp/chat');
 
     stompClient.current = Stomp.over(sockJs);
 

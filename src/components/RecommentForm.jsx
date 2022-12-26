@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Form = styled.form`
   display: flex;
   margin-top: 1em;
+  margin-bottom: .6em;
 
   button {
     color: #979797;
