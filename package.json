@@ -2,14 +2,14 @@
     "name": "kick-off-frontend",
     "version": "1.0.0",
     "description": "kick off Front-end application",
-    "main": "index.js",
     "scripts": {
         "start": "parcel index.html --port 8080",
         "test": "jest",
         "watch:test": "npm test -- --watchAll",
         "codeceptjs": "codeceptjs run --steps",
         "codeceptjs:headless": "HEADLESS=true codeceptjs run --steps",
-        "codeceptjs:ui": "codecept-ui --app"
+        "codeceptjs:ui": "codecept-ui --app",
+        "build": "parcel build index.html"
     },
     "repository": {
         "type": "git",
@@ -21,7 +21,7 @@
     "bugs": {
         "url": "https://github.com/seungjjun/kick-off-frontend/issues"
     },
-    "homepage": "https://github.com/seungjjun/kick-off-frontend#readme",
+    "homepage": "https://github.com/seungjjun/kick-off-frontend",
     "devDependencies": {
         "@codeceptjs/configure": "^0.10.0",
         "@codeceptjs/examples": "^1.2.1",
