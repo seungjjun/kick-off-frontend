@@ -14,7 +14,7 @@ const accessToken = JSON.parse(data);
 userApiService.setAccessToken(accessToken);
 
 root.render((
-  <BrowserRouter>
+  <BrowserRouter basename="/kick-off-frontend">
     <App />
   </BrowserRouter>
 ));
