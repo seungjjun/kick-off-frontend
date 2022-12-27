@@ -12,6 +12,10 @@ import useScheduleStore from '../hooks/useScheduleStore';
 
 import ChattingRoom from '../components/ChattingRoom';
 
+import config from '../config';
+
+const baseUrl = config.apiBaseUrl;
+
 export default function ChattingRoomPage({ myInformation }) {
   const [accessToken] = useLocalStorage('accessToken', '');
 
@@ -31,7 +35,7 @@ export default function ChattingRoomPage({ myInformation }) {
   const stompClient = useRef({});
 
   useEffect(() => {
-    const sockJs = new SockJs('http://localhost:8000/stomp/chat');
+    const sockJs = new SockJs(`${baseUrl}/stomp/chat`);
 
     stompClient.current = Stomp.over(sockJs);
 
