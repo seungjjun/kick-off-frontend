@@ -12,6 +12,8 @@ import EventSource from 'eventsource';
 
 import { userApiService } from './services/UserApiService';
 
+import { notificationApiService } from './services/NotificationApiService';
+
 import GlobalStyle from './styles/GlobalStyle';
 
 import useUserStore from './hooks/useUserStore';
@@ -32,7 +34,10 @@ import SignupPage from './pages/SignUpPage';
 import KaKaoLoginPage from './pages/KaKaoLoginPage';
 
 import useNotificationStore from './hooks/useNotificationStore';
-import { notificationApiService } from './services/NotificationApiService';
+
+import config from './config';
+
+const baseUrl = config.apiBaseUrl;
 
 const Container = styled.div`
   margin: 0 auto;
@@ -81,7 +86,7 @@ export default function App() {
       userStore.fetchMyInformation();
       notificationStore.checkNotification();
 
-      const sseEvents = new EventSource('http://localhost:8000/connect', {
+      const sseEvents = new EventSource(`${baseUrl}/connect`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
