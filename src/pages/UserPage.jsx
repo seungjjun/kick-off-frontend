@@ -34,7 +34,9 @@ export default function UserPage() {
 
   const path = location.search;
 
-  const userName = path.split('=')[1];
+  const decodeUri = decodeURI(path);
+
+  const userName = decodeUri.split('=')[1];
 
   useEffect(() => {
     userStore.fetchUser(userName);

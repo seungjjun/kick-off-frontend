@@ -42,6 +42,8 @@ export default class BoardStore extends Store {
     this.comments = data.posts.comments;
     this.recomments = data.posts.reComments;
 
+    this.boardName = data.posts.boardName;
+
     this.page = data.page;
 
     this.makePage();
