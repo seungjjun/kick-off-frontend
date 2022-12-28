@@ -21,7 +21,7 @@
     "bugs": {
         "url": "https://github.com/seungjjun/kick-off-frontend/issues"
     },
-    "homepage": "https://github.com/seungjjun/kick-off-frontend/",
+    "homepage": "https://seungjjun.github.io/kick-off-frontend",
     "devDependencies": {
         "@codeceptjs/configure": "^0.10.0",
         "@codeceptjs/examples": "^1.2.1",
