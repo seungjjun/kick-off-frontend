@@ -17,6 +17,8 @@ export default class UserStore extends Store {
     this.profileImage = '';
     this.gradeName = '';
 
+    this.bucket = 0;
+
     this.componentState = '';
 
     this.loginState = '';
@@ -58,7 +60,6 @@ export default class UserStore extends Store {
       const { message } = e.response.data;
 
       this.changeLoginState('fail', { errorMessage: message });
-      return '';
     }
   }
 
@@ -118,6 +119,14 @@ export default class UserStore extends Store {
     const imageUrl = await userApiService.upload(formData);
 
     this.imageUrl = imageUrl;
+
+    this.publish();
+  }
+
+  async createBucket() {
+    const bucket = await userApiService.createBucket();
+
+    this.bucket = bucket.availableTokens;
 
     this.publish();
   }

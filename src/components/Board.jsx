@@ -1,6 +1,8 @@
 /* eslint-disable no-mixed-operators */
+import { useState } from 'react';
 import styled from 'styled-components';
 import HotPosts from './HotPosts';
+import ScheduleModal from './ScheduleModal';
 import SearchForm from './SearchForm';
 
 const BoardName = styled.h2`
@@ -124,6 +126,8 @@ export default function Board({
   accessToken, boardName, boardId, posts, navigate, commentNumber, recommentNumber,
   pagination, submit, changeKeywordType, moveToUserPage,
 }) {
+  const [close, setClose] = useState(false);
+
   const postList = posts.posts;
 
   const handleClickPost = (id) => {
@@ -139,8 +143,12 @@ export default function Board({
     navigate('/write');
   };
 
-  const handleClickSchedule = (boardName) => {
-    navigate(`/schedule/${boardName}`);
+  const handleClickSchedule = () => {
+    if (!accessToken) {
+      navigate('/login');
+    }
+
+    setClose(true);
   };
 
   const handleClickPage = (event) => {
@@ -176,9 +184,14 @@ export default function Board({
       <SideButtons>
         <button type="button" onClick={handleClickWrite}>글쓰기</button>
         {boardId === '2' || boardId === '3' || boardId === '4' || boardId === '5' && boardId !== undefined ? (
-          <button type="button" onClick={() => handleClickSchedule(boardName)}>경기일정</button>
+          <button type="button" onClick={handleClickSchedule}>경기일정</button>
         ) : null}
       </SideButtons>
+      <ScheduleModal
+        close={close}
+        setClose={setClose}
+        boardName={boardName}
+      />
       <HotPosts accessToken={accessToken} />
       <article>
         {Object.keys(posts).length === 0 || postList.length === 0 ? (

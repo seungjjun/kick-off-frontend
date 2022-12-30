@@ -28,6 +28,8 @@ export default function LoginFormPage() {
       setAccessToken(accessToken);
       userApiService.setAccessToken(accessToken);
 
+      userStore.createBucket();
+
       navigate('/');
     }
   };

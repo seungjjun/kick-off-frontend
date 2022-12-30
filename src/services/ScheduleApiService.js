@@ -6,10 +6,14 @@ import config from '../config';
 const baseUrl = config.apiBaseUrl;
 
 export default class ScheduleApiService {
-  async fetchTodaySchedule(today, leagueId) {
+  async fetchTodaySchedule(today, leagueId, accessToken) {
     const url = `${baseUrl}/schedule/today/${leagueId}`;
 
     const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+
       params: {
         today,
       },
@@ -18,10 +22,14 @@ export default class ScheduleApiService {
     return data.response;
   }
 
-  async fetchPeriodSchedule(startYear, from, to, leagueId) {
+  async fetchPeriodSchedule(startYear, from, to, leagueId, accessToken) {
     const url = `${baseUrl}/schedule/period/${leagueId}`;
 
     const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+
       params: {
         startYear,
         from,
