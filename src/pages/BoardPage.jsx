@@ -8,6 +8,7 @@ import { useLocalStorage } from 'usehooks-ts';
 import Board from '../components/Board';
 
 import useBoardStore from '../hooks/useBoardStore';
+import useUserStore from '../hooks/useUserStore';
 
 export default function BoardPage() {
   const [accessToken] = useLocalStorage('accessToken', '');
@@ -28,6 +29,8 @@ export default function BoardPage() {
 
   const boardStore = useBoardStore();
 
+  const userStore = useUserStore();
+
   const navigate = useNavigate();
 
   const { pageNumber } = boardStore;
@@ -43,6 +46,10 @@ export default function BoardPage() {
 
     if (keyword) {
       boardStore.searchPosts({ keyword, boardId, pageNumber });
+    }
+
+    if (accessToken) {
+      userStore.fetchMyInformation();
     }
 
     boardStore.makePage();

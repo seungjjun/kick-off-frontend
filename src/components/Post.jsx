@@ -143,7 +143,9 @@ export default function Post({
             </div>
           </PostHeader>
           <PostContent>
-            {posts.post.postInformation.content}
+            <pre>
+              {posts.post.postInformation.content}
+            </pre>
             <div>
               {posts.post.imageUrl ? <PostImage src={posts.post.imageUrl} alt="uploadImage" />
                 : null}

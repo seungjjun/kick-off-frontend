@@ -69,6 +69,9 @@ export default class UserStore extends Store {
     this.myInformation = data.myInformation;
 
     this.user = data.myInformation.user;
+
+    this.bucket = this.user.bucket;
+
     this.publish();
   }
 
@@ -119,14 +122,6 @@ export default class UserStore extends Store {
     const imageUrl = await userApiService.upload(formData);
 
     this.imageUrl = imageUrl;
-
-    this.publish();
-  }
-
-  async createBucket() {
-    const bucket = await userApiService.createBucket();
-
-    this.bucket = bucket.availableTokens;
 
     this.publish();
   }
