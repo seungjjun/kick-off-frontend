@@ -98,6 +98,18 @@ export default class UserApiService {
 
     return data;
   }
+
+  async createBucket() {
+    const url = `${baseUrl}/bucket`;
+
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data;
+  }
 }
 
 export const userApiService = new UserApiService();

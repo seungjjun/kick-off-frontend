@@ -24,11 +24,9 @@ const MyPostButtons = styled.div`
 `;
 
 const PostUpdateButton = styled.button`
-  /* background-color: #FFF; */
 `;
 
 const PostDeleteButton = styled.button`
-  /* background-color: #FFF; */
 `;
 
 const PostHeader = styled.div`

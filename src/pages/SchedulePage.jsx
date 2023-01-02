@@ -33,7 +33,7 @@ export default function SchedulePage({ accessToken }) {
   const today = `${todayMonth}` + '-' + `${todayDay}`;
 
   useEffect(() => {
-    scheduleStore.fetchTodaySchedule(today, leagueName);
+    scheduleStore.fetchTodaySchedule(today, leagueName, accessToken);
     scheduleStore.setPeriodGames();
   }, []);
 
@@ -49,7 +49,7 @@ export default function SchedulePage({ accessToken }) {
     const from = `${startYear}-${startMonth}-${startDay}`;
     const to = `${endYear}-${endMonth}-${endDay}`;
 
-    scheduleStore.fetchPeriodSchedule(startYear, from, to, leagueName);
+    scheduleStore.fetchPeriodSchedule(startYear, from, to, leagueName, accessToken);
   };
 
   const compare = async (gameId) => {
