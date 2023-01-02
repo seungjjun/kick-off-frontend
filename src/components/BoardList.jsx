@@ -94,8 +94,8 @@ const LevelUpBoard = styled.p`
 `;
 
 export default function BoardList({ boardList, changeBoard }) {
-  const handleClickBoard = (boardName) => {
-    changeBoard(boardName);
+  const handleClickBoard = (boardName, boardId) => {
+    changeBoard(boardName, boardId);
   };
 
   return (
@@ -122,7 +122,7 @@ export default function BoardList({ boardList, changeBoard }) {
                       ) : null
                     )}
                     <LeagueBoardName
-                      onClick={() => handleClickBoard(board.boardName)}
+                      onClick={() => handleClickBoard(board.boardName, board.id)}
                     >
                       {board.boardName}
                     </LeagueBoardName>

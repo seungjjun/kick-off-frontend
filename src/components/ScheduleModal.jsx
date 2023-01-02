@@ -2,6 +2,7 @@ import ReactModal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
+import useBoardStore from '../hooks/useBoardStore';
 import useUserStore from '../hooks/useUserStore';
 
 const modalStyle = {
@@ -45,12 +46,20 @@ const RefuseButton = styled.button`
   color: #FFF;
 `;
 
+const BackButton = styled.button`
+  width: 50%;
+  height: 20%;
+  color: #FFF;
+`;
+
 export default function ScheduleModal({ close, setClose, boardName }) {
   const navigate = useNavigate();
 
   const userStore = useUserStore();
 
-  const { bucket } = userStore.user;
+  const boardStore = useBoardStore();
+
+  const { bucket } = userStore;
 
   const handleClickAccept = () => {
     setClose(false);
@@ -62,6 +71,12 @@ export default function ScheduleModal({ close, setClose, boardName }) {
     setClose(false);
   };
 
+  const handleClickBack = () => {
+    setClose(false);
+
+    navigate(`/board?id=${boardStore.boardId}`);
+  };
+
   return (
     <ReactModal
       isOpen={close}
@@ -69,17 +84,26 @@ export default function ScheduleModal({ close, setClose, boardName }) {
       style={modalStyle}
       ariaHideApp={false}
     >
-      <Bucket>
-        이용 가능 횟수
-        {' '}
-        {bucket}
-      </Bucket>
-      <p>경기일정을 확인하겠습니까?</p>
-      <p>(이용 횟수가 1회 차감됩니다.)</p>
-      <Buttons>
-        <AcceptButton type="button" onClick={handleClickAccept}>네</AcceptButton>
-        <RefuseButton type="button" onClick={handleClickRefuse}>아니오</RefuseButton>
-      </Buttons>
+      {bucket === 0 ? (
+        <>
+          <p>이용 횟수를 초과하였습니다.</p>
+          <BackButton type="button" onClick={handleClickBack}>뒤로가기</BackButton>
+        </>
+      ) : (
+        <>
+          <Bucket>
+            이용 가능 횟수
+            {' '}
+            {bucket}
+          </Bucket>
+          <p>경기일정을 확인하겠습니까?</p>
+          <p>(이용 횟수가 1회 차감됩니다.)</p>
+          <Buttons>
+            <AcceptButton type="button" onClick={handleClickAccept}>네</AcceptButton>
+            <RefuseButton type="button" onClick={handleClickRefuse}>아니오</RefuseButton>
+          </Buttons>
+        </>
+      )}
     </ReactModal>
   );
 }

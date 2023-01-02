@@ -26,7 +26,7 @@ export default function SchedulePage({ accessToken }) {
     ? date.toString().padStart(2, '0')
     : date.toString());
 
-  const todayDay = fillZero(todayDate.getDate());
+  const todayDay = fillZero(todayDate.getDate() + 1);
 
   const todayMonth = fillZero(todayDate.getMonth() + 1);
 

@@ -28,6 +28,8 @@ export default class ScheduleStore extends Store {
       this.schedule = data;
 
       this.todayGames = [...this.schedule];
+
+      this.publish();
     } catch (e) {
       const { message } = e.response.data;
 
@@ -45,6 +47,8 @@ export default class ScheduleStore extends Store {
       this.schedule = data;
 
       this.periodGames = [...this.schedule];
+
+      this.publish();
     } catch (e) {
       const { message } = e.response.data;
 

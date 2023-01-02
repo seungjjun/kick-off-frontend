@@ -11,8 +11,10 @@ export default function BoardListPage() {
     boardStore.fetchBoards();
   }, []);
 
-  const changeBoard = (boardName) => {
+  const changeBoard = (boardName, boardId) => {
     boardStore.setKeyword(boardName);
+
+    boardStore.changeBoard(boardId);
   };
 
   return (
