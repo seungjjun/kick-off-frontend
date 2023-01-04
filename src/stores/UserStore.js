@@ -164,6 +164,13 @@ export default class UserStore extends Store {
     this.publish();
   }
 
+  setState() {
+    this.loginState = '';
+    this.registrationState = '';
+
+    this.publish();
+  }
+
   get isLoginFail() {
     return this.loginState === 'fail';
   }

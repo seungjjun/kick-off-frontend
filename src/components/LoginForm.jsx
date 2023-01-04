@@ -78,7 +78,7 @@ export default function LoginForm({
   submit, navigate, isLoginFail, loginErrorMessge,
 }) {
   const REST_API_KEY = 'e5d7be850d09230a5729973d00efde1c';
-  const REDIRECT_URI = 'https://seungjjun.github.io/auth/kakao';
+  const REDIRECT_URI = 'https://kickoff.fly.dev/auth/kakao';
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
