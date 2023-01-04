@@ -92,8 +92,6 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
         />
         {errors.identification ? (
           <Error>{errors.identification.message}</Error>
-        ) : isExistingUserId ? (
-          <Error>{errorMessage}</Error>
         ) : null}
         <label
           htmlFor="input-password"
@@ -135,6 +133,8 @@ export default function SignUp({ submit, errorMessage, isExistingUserId }) {
         />
         {errors.confirmPassword ? (
           <Error>비밀번호가 일치하지 않습니다</Error>
+        ) : isExistingUserId ? (
+          <Error>{errorMessage}</Error>
         ) : null}
         <RegisterButton
           id="signup"
